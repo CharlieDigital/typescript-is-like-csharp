@@ -27,6 +27,7 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    name: Build VitePress Site
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,12 +37,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn 
+          cache: yarn
+          cache-dependency-path: 'docs/yarn.lock'
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
-        run: yarn install
+        working-directory: docs
+        run: yarn install --frozen-lockfile
       - name: Build with VitePress
+        working-directory: docs
         run: yarn docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -55,7 +59,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy Static Site
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
