@@ -37,6 +37,8 @@ export default defineConfig({
             items: [
               { text: 'LINQ', link: '/intermediate-linq' },
               { text: 'Tuples', link: '/intermediate-tuples' },
+              { text: 'Records', link: '/intermediate-records' },
+              { text: 'Iterators and Enumerables', link: '/intermediate-iterators-enumerables' },
               { text: 'Express vs Minimal API', link: '/intermediate-express-vs-minimal-api' },
               { text: 'Nest.js vs Controller API', link: '/intermediate-nest-vs-controller-api' },
               { text: 'Dependency Injection', link: '/intermediate-dependency-injection' },
@@ -46,13 +48,18 @@ export default defineConfig({
           {
             text: 'Advanced',
             items: [
+              { text: 'Generators and Yield', link: '/advanced-generators-yield' },
+              { text: 'dynamic (ExpandoObject)', link: '/advanced-dynamic' },
+              { text: 'JSON Serialization', link: '/advanced-json-serialization' },
               { text: 'Channels', link: '/advanced-channels' },
+              { text: 'Source Generation (Roslyn)', link: '/advanced-source-generation-roslyn' },
             ]
           },
           {
-            text: 'Niceties',
+            text: 'Ergonomics',
             items: [
               { text: 'Switch Expression', link: '/niceties-switch-expression' }
+              { text: 'Partial Classes', link: '/niceties-partial-classes' }
             ]
           },
         ]

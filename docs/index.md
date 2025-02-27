@@ -4,22 +4,21 @@ layout: home
 
 hero:
   name: "TypeScript is Like C#"
-  text: "TypeScript is like C# (it really is!)"
-  tagline: My great project tagline
+  text: "A guide to learning C# for TypeScript Teams"
+  tagline: If you already know TypeScript, then learning C# is easy!
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Intro and Motivation
+      link: /intro-and-motivation
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Start with the Basics
+      link: /basics-variables
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Easy to Learn
+    details: TypeScript and C# are both from Anders Hejlsberg at Microsoft and share a similar design.
+  - title: Fast and Perfomant
+    details: .NET is a multi-threaded runtime capable of high throughput compared to JavaScript based frameworks.
+  - title: Mature and Secure Ecosystem
+    details: Tired of half-baked NPM packages?  .NET's ecosystem has many mature, battle-tested libraries that are more secure.
 ---
-

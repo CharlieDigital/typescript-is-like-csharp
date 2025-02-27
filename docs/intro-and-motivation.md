@@ -13,6 +13,19 @@ In fact, C# is probably the most natural choice for teams that are already adept
 
 ## Why C#
 
+### Strongly Typed Yet *Flexible*
+
+It turns out that, if you are doing anything of consequence, you actually probably want to have strong, static types on your backend because this will help reduce mistakes and errors while also reducing verbosity.
+
+But .NET has a few interesting tricks up its sleeve when it comes to types such as:
+
+- Type inference
+- Tuples
+- Named tuples
+- Anonymous types
+- Type extensions
+- Union types (via 3rd party extensions [for now...](https://github.com/dotnet/csharplang/blob/main/proposals/TypeUnions.md))
+
 ### Performance + DX
 
 - C# is not as fast and memory efficient as Rust
@@ -23,11 +36,36 @@ But for all of that, .NET still performs extremely well across the board in a va
 
 For backends, .NET offers high performance roughly in the same ballpark with Java and Go with an excellent DX because of the large standard library and first party packages from Microsoft ("batteries included").
 
-### Tooling and Documentation
+### Tooling
+
+.NET offers great tooling support in VS Code (free) and Rider (free personal, paid commercial) and is support on Linux, macOS, and of course Windows.  It supports x64 and Arm64 architectures.
+
+The [dotnet cli](https://learn.microsoft.com/en-us/dotnet/core/tools/) is easy to use.
+
+### Documentation
+
+Microsoft's [excellent documentation](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/) is cohesive and thorough, making it easy to read and understand.  In Node, you might read documentation across a variety of third party sites for different packages (Zod, Prisma, Nest.js) which have different levels of thoroughness.  .NET's large standard library means that much of it also has first party documentation.
+
+Perhaps more importantly, it means that you'll likely get better results with LLMs because of the high quality documentation.
 
 ### Security
 
+JavaScript's lack of a standard library means that a lot of functionality depends on third parties.  On the other hand, .NET's large first party ecosystem means that if there are security issues, they will get patched.  With third party libraries, this is a roll of the dice!
+
+Historically, NPM has also been a known vector for supply chain attacks and JavaScript's nature as a dynamic language means that it is susceptible to types of attacks that are not possible in a .NET runtime.
+
+Check out [GitHub's 2020 State of the Octoverse Security report for more insights](https://octoverse.github.com/2020/).
+
 ### Mature but Constantly Evolving
+
+C# and .NET are constantly evolving and the language consistently improves DX with each release, reducing the verbosity of the language.  It's akin to the relationship between Kotlin and Java on the JVM, except C# has continued to rapidly evolve as a language.
+
+Check out some of the latest releases:
+
+- [C# 13](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-13)
+- [C# 12](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12)
+- [C# 11](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-11)
+- [C# 10](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-10)
 
 ## Common Myths
 
