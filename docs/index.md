@@ -9,10 +9,10 @@ hero:
   actions:
     - theme: brand
       text: Intro and Motivation
-      link: /intro-and-motivation
+      link: /pages/intro-and-motivation
     - theme: alt
       text: Start with the Basics
-      link: /basics-variables
+      link: /pages/basics/variables
 
 features:
   - title: Easy to Learn

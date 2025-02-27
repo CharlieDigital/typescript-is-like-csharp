@@ -1,5 +1,5 @@
 <script setup>
-import CodeSplitter from './components/CodeSplitter.vue'
+import CodeSplitter from '../../components/CodeSplitter.vue'
 </script>
 
 # Variables
