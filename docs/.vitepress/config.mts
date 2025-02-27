@@ -58,7 +58,7 @@ export default defineConfig({
           {
             text: 'Ergonomics',
             items: [
-              { text: 'Switch Expression', link: '/niceties-switch-expression' }
+              { text: 'Switch Expression', link: '/niceties-switch-expression' },
               { text: 'Partial Classes', link: '/niceties-partial-classes' }
             ]
           },
