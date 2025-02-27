@@ -26,7 +26,9 @@ string name = "Steve";
 </CodeSplitter>
 
 ::: tip
-In C#, the `'` is a designator for a `char` or character type (as opposed to `"` for `string` types.)
+In C#, the `''` is a designator for a `char` or character type (as opposed to `""` for `string` types.).
+-  `'c'` is the `char` type representation of `c`
+-  `"c"` is the `string` type representation of `c`
 :::
 
 ## Multi Line

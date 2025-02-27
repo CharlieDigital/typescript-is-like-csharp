@@ -11,6 +11,10 @@ But many teams end up overlooking .NET and C#, even though both TypeScript and C
 
 In fact, C# is probably the most natural choice for teams that are already adept at TypeScript because the languages share so much in common.
 
+Many developers, engineering managers, and CTOs may have come across C# and .NET *Framework* at some point in their career, but haven't looked at it since Microsoft pivoted to the open source .NET Core initiative (that yielded the numbered .NET versions).  Today's .NET is very different from .NET Framework of the 2000's.
+
+![](./assets/js-ts-csharp.png)
+
 ## Why C#
 
 ### Strongly Typed Yet *Flexible*
@@ -69,7 +73,7 @@ Check out some of the latest releases:
 
 ## Common Myths
 
-### C# Requires Visual Studio
+### C# Requires Visual Studio and Expensive Licenses
 
 This is not the case; in fact C# works great from VS Code!  It's completely free to use and you can use the C# extensions without a license.
 

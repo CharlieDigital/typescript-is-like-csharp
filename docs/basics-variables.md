@@ -4,9 +4,7 @@ import CodeSplitter from './components/CodeSplitter.vue'
 
 # Variables
 
-## Variable Declaration
-
-### Inferred Types
+## Inferred Types
 
 <CodeSplitter>
   <template #left>
@@ -28,22 +26,22 @@ const x = 1;  // Compiler "inlined"; NOT the same as JS const
   </template>
 </CodeSplitter>
 
-::: info
+::: warn
 C#'s `const` keyword does not mean the same thing as in JS. [See the docs](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const)
 :::
 
-### Explicit Types
+## Explicit Types
 
 <CodeSplitter>
   <template #left>
 
 ```ts
 // Primitives
-var x:number = 1;
+let x:number = 1;
 let y:string = "";
 
 // Reference types
-var map = new Map();
+let map = new Map();
 ```
 
   </template>
@@ -62,13 +60,13 @@ HashMap map = new(); // Means the same thing.
   </template>
 </CodeSplitter>
 
-### Generic Types
+## Generic Types
 
 <CodeSplitter>
   <template #left>
 
 ```ts
-var x: Result<User> = getUser();
+let x: Result<User> = getUser();
 ```
 
   </template>
@@ -81,14 +79,14 @@ Result<User> x = GetUser();
   </template>
 </CodeSplitter>
 
-### Collection Initialization
+## Collection Initialization
 
 <CodeSplitter>
   <template #left>
 
 ```ts
-var x = ["Bird", "Cat", "Dog"];
-var y = [...x];
+let x = ["Bird", "Cat", "Dog"];
+let y = [...x];
 ```
 
   </template>
