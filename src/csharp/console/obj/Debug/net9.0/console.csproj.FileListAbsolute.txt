@@ -1,0 +1,15 @@
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/bin/Debug/net9.0/console
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/bin/Debug/net9.0/console.deps.json
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/bin/Debug/net9.0/console.runtimeconfig.json
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/bin/Debug/net9.0/console.dll
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/bin/Debug/net9.0/console.pdb
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.GeneratedMSBuildEditorConfig.editorconfig
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.AssemblyInfoInputs.cache
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.AssemblyInfo.cs
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.csproj.CoreCompileInputs.cache
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.sourcelink.json
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.dll
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/refint/console.dll
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.pdb
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/console.genruntimeconfig.cache
+/Users/cchen/Code/OSS/typescript-is-like-csharp/src/csharp/console/obj/Debug/net9.0/ref/console.dll
