@@ -15,6 +15,9 @@
   </template>
 </CodeSplitter>
 
+![CSharp Logo](./assets/csharp-logo.png)
+![CSharp Logo](./assets/csharp-logo-32.png)
+
 # Markdown Extension Examples
 
 This page demonstrates some of the built-in markdown extensions provided by VitePress.
