@@ -13,7 +13,7 @@ export default defineConfig({
     ],
 
     editLink: {
-      pattern: 'https://github.com/CharlieDigital/typescript-is-like-csharp/docs/:path'
+      pattern: 'https://github.com/CharlieDigital/typescript-is-like-csharp/blob/main/docs/:path'
     },
 
     sidebar: [
