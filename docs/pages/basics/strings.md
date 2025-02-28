@@ -1,7 +1,3 @@
-<script setup>
-import CodeSplitter from '../../components/CodeSplitter.vue'
-</script>
-
 # Strings
 
 ## Basics

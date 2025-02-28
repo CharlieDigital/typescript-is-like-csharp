@@ -1,7 +1,3 @@
-<script setup>
-import CodeSplitter from '../../components/CodeSplitter.vue'
-</script>
-
 # Null Handling
 
 TypeScript `null` and C# `null` are semantically identical.  C# does not have a concept of `undefined`.

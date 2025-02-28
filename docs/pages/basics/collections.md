@@ -1,7 +1,3 @@
-<script setup>
-import CodeSplitter from '../../components/CodeSplitter.vue'
-</script>
-
 # Collections
 
 C# differentiates several types of collection semantics into distinct classes (which have an underlying `Array` (or possibly `Span`) implementation).

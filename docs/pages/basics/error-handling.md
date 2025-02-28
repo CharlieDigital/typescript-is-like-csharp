@@ -1,7 +1,3 @@
-<script setup>
-import CodeSplitter from '../../components/CodeSplitter.vue'
-</script>
-
 # Error Handling
 
 Error handling in both languages is identical and congruent (as opposed to Go, for example).  Both follow the `try-catch-finally` exception handling construct.
