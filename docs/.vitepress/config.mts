@@ -8,7 +8,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Intro', link: '/pages/intro-and-motivaation' }
+      { text: 'Intro', link: '/pages/intro-and-motivation' }
     ],
 
     editLink: {
@@ -77,7 +77,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/CharlieDigital/typescript-is-like-csharp' }
     ]
   }
 })

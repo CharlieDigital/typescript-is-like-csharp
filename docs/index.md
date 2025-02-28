@@ -5,13 +5,16 @@ layout: home
 hero:
   name: "TypeScript is Like C#"
   text: "Outgrowing Node.js?"
+  image:
+    src: ./assets/csharp-logo.png
+    alt: C# logo
   tagline: If you already know TypeScript, then learning C# is easy!  This guide walks you through the similarities (and differences) between TypeScript and C#.
   actions:
     - theme: brand
       text: Intro and Motivation
       link: /pages/intro-and-motivation
     - theme: alt
-      text: Start with the Basics
+      text: Show me the Basics
       link: /pages/basics/variables
 
 features:
