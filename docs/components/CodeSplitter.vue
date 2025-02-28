@@ -3,7 +3,7 @@
     <div ref="leftPanel" class="panel left" :style="{ width: `${leftWidth}%` }">
       <slot name="left"></slot>
     </div>
-    <div ref="splitter" class="splitter" @mousedown="startResize"></div>
+    <div ref="splitter" class="splitter" @mousedown="startResize" @touchstart="startResize"></div>
     <div ref="rightPanel" class="panel right" :style="{ width: `${rightWidth}%` }">
       <slot name="right"></slot>
     </div>
@@ -37,18 +37,15 @@ const startResize = (event) => {
     isResizing = false;
     window.removeEventListener("mousemove", onMouseMove);
     window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("touchend", onMouseUp);
+    window.removeEventListener("touchmove", onMouseMove);
   };
 
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("mouseup", onMouseUp);
+  window.addEventListener("touchend", onMouseUp);
+  window.addEventListener("touchmove", onMouseMove);
 };
-
-onMounted(() => {
-  // const containerRect = splitter.value!.parentElement!.getBoundingClientRect();
-
-  // leftWidth.value = containerRect.width / 2;
-  // rightWidth.value = containerRect.width / 2;
-});
 </script>
 
 <style scoped>
