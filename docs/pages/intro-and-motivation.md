@@ -15,7 +15,7 @@ In fact, C# is probably the most natural choice for teams that are already adept
 
 Many developers, engineering managers, and CTOs may have come across C# and .NET *Framework* at some point in their career, but haven't looked at it since Microsoft pivoted to the open source .NET Core initiative (that yielded the numbered .NET versions).  Today's .NET is very different from .NET Framework of the 2000's.
 
-![Image comparing JS/TS/C#](../../assets/js-ts-csharp.png)
+![Image comparing JS/TS/C#](../assets/js-ts-csharp.png)
 
 ## Why C#
 
