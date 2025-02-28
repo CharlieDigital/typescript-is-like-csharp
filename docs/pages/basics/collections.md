@@ -4,6 +4,8 @@ import CodeSplitter from '../../components/CodeSplitter.vue'
 
 # Collections
 
+C# differentiates several types of collection semantics into distinct classes (which have an underlying `Array` (or possibly `Span`) implementation).
+
 ## Arrays
 
 <CodeSplitter>
@@ -36,7 +38,7 @@ string[] pets = ["Tomi", "Rascal", "Puck"];
 // Implicit type
 var pets2 = new[] {"Tomi", "Rascal", "Puck"};
 
-// Need explicit type here
+// Copy (Need explicit type here)
 string[] pets3 = [.. pets2];
 
 // Access
@@ -104,6 +106,10 @@ let tasks: string[] = [];
 tasks.push("task1");
 tasks.push("task2");
 let task2 = tasks.pop(); // "task2"
+
+// Peek
+var task1 = tasks.pop(); // "task1"
+tasks.push(task1);
 ```
 
   </template>
@@ -114,14 +120,13 @@ var tasks = new Stack<string>();
 tasks.Push("task1");
 tasks.Push("task2");
 var task2 = tasks.Pop(); // "task2"
+
+// Peek
+var task1 = tasks.Peek(); // "task1"
 ```
 
   </template>
 </CodeSplitter>
-
-::: tip
-C# stacks have a number of non-mutating operations like `.Peek()`.
-:::
 
 ## Queues
 
@@ -132,7 +137,11 @@ C# stacks have a number of non-mutating operations like `.Peek()`.
 let tasks: string[] = [];
 tasks.push("task1");
 tasks.push("task2");
-let task2 = tasks.shift(); // "task1"
+let task1 = tasks.shift(); // "task1"
+
+// Peek
+let task2 = tasks.shift(); // "task2"
+tasks.unshift(task1);
 ```
 
   </template>
@@ -143,15 +152,25 @@ var tasks = new Queue<string>();
 tasks.Enqueue("task1");
 tasks.Enqueue("task2");
 var task1 = tasks.Dequeue(); // "task1"
+
+// Peek
+var task2 = tasks.Peek(); // "task2"
 ```
 
   </template>
 </CodeSplitter>
 
-::: tip
-C# queues have a number of non-mutating operations like `.Peek()`.
-:::
-
 ## Dictionaries/Maps
 
 ## Sets
+
+## Advanced
+
+This section introduced some of the congruent collection types, but there are several other interesting collection types in the .NET standard libraries that have useful semantics such as:
+
+- readonly,
+- immutability,
+- concurrent read/write,
+- memory-mapped/inlined collections for speed
+
+Read more to find out how these types work and why they are useful.  These can all be obtained through NPM packages, but it's nice that these are packaged as part of the .NET standard libraries.

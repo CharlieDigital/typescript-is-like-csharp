@@ -26,7 +26,7 @@ const x = 1;  // Compiler "inlined"; NOT the same as JS const
   </template>
 </CodeSplitter>
 
-::: warn
+::: warning
 C#'s `const` keyword does not mean the same thing as in JS. [See the docs](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const)
 :::
 

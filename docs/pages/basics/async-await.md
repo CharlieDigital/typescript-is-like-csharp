@@ -4,7 +4,7 @@ import CodeSplitter from '../../components/CodeSplitter.vue'
 
 # Async/Await
 
-In C#, the `Task` class is the equivalent of `Promise`.
+In C#, the `Task` class is the equivalent of `Promise`.  However, it is important to make the distinction here that .NET's runtime is concurrent + parallel (because it is multi-threaded) which means that given a set of *futures*, they may be executed on *different threads* whereas in JS, they will always execute on a single thread.
 
 ## Basics
 

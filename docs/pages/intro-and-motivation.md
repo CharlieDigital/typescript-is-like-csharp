@@ -1,6 +1,8 @@
 # Intro and Motivation
 
-Many teams find themselves outgrowing TypeScript on the backend when building systems of consequence.  Teams will often consider alternatives such as:
+Many teams find themselves outgrowing Node.js and TypeScript on the backend when building systems of consequence.  In particular, TypeScript of course helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
+
+Teams will often consider alternatives such as:
 
 - Go
 - Java
@@ -19,7 +21,7 @@ Many developers, engineering managers, and CTOs may have come across C# and .NET
 
 ### Strongly Typed Yet *Flexible*
 
-It turns out that, if you are doing anything of consequence, you actually probably want to have strong, static types on your backend because this will help reduce mistakes and errors while also reducing verbosity.
+It turns out that, if you are doing anything of consequence, you actually probably want to have strong, static types on your backend because this will help reduce mistakes and errors while also reducing verbosity in the overall codebase required in JS to ensure some level of type safety (e.g. Zod schemas).
 
 But .NET has a few interesting tricks up its sleeve when it comes to types such as:
 
