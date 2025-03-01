@@ -16,3 +16,107 @@ nameToAge.Add("Didi", 55);
 foreach (var entry in nameToAge.Values) {
   Console.WriteLine(entry); // Unordered
 }
+
+#!csharp
+
+var uniqueIds = new HashSet<int>();
+uniqueIds.Add(5);
+uniqueIds.Add(1);
+uniqueIds.Add(5);
+
+foreach (var id in uniqueIds) {
+  Console.WriteLine(id); // 5, 1
+}
+
+#!csharp
+
+var x = 5;
+
+switch (x) {
+  case 0:
+    Console.WriteLine("You win a dollar!");
+    break;
+  case 5:
+    Console.WriteLine("You win a car!");
+    break;
+  default:
+    Console.WriteLine("Play again!");
+    break;
+}
+
+#!csharp
+
+var x = 99;
+
+switch (x) {
+  case <= 100 when x > 98:
+    Console.WriteLine("You got an A+!");
+    break;
+  case <= 98 when x >= 90:
+    Console.WriteLine("You got an A!");
+    break;
+  default:
+    Console.WriteLine("You passed!");
+    break;
+}
+
+#!csharp
+
+var coursework = 95;
+var midterm = 91;
+var finals = 92;
+
+switch ( (coursework, midterm, finals) ) {
+  case (> 80, > 90, > 95):
+  case (> 90, > 90, > 90):
+    Console.WriteLine("You got an A!");
+    break;
+  case (> 80, > 80, > 80):
+    Console.WriteLine("You got an B!");
+    break;
+  default:
+    Console.WriteLine("You passed!");
+    break;
+}
+
+#!csharp
+
+var courseGrade = (87, 91, 98) switch {
+  ( > 90, > 90, > 95) => "A+",
+  ( > 80, > 90, > 90) => "A",
+  ( > 80, > 80, > 80) => "B",
+  _ => "C"
+};
+
+Console.WriteLine(courseGrade);
+
+#!csharp
+
+var account = ("Diamond Member", 100_000);
+
+if (account is ("Diamond Member", >= 100_000)) {
+  Console.WriteLine("You are a VIP!");
+} else if (account is ("Gold Member", >= 50_000)) {
+  Console.WriteLine("You are a Gold Member!");
+} else if (account is ("Silver Member", >= 10_000)) {
+  Console.WriteLine("You are a Silver Member!");
+} else {
+  Console.WriteLine("You are a regular member.");
+}
+
+#!csharp
+
+var account = new {
+  Name = "Gigi",
+  Balance = 100_000
+};
+
+if (account is { Balance: >= 100_000 }) {
+  Console.WriteLine($"{account.Name} is a VIP!");
+} else if (account is { Balance: >= 50_000 }) {
+  Console.WriteLine($"{account.Name} is a Gold Member!");
+} else if (account is { Balance: >= 10_000 }) {
+  Console.WriteLine($"{account.Name} is a Silver Member!");
+} else {
+  Console.WriteLine($"{account.Name} is a regular member.");
+}

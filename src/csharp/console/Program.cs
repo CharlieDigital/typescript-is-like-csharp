@@ -34,3 +34,14 @@ tasks2.Enqueue("task2");
 var task1 = tasks2.Dequeue();
 
 log(task1);
+
+/// <summary>
+///
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
+int Sum(int a, int b)
+{
+    return a + b;
+}

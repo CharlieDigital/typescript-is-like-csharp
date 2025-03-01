@@ -11,3 +11,19 @@ uniqueIds.add(5);
 for (const id of uniqueIds.values()) {
   console.log(id);
 }
+
+#!javascript
+
+var x = 5;
+
+switch (x) {
+  case 0:
+    console.log("You win a dollar!");
+    break;
+  case 5:
+    console.log("You win a car!");
+    break;
+  default:
+    console.log("Play again!");
+    break;
+}

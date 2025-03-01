@@ -21,6 +21,7 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Intro and Motivation', link: '/pages/intro-and-motivation' },
+          { text: 'Getting Started', link: '/pages/getting-started' },
           {
             text: 'Basics',
             collapsed: false,
@@ -32,9 +33,10 @@ export default defineConfig({
               { text: 'Error Handling', link: '/pages/basics/error-handling' },
               { text: 'Conditionals', link: '/pages/basics/conditionals' },
               { text: 'Iteration', link: '/pages/basics/iteration' },
-              { text: 'Generics', link: '/pages/basics/generics' },
+              { text: 'Comments', link: '/pages/basics/comments' },
               { text: 'Functions', link: '/pages/basics/functions' },
               { text: 'Classes and Types', link: '/pages/basics/classes' },
+              { text: 'Generics', link: '/pages/basics/generics' },
               { text: 'Async/Await', link: '/pages/basics/async-await' },
               { text: 'Packages vs Projects', link: '/pages/basics/projects' },
               { text: 'CLI and Tooling', link: '/pages/basics/cli-tooling' },

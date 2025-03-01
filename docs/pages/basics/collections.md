@@ -284,6 +284,4 @@ This section introduced some of the congruent collection types, but there are se
 - [concurrent read/write](https://learn.microsoft.com/en-us/dotnet/standard/collections/thread-safe/) (used in multi-threaded scenarios for thread-safe access),
 - [memory-mapped/inlined collections for speed](https://learn.microsoft.com/en-us/archive/msdn-magazine/2018/january/csharp-all-about-span-exploring-a-new-net-mainstay) (managed access to contiguous regions of memory)
 
-In Node, one might typically import a 3rd party library for these types of semantic wrappers around the native collection types (and of course, there's no need for support for concurrent access nor memory inlined collections)
-
-Read more to find out how these types work and why they are useful.  These can all be obtained through NPM packages, but it's nice that these are packaged as part of the .NET standard libraries.
+In Node, one might typically import a 3rd party library for these types of semantic wrappers around the native collection types (and of course, there's no need for support for concurrent access nor memory inlined collections).  It's nice that these are packaged as part of the .NET standard libraries.
