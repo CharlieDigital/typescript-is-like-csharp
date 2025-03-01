@@ -27,6 +27,7 @@ export default defineConfig({
             collapsed: false,
             items: [
               { text: 'Variables', link: '/pages/basics/variables' },
+              { text: 'Types', link: '/pages/basics/types' },
               { text: 'Nulls', link: '/pages/basics/nulls' },
               { text: 'Strings', link: '/pages/basics/strings' },
               { text: 'Collections', link: '/pages/basics/collections' },
@@ -73,7 +74,8 @@ export default defineConfig({
             collapsed: false,
             items: [
               { text: 'Switch Expression', link: '/pages/bonus/switch-expression' },
-              { text: 'Partial Classes', link: '/pages/bonus/partial-classes' }
+              { text: 'Partial Classes', link: '/pages/bonus/partial-classes' },
+              { text: 'Global Using', link: '/pages/bonus/global-usings' }
             ]
           },
         ]

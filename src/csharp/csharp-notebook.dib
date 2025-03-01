@@ -120,3 +120,220 @@ if (account is { Balance: >= 100_000 }) {
 } else {
   Console.WriteLine($"{account.Name} is a regular member.");
 }
+
+#!csharp
+
+// Return a function
+Action fn() {
+  return () => {
+    Console.WriteLine("Here");
+  };
+}
+
+fn()();
+
+#!csharp
+
+// Accept a function
+string fn(
+  string name,
+  Func<string, string> fx
+) {
+  return fx(name);
+}
+
+Console.WriteLine(
+  fn("Steve", (name) => $"Hello, {name}")
+); // Hello, Steve
+
+#!csharp
+
+var fn = (string msg) => Console.WriteLine(msg);
+
+fn("Hello, World!");
+
+#!csharp
+
+void fn(params string[] args) {
+  foreach (var arg in args) {
+    Console.Write(arg);
+  }
+}
+
+fn("a", "b", "c")
+
+#!csharp
+
+void fn(
+  string? firstName,
+  string? lastName
+) {
+  Console.WriteLine($"{firstName} {lastName}");
+}
+
+fn (lastName: "Lee", firstName: "Amy")
+
+#!csharp
+
+void fn(
+  string name = "(no name)"
+) {
+  Console.WriteLine($"Hello, {name}");
+}
+
+fn();
+fn("Carl");
+
+#!csharp
+
+using System.Collections.Generic;
+using System.Linq;
+
+var fn = (string msg) => Console.WriteLine(msg);
+
+fn("Hello, World!");
+
+var contacts = new List<string> { "Allie", "Stella", "Carson" };
+contacts.ForEach(fn);
+
+#!csharp
+
+void fn() {
+  void fx() {
+    Console.WriteLine("Hello, World!");
+  }
+
+  fx();
+}
+
+fn();
+
+#!csharp
+
+class Person(
+  string firstName,
+  string lastName
+) {
+  public string DisplayName => $"{firstName} {lastName}";
+
+  public void Notify() {
+    Console.WriteLine($"Notified {nameof(Person)}: {DisplayName}");
+  }
+}
+
+var frankie = new Person("Frank", "Sinatra");
+frankie.Notify();
+
+#!csharp
+
+class MobileDevice {
+  public void Call(int recipient) {
+    Console.WriteLine($"Calling: {recipient}");
+  }
+}
+
+class AndroidPhone : MobileDevice { }
+
+class ApplePhone : MobileDevice { }
+
+var pixel = new AndroidPhone();
+pixel.Call(1234567); // "Calling: 1234567"
+
+var iphone = new ApplePhone();
+iphone.Call(1234567); // "Calling: 1234567"
+
+#!csharp
+
+interface IMobileDevice {
+  void Call(int recipient);
+}
+
+class AndroidPhone : IMobileDevice {
+  public void Call(int recipient) {
+    Console.WriteLine($"Calling {recipient} from my Android device...");
+  }
+}
+
+class ApplePhone : IMobileDevice {
+  public void Call(int recipient) {
+    Console.WriteLine($"Calling {recipient} from my Apple device...");
+  }
+}
+
+var pixel = new AndroidPhone();
+pixel.Call(1234567); // "Calling: 1234567"
+
+var iphone = new ApplePhone();
+iphone.Call(1234567); // "Calling: 1234567"
+
+#!csharp
+
+abstract class MobileDevice {
+  public void Call(int recipient) {
+    Console.WriteLine($"Calling: {recipient}");
+  }
+
+  public abstract void PowerOn();
+
+  public virtual void ConnectCable() {
+    Console.WriteLine("Connecting USB-C...");
+  }
+}
+
+class AndroidPhone : MobileDevice {
+  public override void PowerOn() {
+    Console.WriteLine("Powering Android device on...");
+  }
+}
+
+class ApplePhone(int version) : MobileDevice {
+  public override void PowerOn() {
+    Console.WriteLine("Powering Apple device on...");
+  }
+
+  public override void ConnectCable() {
+    if (version < 15) {
+      Console.WriteLine("Connecting Lightning cable...");
+    } else {
+      Console.WriteLine("Connecting USB-C...");
+    }
+  }
+}
+
+var pixel = new AndroidPhone();
+pixel.PowerOn(); // "Powering Android device on"
+pixel.ConnectCable(); // "Connecting USB-C..."
+
+var iphone = new ApplePhone(14);
+iphone.PowerOn(); // "Powering Apple device on"
+iphone.ConnectCable(); // "Connecting Lighting cable..."
+
+#!csharp
+
+record Contact(
+  string FirstName,
+  string LastName
+) {
+  public string DisplayName => $"{FirstName} {LastName}";
+};
+
+var alan = new Contact("Alan", "Turing");
+// alan.FirstName = "Alan"; // Error: cannot modify a record
+alan = alan with { FirstName = "Al" }; // OK
+var (FirstName, LastName) = alan; // Deconstructing a record
+Console.WriteLine(alan.DisplayName); // "Al Turing"
+
+var al = new Contact("Al", "Turing");
+Console.WriteLine(al == alan);
+
+#!csharp
+
+class MobileDevice { }
+class AndroidPhone : MobileDevice { }
+class ApplePhone : MobileDevice { }
+
+var pixel = new AndroidPhone();
+var iphone = new ApplePhone();
+
+Console.WriteLine(pixel is AndroidPhone); // True
+Console.WriteLine(pixel is MobileDevice); // True

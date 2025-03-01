@@ -27,3 +27,62 @@ switch (x) {
     console.log("Play again!");
     break;
 }
+
+#!javascript
+
+function fn() {
+  return () => {
+    console.log("Here");
+  }
+}
+
+fn()();
+
+#!javascript
+
+function fn(
+  label,
+  fx
+) {
+  return fx(label)
+}
+
+console.log(
+  fn("Steve", (name) => `Hello, ${name}`)
+);
+
+#!javascript
+
+let fn = (msg) => console.log(msg);
+
+fn("Hello, World!");
+
+#!javascript
+
+function fn() {
+  for (let arg of arguments) {
+    console.log(arg);
+  }
+}
+
+fn("a", "b", "c");
+
+#!javascript
+
+function fn({
+  firstName,
+  lastName
+}) {
+  console.log(`Hello, ${firstName} ${lastName}`);
+}
+
+fn({lastName: "Lee", firstName: "Amy"});
+
+#!javascript
+
+let fn = (msg) => console.log(msg);
+
+fn("Hello, World!");
+
+var contacts = ["Allie", "Stella", "Carson"];
+contacts.forEach(fn)

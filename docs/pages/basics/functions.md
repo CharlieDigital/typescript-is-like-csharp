@@ -2,16 +2,291 @@
 
 ## Basics
 
+<CodeSplitter>
+  <template #left>
+
+```ts
+function fn(
+  name: string, // Required parameter
+  affiliation: string = "unaffiliated", // Default parameter,
+  notify: () => void, // Function parameter
+  nickName?: string // Optional parameter
+) {
+  let x = "1";
+  let y = "2";
+
+  // Local function
+  let fx = () => {
+    console.log(`x = ${x}`);
+  }
+
+  // Local function
+  function fy() {
+    console.log(`y = ${y}`);
+  }
+
+  fx(); // "x = 1"
+  fy(); // "y = 2"
+}
+```
+
+  </template>
+  <template #right>
+
+```csharp
+void fn(
+  string name, // Required parameter
+  string affiliation = "unaffiliated", // Default parameter
+  Action notify, // Function parameter
+  string? nickName // Optional parameter
+) {
+  let x = "1";
+  let y = "2";
+
+  // Local function
+  let fx = () => {
+    Console.WriteLine($"x = {x}");
+  }
+
+  // Local function
+  void fy() {
+    Console.WriteLine($"y = {y}");
+  }
+
+  fx(); // "x = 1"
+  fy(); // "y = 2"
+}
+```
+
+  </template>
+</CodeSplitter>
+
+::: info
+C#'s `Action` and `Func` types are covered below.
+:::
+
 ## Lambda Expressions
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Lambda expression
+let fn = (msg: string) => console.log(msg);
+
+fn("Hello, World!");
+
+let contacts = ["Allie", "Stella", "Carson"];
+contacts.forEach(fn)
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// Lambda expression
+var fn = (string msg) => Console.WriteLine(msg);
+
+fn("Hello, World!");
+
+// 👇 Here, we use a `List` so we import these
+using System.Collections.Generic;
+using System.Linq;
+
+var contacts = new List<string> { "Allie", "Stella", "Carson" };
+contacts.ForEach(fn);
+```
+
+  </template>
+</CodeSplitter>
+
+::: tip
+Here, we see an intro to .NET's powerful LINQ (Language Integrated Query) features.  We'll dive into this more later.
+:::
 
 ## Default Parameter Values
 
+<CodeSplitter>
+  <template #left>
+
+```ts
+function fn(name: string = "(no name)") {
+  console.log(`Hello, ${name}`);
+}
+
+fn(); // "Hello, (no name)""
+fn("Carl"); // "Hello, Carl"
+```
+
+  </template>
+  <template #right>
+
+```csharp
+void fn(string name = "(no name)") {
+  Console.WriteLine($"Hello, {name}");
+}
+
+fn(); // "Hello, (no name)""
+fn("Carl"); // "Hello, Carl"
+```
+
+  </template>
+</CodeSplitter>
+
 ## Passing Named Parameters
+
+TypeScript does not natively have named parameters so we need to destructure an object to achieve the same result.
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+function fn({
+  firstName, // 👈 Use destructuring
+  lastName
+} : {
+  firstName: string,
+  lastName: string
+}) {
+  console.log(`Hello, ${firstName} ${lastName}`);
+}
+
+// Pass an object to be destructured
+fn({lastName: "Lee", firstName: "Amy"});
+
+// Or with a type:
+type Contact = {
+  firstName: string,
+  lastName: string
+}
+
+function fn({
+  firstName, // 👈 Use destructuring
+  lastName
+} : Contact) {
+  console.log(`Hello, ${firstName} ${lastName}`);
+}
+
+// Pass an object to be destructured
+fn({lastName: "Lee", firstName: "Amy"});
+```
+
+  </template>
+  <template #right>
+
+```csharp
+void fn(
+  string firstName,
+  string lastName
+) {
+  Console.WriteLine($"Hello, {firstName} {lastName}");
+}
+
+// We can pass the parameters in any order
+fn (lastName: "Lee", firstName: "Amy")
+```
+
+  </template>
+</CodeSplitter>
 
 ## Unbounded Parameters
 
+<CodeSplitter>
+  <template #left>
+
+```ts
+function fn() {
+  for (let arg of arguments) {
+    console.log(arg);
+  }
+}
+
+fn("a", "b", "c");
+// abc
+```
+
+  </template>
+  <template #right>
+
+```csharp
+void fn(params string[] args) {
+  foreach (var arg in args) {
+    Console.Write(arg);
+  }
+}
+
+fn("a", "b", "c");
+// abc
+```
+
+  </template>
+</CodeSplitter>
+
+::: tip
+C# 13 [has some nifty improvements](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-13#params-collections) around `params` collections.
+:::
+
 ## Function Type
 
-C# has two discrete types that map to JavaScript's `Function` type.
+Like JavaScript, C# functions are first class objects represented by two system types:
 
-`Func<TArg, TReturn>` is the equivalent of `(arg: TArg) => TReturn` and `Action<TArg>` is the equivalent of `(arg: TArg) => void`.
+1. `Action` - the equivalent of `() => void`
+2. `Func<T>` - the equivalent of `() => T`
+
+Therefore, we can freely pass around functions and lambda closures largely behave similarly to lambda closures in JavaScript (with some edge cases and specific considerations in .NET due to the multi-threaded runtime).
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Return a function
+function fn() : () => void {
+  return () => {
+    console.log("Here");
+  }
+}
+
+fn()();
+
+// Accept a function
+function fn(
+  label: string,
+  fx: (name: string) => string
+) : string {
+  return fx(label)
+}
+
+console.log(
+  fn("Steve", (name) => `Hello, ${name}`);
+); // Hello, Steve
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// Return a function
+Action fn() {
+  return () => {
+    Console.WriteLine("Here");
+  };
+}
+
+fn()();
+
+// Accept a function
+string fn(
+  string name,
+  Func<string, string> fx
+) {
+  return fx(name);
+}
+
+Console.WriteLine(
+  fn("Steve", (name) => $"Hello, {name}")
+); // Hello, Steve
+
+```
+
+  </template>
+</CodeSplitter>

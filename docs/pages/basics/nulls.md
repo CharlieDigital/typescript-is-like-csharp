@@ -17,6 +17,9 @@ function findUser(name: string, email?: string ) {
 }
 
 let handle = email?.split("@")[0];
+
+// Null forgiving operator
+let handle = email!.split("@")[0];
 ```
 
   </template>
@@ -32,6 +35,9 @@ User[] FindUser(string name, string? email) {
 }
 
 var handle = email?.Split("@")[0];
+
+// Null forgiving operator
+var handle = email!.Split("@")[0];
 ```
 
   </template>

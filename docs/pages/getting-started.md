@@ -16,9 +16,11 @@ There are three primary IDEs depending on which platform you are on:
 
 Of course, [you can also use `vim`](https://github.com/OmniSharp/omnisharp-vim)!
 
-> In general, I find that VS Code with the C# DevKit to be perfectly fine even for large .NET codebases.  I have used it with a 100,000 line codebase at a startup without issues.  I strongly recommend starting there since you are probably already using it for your TypeScript work!
->
-> Where Jetbrains Rider shines is when you need to do complex refactorings.
+::: tip
+In general, I find that VS Code with the C# DevKit to be perfectly fine even for large .NET codebases.  I have used it with a 100,000 line codebase at a startup without issues.  I strongly recommend starting there since you are probably already using it for your TypeScript work!
+
+Where Jetbrains Rider shines is when you need to do complex refactorings.
+:::
 
 ## Get .NET Interactive and Polyglot Notebooks
 
