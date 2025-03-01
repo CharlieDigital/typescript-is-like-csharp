@@ -3,7 +3,13 @@
     <div ref="leftPanel" class="panel left" :style="{ width: `${leftWidth}%` }">
       <slot name="left"></slot>
     </div>
-    <div ref="splitter" class="splitter" @mousedown="startResize" @touchstart="startResize"></div>
+    <div
+      ref="splitter"
+      class="splitter"
+      @mousedown="startResize"
+      v-touch:press="startResize"
+      v-touch:drag="onMouseMove">
+    </div>
     <div ref="rightPanel" class="panel right" :style="{ width: `${rightWidth}%` }">
       <slot name="right"></slot>
     </div>
@@ -11,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 const leftPanel = ref<HTMLDivElement>();
 const rightPanel = ref<HTMLDivElement>();
@@ -23,28 +29,24 @@ const rightWidth = ref(50); // Default width of right panel
 
 const startResize = (event) => {
   isResizing = true;
-  const containerRect = splitter.value!.parentElement!.getBoundingClientRect();
-
-  const onMouseMove = (e) => {
-    if (!isResizing) return;
-
-    const offset = e.clientX - containerRect.left;
-    leftWidth.value = Math.max(5, (offset / containerRect.width) * 100); // Prevents collapsing completely
-    rightWidth.value = Math.max(5, 100 - leftWidth.value); // Ensures the right panel adjusts accordingly
-  };
-
-  const onMouseUp = () => {
-    isResizing = false;
-    window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
-    window.removeEventListener("touchend", onMouseUp);
-    window.removeEventListener("touchmove", onMouseMove);
-  };
-
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("mouseup", onMouseUp);
-  window.addEventListener("touchend", onMouseUp);
-  window.addEventListener("touchmove", onMouseMove);
+  console.log("START RESIZE");
+};
+
+const onMouseMove = (e) => {
+  if (!isResizing) return;
+
+  const containerRect = splitter.value!.parentElement!.getBoundingClientRect();
+  const offset = (e.clientX ?? e.touches[0].clientX) - containerRect.left;
+  leftWidth.value = Math.max(5, (offset / containerRect.width) * 100); // Prevents collapsing completely
+  rightWidth.value = Math.max(5, 100 - leftWidth.value); // Ensures the right panel adjusts accordingly;
+};
+
+const onMouseUp = () => {
+  isResizing = false;
+  window.removeEventListener("mousemove", onMouseMove);
+  window.removeEventListener("mouseup", onMouseUp);
 };
 </script>
 
@@ -81,8 +83,10 @@ const startResize = (event) => {
   border-bottom-left-radius: 0px;
 }
 
-.panel :deep(code),
-.panel :deep(pre) {
-  overflow: hidden !important;
+@media only screen and (min-width: 600px) {
+  .panel :deep(code),
+  .panel :deep(pre) {
+    overflow: hidden !important;
+  }
 }
 </style>

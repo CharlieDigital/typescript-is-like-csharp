@@ -1149,6 +1149,11 @@ vitepress@^1.6.3:
     vite "^5.4.14"
     vue "^3.5.13"
 
+vue3-touch-events@^5.0.13:
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/vue3-touch-events/-/vue3-touch-events-5.0.13.tgz#3ece24d43d8216b68af75ab1c58ba7b08d4a0a5d"
+  integrity sha512-VOprVhKsL5DaistDFU0+oLJz/LaFzVENeUzs4Hp3PeD0TVx1vNEgNgS/9WehUHlUIUuCdnmLm0TkmITjwVmUBQ==
+
 vue@^3.5.13:
   version "3.5.13"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.13.tgz#9f760a1a982b09c0c04a867903fc339c9f29ec0a"

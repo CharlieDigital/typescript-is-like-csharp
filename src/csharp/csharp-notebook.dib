@@ -330,10 +330,25 @@ Console.WriteLine(al == alan);
 
 class MobileDevice { }
 class AndroidPhone : MobileDevice { }
-class ApplePhone : MobileDevice { }
+class ApplePhone(int version) : MobileDevice {
+  public int Version { get; } = version;
+}
 
 var pixel = new AndroidPhone();
-var iphone = new ApplePhone();
+var iphone16 = new ApplePhone(16);
+var iphone14 = new ApplePhone(14);
 
-Console.WriteLine(pixel is AndroidPhone); // True
-Console.WriteLine(pixel is MobileDevice); // True
+void CheckDevice(MobileDevice device) {
+  var message = device switch {
+    AndroidPhone => "This is an Android phone",
+    ApplePhone and { Version: >= 15} => "This is an Apple phone with USB-C",
+    ApplePhone => "This is an Apple phone with Lightning",
+    _ => "Mobile device"
+  };
+
+  Console.WriteLine(message);
+}
+
+CheckDevice(pixel); // "This is an Android phone"
+CheckDevice(iphone16); // "This is an Apple phone with USB-C"
+CheckDevice(iphone14); // "This is an Apple phone with Lightning"

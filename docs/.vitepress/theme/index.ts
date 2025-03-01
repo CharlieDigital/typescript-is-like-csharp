@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
+import Vue3TouchEvents, { Vue3TouchEventsOptions } from 'vue3-touch-events';
 import CodeSplitter from '../../components/CodeSplitter.vue'
 
 export default {
@@ -13,6 +14,9 @@ export default {
     })
   },
   enhanceApp({ app, router, siteData }) {
-    app.component('CodeSplitter', CodeSplitter)
+    app.component('CodeSplitter', CodeSplitter);
+    app.use<Vue3TouchEventsOptions>(Vue3TouchEvents, {
+      disableClick: false
+    })
   }
 } satisfies Theme
