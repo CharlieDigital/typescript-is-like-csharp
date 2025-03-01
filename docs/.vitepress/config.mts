@@ -37,6 +37,7 @@ export default defineConfig({
               { text: 'Classes and Types', link: '/pages/basics/classes' },
               { text: 'Async/Await', link: '/pages/basics/async-await' },
               { text: 'Packages vs Projects', link: '/pages/basics/projects' },
+              { text: 'CLI and Tooling', link: '/pages/basics/cli-tooling' },
             ]
           },
           {

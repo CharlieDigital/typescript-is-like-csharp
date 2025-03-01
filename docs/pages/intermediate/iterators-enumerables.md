@@ -10,7 +10,7 @@ Most generally, they represent a forward-only "virtual" iteration over a set.
   <template #left>
 
 ```ts
-let nameToAge = new Map([
+let nameToAge = new Map<string, number>([
   ["Anne", 12],
   ["Bert", 23],
   ["Carl", 43],

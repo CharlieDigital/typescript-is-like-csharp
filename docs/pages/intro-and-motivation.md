@@ -1,19 +1,20 @@
 # Intro and Motivation
 
-Many teams find themselves outgrowing Node.js and TypeScript on the backend when building systems of consequence.  In particular, TypeScript of course helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
+Many teams find themselves outgrowing Node.js and TypeScript on the backend when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
 
 Teams will often consider alternatives such as:
 
 - Go
 - Java
 - Kotlin
+- Scala
 - Rust (?!?)
 
 But many teams end up overlooking .NET and C#, even though both TypeScript and C# are designed by [Anders Hejlsberg](https://en.wikipedia.org/wiki/Anders_Hejlsberg) of Microsoft.  Because of this lineage and the long influence of C# on JavaScript and vice versa, C# and TypeScript have actually been converging over the last decade.
 
 In fact, C# is probably the most natural choice for teams that are already adept at TypeScript because the languages share so much in common.
 
-Many developers, engineering managers, and CTOs may have come across C# and .NET *Framework* at some point in their career, but haven't looked at it since Microsoft pivoted to the open source .NET Core initiative (that yielded the numbered .NET versions).  Today's .NET is very different from .NET Framework of the 2000's.
+Many developers, engineering managers, and CTOs may have come across C# and .***NET Framework*** at some point in their career, but haven't looked at it since Microsoft pivoted to the open source ***.NET Core*** initiative (that yielded the open source, numbered .NET versions).  Today's .NET is very different from *.NET Framework* of the 2000's.
 
 ![Image comparing JS/TS/C#](../assets/js-ts-csharp.png)
 
@@ -21,7 +22,7 @@ Many developers, engineering managers, and CTOs may have come across C# and .NET
 
 ### Strongly Typed Yet *Flexible*
 
-It turns out that, if you are doing anything of consequence, you actually probably want to have strong, static types on your backend because this will help reduce mistakes and errors while also reducing verbosity in the overall codebase required in JS to ensure some level of type safety (e.g. Zod schemas).
+It turns out that -- if you are doing anything of consequence -- you actually probably want to have strong, static types on your backend because this will help reduce mistakes and errors while also reducing verbosity in the overall codebase required in JS to ensure some level of type safety (e.g. Zod schemas).
 
 But .NET has a few interesting tricks up its sleeve when it comes to types such as:
 
@@ -73,6 +74,8 @@ Check out some of the latest releases:
 - [C# 11](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-11)
 - [C# 10](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-10)
 
+What should be clear is how much of a focus the .NET team has a ergonomics and DX.
+
 ## Common Myths
 
 ### C# Requires Visual Studio and Expensive Licenses
@@ -89,7 +92,7 @@ In fact, at one startup, we developed .NET on M1 MacBook Pros, build our contain
 
 ### .NET is a Legacy Platform
 
-This is true of .NET *Framework*, but the numbered .NET versions (.NET 6, 7, 8, 9) are modern and the underlying platform evolves extremely fast and is perhaps more akin to Kotlin in that sense.
+This is true of ***.NET Framework***, but the numbered .NET versions (.NET 6, 7, 8, 9) are modern and the underlying platform evolves extremely fast and is perhaps more akin to Kotlin in that sense.
 
 ### .NET is Hard to Learn
 

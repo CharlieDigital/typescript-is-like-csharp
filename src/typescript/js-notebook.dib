@@ -1,0 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"javascript","items":[{"aliases":[],"languageName":"javascript","name":"javascript"}]}}
+
+#!javascript
+
+let uniqueIds = new Set();
+uniqueIds.add(5);
+uniqueIds.add(5);
+
+for (const id of uniqueIds.values()) {
+  console.log(id);
+}

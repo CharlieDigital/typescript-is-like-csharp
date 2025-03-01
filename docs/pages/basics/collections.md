@@ -158,15 +158,132 @@ var task2 = tasks.Peek(); // "task2"
 
 ## Dictionaries/Maps
 
+TypeScript has two main dictionary/map types: `Record<TKey, TValue>` and `Map<TKey, TValue>` (which preserves order of insertion).  Let's look at both and how they map to C#.
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+let nameToAge = new Map<string, number>([
+  ["Anne", 12],
+  ["Bert", 23],
+  ["Carl", 43],
+]);
+
+nameToAge.set("Didi", 55);
+
+// Enumerate
+for (const entry of nameToAge.values()) {
+    console.log(entry); // 12, 23, 43, 55
+}
+```
+
+  </template>
+  <template #right>
+
+```csharp
+var nameToAge = new OrderedDictionary<string, int> {
+  ["Anne"] = 12,
+  ["Bert"] = 23,
+  ["Carl"] = 43,
+};
+
+nameToAge.Add("Didi", 55);
+
+// Enumerate
+foreach (var entry in nameToAge.Values) {
+  Console.WriteLine(entry); // 12, 23, 43, 55
+}
+```
+
+  </template>
+</CodeSplitter>
+
+Here, the [`OrderedDictionary`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.specialized.ordereddictionary?view=net-9.0) type preserves the order of insertion like TypeScript `Map`.
+
+Alternatively, if the order of insertion doesn't matter:
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+let nameToAge: Record<string, number> = {
+  "Anne": 12,
+  "Bert": 23,
+  "Carl": 43
+}
+
+nameToAge["Didi"] = 55;
+
+// Enumerate
+for (const entry of Object.values(nameToAge) {
+  console.log(entry); // Unordered
+}
+```
+
+  </template>
+  <template #right>
+
+```csharp
+var nameToAge = new Dictionary<string, int> {
+  ["Anne"] = 12,
+  ["Bert"] = 23,
+  ["Carl"] = 43,
+};
+
+nameToAge.Add("Didi", 55);
+
+// Enumerate
+foreach (var entry in nameToAge.Values) {
+  Cosole.WriteLine(entry); // Unordered
+}
+```
+
+  </template>
+</CodeSplitter>
+
 ## Sets
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+let uniqueIds = new Set<number>();
+uniqueIds.add(5);
+uniqueIds.add(1);
+uniqueIds.add(5);
+
+for (const id of uniqueIds.values()) {
+  console.log(id); // 5, 1
+}
+```
+
+  </template>
+  <template #right>
+
+```csharp
+var uniqueIds = new HashSet<int>();
+uniqueIds.Add(5);
+uniqueIds.Add(1);
+uniqueIds.Add(5);
+
+for (var id in uniqueIds) {
+  Console.WriteLine(id); // 5, 1
+}
+```
+
+  </template>
+</CodeSplitter>
 
 ## Advanced
 
 This section introduced some of the congruent collection types, but there are several other interesting collection types in the .NET standard libraries that have useful semantics such as:
 
-- readonly,
-- immutability,
-- concurrent read/write,
-- memory-mapped/inlined collections for speed
+- [readonly](https://learn.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.readonlycollection-1?view=net-9.0) (a readonly wrapper around an underlying list),
+- [immutability](https://learn.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablelist-1?view=net-9.0) (creates a new copy of the list when the list is modified),
+- [concurrent read/write](https://learn.microsoft.com/en-us/dotnet/standard/collections/thread-safe/) (used in multi-threaded scenarios for thread-safe access),
+- [memory-mapped/inlined collections for speed](https://learn.microsoft.com/en-us/archive/msdn-magazine/2018/january/csharp-all-about-span-exploring-a-new-net-mainstay) (managed access to contiguous regions of memory)
+
+In Node, one might typically import a 3rd party library for these types of semantic wrappers around the native collection types (and of course, there's no need for support for concurrent access nor memory inlined collections)
 
 Read more to find out how these types work and why they are useful.  These can all be obtained through NPM packages, but it's nice that these are packaged as part of the .NET standard libraries.

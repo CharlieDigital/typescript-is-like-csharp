@@ -1,0 +1,18 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!csharp
+
+var nameToAge = new Dictionary<string, int> {
+  ["Anne"] = 12,
+  ["Bert"] = 23,
+  ["Carl"] = 43,
+};
+
+nameToAge.Add("Didi", 55);
+
+// Enumerate
+foreach (var entry in nameToAge.Values) {
+  Console.WriteLine(entry); // Unordered
+}

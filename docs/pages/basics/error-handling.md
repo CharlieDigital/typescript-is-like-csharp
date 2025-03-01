@@ -157,7 +157,7 @@ try {
 try {
   // Work here
 } catch (Exception) {
-  // Handle...
+  // 👇 NOTE that this DOES NOT use `throw ex;`
   throw;
 } finally {
   // Always executed
