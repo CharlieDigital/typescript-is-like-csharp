@@ -22,6 +22,8 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    logo: '/csharp-logo.png',
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Intro', link: '/pages/intro-and-motivation' }

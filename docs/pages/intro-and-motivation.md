@@ -1,8 +1,8 @@
 # Intro and Motivation
 
-Many teams find themselves outgrowing Node.js and TypeScript on the backend when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
+Many teams find themselves outgrowing Node.js and TypeScript ***on the backend*** when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
 
-If we look at the lifecycle of a codebase from dev-to-build-to-runtime, we can start to see the problem:
+If we look at the lifecycle of a codebase from dev-to-build-to-runtime, the problem becomes clear:
 
 |Lifecycle|TypeScript|C#|
 |--|--|--|
@@ -96,7 +96,7 @@ Of course, you can add a third party package to do this or even write the code y
 
 ### It's Easy to Learn
 
-Throughout this guide, you'll notice just how similar TypeScript and C# are because of their shared designer.  This makes C# one of the easier languages to learn compared to Go or Scala if you already now TypeScript.
+Throughout this guide, you'll notice just how similar TypeScript and C# are because of their shared designer.  This makes C# one of the easier languages to learn compared to Go or Scala if you already now TypeScript.  I don't think it's a coincidence that C# is used in game engines like [Unity](https://unity.com/how-to/programming-unity) and [Godot](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/index.html); it offers the right amount of structure vs DX/ergonomics vs ease of adoption to make it broadly appealing.
 
 ### Strongly Typed Yet *Flexible*
 
@@ -110,6 +110,8 @@ But .NET has a few interesting tricks up its sleeve when it comes to types such 
 - Anonymous types
 - Type extensions
 - Union types (via 3rd party extensions [for now...](https://github.com/dotnet/csharplang/blob/main/proposals/TypeUnions.md))
+
+Read more in the section on [classes and types](./basics/classes.md)
 
 ### Balance of Runtime Performance + Great DX
 
@@ -129,17 +131,21 @@ For backends, .NET offers high performance roughly in the same ballpark with Jav
 
 The [dotnet cli](https://learn.microsoft.com/en-us/dotnet/core/tools/) is easy to use.
 
+Read more in [the next section on getting started](./getting-started.md).
+
 ### Documentation
 
-Microsoft's [excellent documentation](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/) is cohesive and thorough, making it easy to read and understand.  In Node, you might read documentation across a variety of third party sites for different packages (Zod, Prisma, Nest.js) which have different levels of thoroughness.  .NET's large standard library means that much of it also has first party documentation.
+Microsoft's [excellent documentation](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/) is cohesive and thorough, making it easy to read and understand.  In Node, you might read documentation across a variety of third party sites for different packages (Zod, Prisma, Nest.js) which have different levels of thoroughness, different navigation, different writing styles, and so on.  .NET's large standard library means that much of it also has consistent first party documentation.
 
 Perhaps more importantly, it means that you'll likely get better results with LLMs because of the high quality documentation.
 
 ### Security
 
-JavaScript's lack of a standard library means that a lot of functionality depends on third parties.  On the other hand, .NET's large first party ecosystem means that if there are security issues, they will get patched.  With third party libraries, this is a roll of the dice!
+JavaScript's lack of a deep and broad standard library means that a lot of functionality depends on third parties.  On the other hand, .NET's large first party ecosystem means that if there are security issues, they will get patched.  With third party libraries in either .NET or Node.js, this can be a roll of the dice!
 
 Historically, NPM has also been a known vector for supply chain attacks and JavaScript's nature as a dynamic language means that it is susceptible to types of attacks that are not possible in a .NET runtime.
+
+![GitHub Octoverse 2020 report showing advisories by package ecosystem](../assets/octoverse-advisories.png)
 
 Check out [GitHub's 2020 State of the Octoverse Security report for more insights](https://octoverse.github.com/2020/).
 

@@ -19,11 +19,11 @@ hero:
 
 features:
   - title: Easy to Learn
-    details: TypeScript and C# are both from Anders Hejlsberg at Microsoft and share a similar design and feel familiar.
+    details: TypeScript and C# are both from Anders Hejlsberg at Microsoft and share a similar design and feel familiar; if you know one, it's easy to learn the other.
   - title: Fast and Perfomant
-    details: .NET is a multi-threaded runtime capable of high throughput compared to JavaScript based frameworks.
-  - title: Mature and Secure Ecosystem
+    details: .NET is a multi-threaded runtime capable of higher throughput compared to JavaScript based frameworks (often an order of magnitude difference!)
+  - title: Stable and Secure
     details: Tired of half-baked NPM packages?  .NET's ecosystem has many mature, battle-tested libraries that are free from the types of attack vectors in JS.
   - title: Batteries Included
-    details: Many common packages that might be needed from NPM are included in the .NET standard libraries from Microsoft.  They are also professionally maintained and patched by Microsoft.
+    details: Many common packages that might be needed from NPM are included in the .NET standard libraries from Microsoft which are also professionally maintained and patched by Microsoft.
 ---
