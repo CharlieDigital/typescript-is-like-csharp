@@ -4,6 +4,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "TypeScript is Like C#",
   description: "TypeScript is like C# (it really is!)",
+  sitemap: {
+    hostname: 'https://typescript-is-like-csharp.chrlschn.dev'
+  },
   head: [
     ['link', { rel: 'icon', href: '/csharp-logo-32.png' }],
     ['script', {
