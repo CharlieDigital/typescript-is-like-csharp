@@ -33,7 +33,7 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: 'Examples',
+        text: 'Guide',
         items: [
           { text: 'Intro and Motivation', link: '/pages/intro-and-motivation' },
           { text: 'Getting Started', link: '/pages/getting-started' },
