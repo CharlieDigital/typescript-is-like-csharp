@@ -352,3 +352,50 @@ void CheckDevice(MobileDevice device) {
 CheckDevice(pixel); // "This is an Android phone"
 CheckDevice(iphone16); // "This is an Apple phone with USB-C"
 CheckDevice(iphone14); // "This is an Apple phone with Lightning"
+
+#!csharp
+
+class MobileDevice {
+  public void Reboot() {
+    Console.WriteLine("Rebooting the device...");
+  }
+}
+
+class AndroidPhone : MobileDevice { }
+class ApplePhone : MobileDevice { }
+
+var pixel = new AndroidPhone();
+var iphone = new ApplePhone();
+
+class Fixer<TDevice>(TDevice device) where TDevice : MobileDevice {
+  public void Fix() {
+    device.Reboot();
+  }
+}
+
+var fixer = new Fixer<MobileDevice>(pixel);
+fixer.Fix(); // "Rebooting the device..."
+
+#!csharp
+
+class MobileDevice {
+  public void Reboot() {
+    Console.WriteLine("Rebooting the device...");
+  }
+}
+
+class AndroidPhone : MobileDevice { }
+class ApplePhone : MobileDevice { }
+
+var pixel = new AndroidPhone();
+var iphone = new ApplePhone();
+
+class Fixer {
+  public void Fix<TDevice>(TDevice device)
+    where TDevice : MobileDevice {
+    device.Reboot();
+  }
+}
+
+var fixer = new Fixer();
+fixer.Fix(pixel); // "Rebooting the device..."

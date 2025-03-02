@@ -47,4 +47,4 @@ var ages = nameToAge.Values.ToList();
   </template>
 </CodeSplitter>
 
-## Generators
+In [Generators and Yield](../advanced/generators-yield.md), we'll explore how to use generator functions and the common `yield` statement to produce a stream of results.
