@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DefaultTheme from 'vitepress/theme'
 
-import Comments from './components/UtterancesComments.vue'
+import PageComments from './components/PageComments.vue'
 
 const { Layout } = DefaultTheme
 </script>
@@ -9,7 +9,7 @@ const { Layout } = DefaultTheme
 <template>
   <Layout>
     <template #doc-after>
-      <Comments />
+      <PageComments />
     </template>
   </Layout>
 </template>
