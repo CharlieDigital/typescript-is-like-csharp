@@ -40,7 +40,7 @@ I often wonder if Microsoft would have been better off just calling it `dot` ins
 
 ## The Problem with TS
 
-Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy and every project JavaScript I work on is TypeScript (e.g. [CodeRev.app](https://coderev.app)).  Every JavaScript project that isn't a library should be written in TypeScript.
+Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy and every JavaScript project I work on is TypeScript (e.g. [CodeRev.app](https://coderev.app)).  Every JavaScript project that isn't a library should be written in TypeScript.
 
 The fundamental problem with TypeScript-based backends and APIs is that this API:
 
@@ -56,6 +56,7 @@ export class CreateDogDto {
   bark: "loud" | "medium" | "quiet"
 }
 
+// Nest.js controller, but could also be Express.js handler
 @Post()
 async create(@Body() createCatDto: CreateCatDto) {
   // Add a cat to the database
@@ -86,11 +87,11 @@ And now your `createCatDto` is carrying an extra `bark` property of dubious cont
 
 That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure that correctness and safety of your backend application!)
 
-What if you write this to a document oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
+What if you write this to a document-oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
 
-At best, you may not notice the payload.  At worst, the payload can contain *anything*.
+At best, you may not notice the payload and it's entirely harmless.  At worst, the payload can contain *anything*.
 
-Of course, you can add a third party package to do this or even write the code yourself.  But this feels like table stakes for building a backend API.
+Of course, you can add a third party package to ensure adherence to a known schema or even write the code yourself.  But this feels like really basic *table stakes* for building a backend API where you care about your data; why is there a dependency on third parties and why would you build this yourself?
 
 ## Why C#
 
