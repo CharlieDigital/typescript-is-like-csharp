@@ -115,6 +115,8 @@ But .NET has a few interesting tricks up its sleeve when it comes to types such 
 
 But for all of that, .NET still performs extremely well across the board in a variety of applications and with [ahead-of-time compilation (AOT)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8), it is possible to achieve relatively fast startup times.
 
+![TechEmpower Round 22 official results](../assets/techempower.png)
+
 For backends, .NET offers high performance roughly in the same ballpark with Java and Go with an excellent DX because of the large standard library and first party packages from Microsoft ("batteries included") as well as hot-reload (see [CLI and Tooling](./basics/cli-tooling.md)).
 
 ### Tooling
@@ -171,3 +173,7 @@ This is true of ***.NET Framework***, but the numbered .NET versions (.NET 6, 7,
 ### .NET is Hard to Learn
 
 That's why this doc exists 😅 In fact, .NET's congruence with TypeScript means that developers that know JavaScript and TypeScript should be able to easily transition to C#.
+
+### Performance Doesn't Matter
+
+Performance is probably the wrong way to think about the delta between something like .NET an Node.js; it's probably better to think of it as *throughput*.  So given a certain amount of hardware spend, .NET will yield a *higher request throughput* compared to Node.js solutions.  This equates to less infra spend as you scale up and *this* can be significant.
