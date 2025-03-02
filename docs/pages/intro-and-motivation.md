@@ -145,7 +145,7 @@ JavaScript's lack of a deep and broad standard library means that a lot of funct
 
 Historically, NPM has also been a known vector for supply chain attacks and JavaScript's nature as a dynamic language means that it is susceptible to types of attacks that are not possible in a .NET runtime.
 
-![GitHub Octoverse 2020 report showing advisories by package ecosystem](../assets/octoverse-advisories.png)
+![GitHub Octoverse 2020 report showing advisories by package ecosystem](../assets/octoverse-dependabot.png)
 
 Check out [GitHub's 2020 State of the Octoverse Security report for more insights](https://octoverse.github.com/2020/).
 

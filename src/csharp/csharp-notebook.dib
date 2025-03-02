@@ -406,3 +406,43 @@ var contact = new {
   FirstName = "Charles",
   LastName = "Babbage"
 };
+
+#!csharp
+
+enum Position { Frontend, Backend, Database, Infra }
+
+record Candidate(
+  string Name,
+  Position Position,
+  int YoE,
+  string[] Tech
+);
+
+var candidates = new List<Candidate> {
+  new("Ada", Position.Backend, 5, ["C#", "Node.js", "Go"]),
+  new("Alan", Position.Frontend, 3, ["React", "Vue", "C#", "MongoDB"]),
+  new("Charles", Position.Database, 7, ["Postgres", "MongoDB"])
+};
+
+var backend = candidates.Where(c => c.Position == Position.Backend);
+
+var names = candidates.Select(c => c.Name);
+
+var log = (object payload) => Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(payload));
+
+var techToCandidates = candidates.Aggregate(
+  new Dictionary<string, List<string>>(),
+  (map, c) => {
+    foreach (var t in c.Tech) {
+      if (!map.ContainsKey(t)) {
+        map[t] = new();
+      }
+
+      map[t].Add(c.Name);
+    }
+
+    return map;
+  }
+);
+
+  log(techToCandidates);

@@ -8,7 +8,7 @@ Many teams may find themselves in this position after dealing with TypeScript is
 
 Particularly on the backend, the dynamic type system of JS (and therefore, TS) can be a bane when it comes to ensuring data quality and system correctness.
 
-JavaScript's single-threaded nature also means that it can feel limiting for both runtime throughput and the possible tools developers can use to solve performance sensitive problems.
+JavaScript's single-threaded nature also means that it can feel limiting for both runtime throughput and the possible tools developers can use to solve performance sensitive problems (e.g. processing a large CSV in parallel in a compute intensive scenario).
 
 I hope that these docs can help convince you that C# is a very realistic pathway if your team is already comfortable with TypeScript and frameworks like Nest.js.
 
