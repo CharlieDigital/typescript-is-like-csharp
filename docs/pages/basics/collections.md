@@ -4,6 +4,8 @@ In JavaScript and TypeScript, the primary collection type is `Array<T>`, which i
 
 C# provides multiple collection types with strong typing and optimized performance. The `List<T>` class is the closest equivalent to JavaScript’s `Array<T>`, offering dynamic resizing and methods like `Add`, `Remove`, and `ForEach`. For key-value storage, C# uses `Dictionary<TKey, TValue>`, similar to JavaScript’s `Map`, but with strict key typing. Additionally, `HashSet<T>` provides a unique-value collection like JavaScript’s `Set`. Unlike JavaScript arrays, C# also has fixed-size `Array` (`int[] numbers = new int[5];`), which must have a predefined length, making it more memory-efficient.
 
+A key distinction is that a TypeScript collection like `const dogs: Dog[] = []` will happily accept a `{ breed: 'Siamese', purrs: true }` or even `42` at runtime without complaint while C# will throw an exception at runtime if the inserted entity does not have the `Dog` type metadata.
+
 ## Arrays
 
 <CodeSplitter>

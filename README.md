@@ -2,9 +2,9 @@
 
 See: https://typescript-is-like-csharp.chrlschn.dev
 
-This repository publishes a set of docs that is aimed at helping teams that are evaluating options beyond TypeScript.
+This repository publishes a set of docs that is aimed at helping teams that are evaluating options beyond TypeScript.  (Or alternatively, if you are a C# developer trying to map concepts to JavaScript/TypeScript).
 
-Many teams may find themselves in this position after dealing with TypeScript issues and the reality that the underlying runtime is still JavaScript.
+Many teams may find themselves in this position after dealing with TypeScript issues and the reality that the underlying runtime is still JavaScript and all that implies.
 
 Particularly on the backend, the dynamic type system of JS (and therefore, TS) can be a bane when it comes to ensuring data quality and system correctness.
 
