@@ -35,6 +35,18 @@ using static System.Math;
   </template>
 </CodeSplitter>
 
+::: tip
+`using` has two main use cases in C#.  The first is as we've seen here where we are *importing* and *using* classes and functions from a namespace.
+
+The second use case is to [instruct a `disposable` object to clean up resources](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using) as its active lifecycle has ended.  This second use case [is the same as TypeScript 5.2's `using`](https://www.totaltypescript.com/typescript-5-2-new-keyword-using) that implements [TC-39's proposal for resource management](https://github.com/tc39/proposal-explicit-resource-management#definitions).
+
+Can you see just how similar these languages are and how C# and TS influence each other?
+:::
+
+::: info
+The third use case for `using` is actually to define a file-scoped named tuple type, which we'll also explore later.
+:::
+
 ## Multi-File
 
 Whereas JavaScript modules are imported based on file path, .NET namespaces are imported based on name.  So multiple files can belong to the same namespace and be imported together without any extra work.  In JavaScript, we need to aggregate multiple modules into one or add them one by one.

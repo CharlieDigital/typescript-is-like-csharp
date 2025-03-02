@@ -20,17 +20,27 @@ Many developers, engineering managers, and CTOs may have come across C# and .***
 - `.NET 5`, `.NET 6`, `.NET 7`, `.NET 8`, `.NET 9`, etc - Modern, cross-platform .NET that runs on Linux, macOS, and Windows with x64 or Arm64 bindings.
 - `.NET Core`, `.NET Standard` - Designator of the bifurcation point between legacy and modern (long legacy of terrible nomenclature from Microsoft...)
 
-> I often wonder if Microsoft would have been better off just calling it `dot` instead when they made the transition from .NET Framework...
+::: info
+I often wonder if Microsoft would have been better off just calling it `dot` instead when they made the transition from .NET Framework...
+:::
 
 ![Image comparing JS/TS/C#](../assets/js-ts-csharp.png)
 
 ## The Problem with TS
 
-Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy.  Every JavaScript project that isn't a library should be written in TypeScript.
+Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy and every project JavaScript I work on is TypeScript (e.g. [CodeRev.app](https://coderev.app)).  Every JavaScript project that isn't a library should be written in TypeScript.
 
-But the fundamental problem with TypeScript-based backends and APIs is that this API:
+If we look at the lifecycle of a codebase from dev-to-build-to-runtime, we can start to see the problem:
 
-```ts
+|Lifecycle|TypeScript|C#|
+|--|--|--|
+|**Dev**|Types present and help developers determine correctness|Ditto!|
+|**Build**|Types inspected across the codebase to ensure correctness of the application as the codebase is transformed into JavaScript which is what is actually shipped out.|C# is compiled into an [intermediate language (IL)](https://learn.microsoft.com/en-us/dotnet/standard/managed-code#intermediate-language--execution) or native binary (via [ahead of time compilation (AOT)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8)) that runs on the .NET runtime.|
+|**Runtime**|*Types no longer present* 😱 to enforce correctness of data so another mechanism is needed (schema validation) to ensure correctness and guard against invalid data from sneaking in. [Zod](https://zod.dev), [Valibot](https://valibot.dev), or other schema validators are necessary.|Type metadata still present and enforced at runtime 💪!  Runtime errors happen when there's a type mismatch at a boundary (typically serialization).  The difference is that this is "free" as a JSON payload is transformed into managed C# objects.|
+
+The fundamental problem with TypeScript-based backends and APIs is that this API:
+
+```ts{13}
 export class CreateCatDto {
   name: string;
   breed: string;
@@ -70,7 +80,7 @@ It will also accept this:
 
 And now your `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
 
-That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***
+That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure that correctness and safety of your backend application!)
 
 What if you write this to a document oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
 
@@ -97,7 +107,7 @@ But .NET has a few interesting tricks up its sleeve when it comes to types such 
 - Type extensions
 - Union types (via 3rd party extensions [for now...](https://github.com/dotnet/csharplang/blob/main/proposals/TypeUnions.md))
 
-### Performance + DX
+### Balance of Runtime Performance + Great DX
 
 - C# is not as fast and memory efficient as Rust
 - Because it's JIT, it compiles to larger binaries than Go
@@ -105,7 +115,7 @@ But .NET has a few interesting tricks up its sleeve when it comes to types such 
 
 But for all of that, .NET still performs extremely well across the board in a variety of applications and with [ahead-of-time compilation (AOT)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8), it is possible to achieve relatively fast startup times.
 
-For backends, .NET offers high performance roughly in the same ballpark with Java and Go with an excellent DX because of the large standard library and first party packages from Microsoft ("batteries included").
+For backends, .NET offers high performance roughly in the same ballpark with Java and Go with an excellent DX because of the large standard library and first party packages from Microsoft ("batteries included") as well as hot-reload (see [CLI and Tooling](./basics/cli-tooling.md)).
 
 ### Tooling
 

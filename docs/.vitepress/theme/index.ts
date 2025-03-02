@@ -2,17 +2,19 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import Layout from '../../Layout.vue'
 import './style.css'
 import Vue3TouchEvents, { Vue3TouchEventsOptions } from 'vue3-touch-events';
 import CodeSplitter from '../../components/CodeSplitter.vue'
 
 export default {
   extends: DefaultTheme,
-  Layout: () => {
-    return h(DefaultTheme.Layout, null, {
-      // https://vitepress.dev/guide/extending-default-theme#layout-slots
-    })
-  },
+  // Layout: () => {
+  //   return h(DefaultTheme.Layout, null, {
+  //     // https://vitepress.dev/guide/extending-default-theme#layout-slots
+  //   })
+  // },
+  Layout,
   enhanceApp({ app, router, siteData }) {
     app.component('CodeSplitter', CodeSplitter);
     app.use<Vue3TouchEventsOptions>(Vue3TouchEvents, {

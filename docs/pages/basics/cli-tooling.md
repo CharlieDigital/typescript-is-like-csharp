@@ -72,7 +72,10 @@ npm run build:watch
 
 ```shell
 # .NET
-dotnet watch run
+dotnet watch
+
+# To avoid manually confirming "rude edits"
+dotnet watch --non-interactive
 ```
 
   </template>
