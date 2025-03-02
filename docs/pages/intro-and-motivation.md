@@ -127,7 +127,7 @@ For backends, .NET offers high performance roughly in the same ballpark with Jav
 
 ### Tooling
 
-.NET offers great tooling support in VS Code (free) and Rider (free personal, paid commercial) and is support on Linux, macOS, and of course Windows.  It supports x64 and Arm64 architectures.
+.NET offers great tooling support in VS Code (free) and Rider (free personal, paid commercial) and is supported on Linux, macOS, and of course Windows.  It supports targeting both x64 and Arm64 architectures.
 
 The [dotnet cli](https://learn.microsoft.com/en-us/dotnet/core/tools/) is easy to use.
 
