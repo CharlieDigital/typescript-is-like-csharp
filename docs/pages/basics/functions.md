@@ -1,5 +1,9 @@
 # Functions
 
+Functions are **first-class citizens** in both C# and TypeScript/JavaScript, meaning they can be assigned to variables, passed as arguments, and returned from other functions. In JavaScript and TypeScript, functions are objects, allowing flexible definitions with `function` declarations, `function` expressions, and arrow functions (`const add = (a, b) => a + b`). Similarly, C# supports **delegates**, function pointers, and **lambda expressions** (`Func<int, int, int> add = (a, b) => a + b;`), which behave like JavaScript arrow functions but require explicit delegate types.
+
+Both languages support **closures**, where inner functions capture variables from their surrounding scope. In JavaScript, closures are commonly used for encapsulation and callbacks, while in C#, lambda expressions and local functions (`void LocalFunction() { }`) capture outer variables and are often used in LINQ, event handling, and asynchronous programming. However, C# provides additional type safety, requiring explicit delegate types (`Func<T>`, `Action<T>`) for function references, whereas JavaScript functions remain dynamically typed. Despite these differences, both languages treat functions as flexible, reusable constructs that enable functional programming patterns.
+
 ## Basics
 
 <CodeSplitter>

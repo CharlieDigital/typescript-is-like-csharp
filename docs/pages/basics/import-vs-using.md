@@ -1,6 +1,8 @@
 # `import` vs `using`
 
-A quick overview of how to import packages and modules
+In C#, the `using` keyword is used to import namespaces, which are collections of related types such as classes, interfaces, and enums. By importing a namespace with `using`, you can directly access its types without needing to fully qualify their names every time. For example, `using System;` allows you to use types like `Console.WriteLine()` without needing to write `System.Console.WriteLine()`. This helps keep C# code clean and concise. The `using` statement is typically placed at the top of a file and allows for easy reference to namespaces across the entire file.
+
+In TypeScript and JavaScript, the `import` keyword is used to bring in modules, typically from external files or packages. JavaScript and TypeScript organize code into **modules**, and the `import` statement allows you to selectively bring in specific functions, classes, or objects from these modules. For example, `import { myFunction } from './myModule';` imports a named export from a file. TypeScript’s `import` works similarly to JavaScript’s ES6 `import` and offers the added benefit of static type checking.
 
 ## Basics
 

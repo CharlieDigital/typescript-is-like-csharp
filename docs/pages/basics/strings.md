@@ -1,5 +1,9 @@
 # Strings
 
+In JavaScript and TypeScript, strings are represented by the `string` type and are immutable sequences of characters. Strings are defined using single (`'`), double (`"`), or backtick (\`\`) quotes, with backticks enabling template literals for interpolation (e.g., `` `Hello, ${name}!` ``). There is no distinct `char` type; single characters are simply strings of length one (`const letter: string = 'A';`).
+
+C# also has an immutable `string` type, which is a sequence of UTF-16 characters. Strings are defined using double quotes (`string message = "Hello";`) and support interpolation with `$` (`$"Hello, {name}!"`). Unlike JavaScript, C# has a distinct `char` type for single characters (`char letter = 'A';`), which uses single quotes and represents a single UTF-16 character rather than a string. This distinction is important because `char` is a value type, while `string` is a reference type, impacting performance and memory usage.
+
 ## Basics
 
 <CodeSplitter>

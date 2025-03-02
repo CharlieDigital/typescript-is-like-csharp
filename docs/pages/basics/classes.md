@@ -1,5 +1,13 @@
 # Classes and Types
 
+Classes in C# and TypeScript/JavaScript share the same basic structure, allowing the creation of blueprints for objects with properties, methods, and constructors. However, C# classes come with stronger typing, more powerful features, and stricter rules. C# uses `class` to define a class, and constructors are defined using the class name. The class members (fields, properties, methods) are explicitly typed, offering better compile-time safety compared to TypeScript, where type annotations are optional and inferred.
+
+C# also introduces **generics**, which allow classes and methods to be defined with type parameters (`class Box<T> {}`), providing a highly type-safe way to handle different data types. While TypeScript also supports generics, C#'s implementation is more robust with additional constraints, making it easier to enforce type safety and reduce errors.
+
+In C#, **primary constructors** are a concise feature, where you can define parameters directly in the class declaration, eliminating the need for a separate constructor body (`class Person(string name) { }`). TypeScript lacks a direct equivalent but can mimic this with class properties initialized in the constructor.
+
+Additionally, C# introduces **record classes**, which are immutable reference types designed for storing data with value-based equality. Record classes (`public record Person(string Name, int Age);`) automatically generate equality methods, `ToString()`, and `Clone()`, reducing boilerplate code. TypeScript can approximate this behavior with classes or interfaces, but it lacks built-in support for value-based equality and immutability, making C#'s record types a unique feature for modeling immutable data.
+
 ## Basic Classes
 
 <CodeSplitter>

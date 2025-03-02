@@ -1,5 +1,9 @@
 # Comments
 
+C# and TypeScript/JavaScript use the same basic comment syntax: `//` for single-line comments and `/* */` for multi-line comments. However, C# introduces **XML documentation comments**, written with `///`, which integrate with tools like IntelliSense and generate API documentation (`/// <summary>Describes a method</summary>`). TypeScript supports JSDoc-style comments (`/** ... */`), which provide similar documentation capabilities but rely on external tooling rather than built-in language support.
+
+Unlike JavaScript, where comments are purely for human readability, C#'s XML comments can enforce structured documentation and provide compile-time feedback. While both languages encourage clear commenting practices, C#’s built-in documentation system makes it easier to maintain well-documented code, especially for large projects and libraries.
+
 ## Inline
 
 <CodeSplitter>

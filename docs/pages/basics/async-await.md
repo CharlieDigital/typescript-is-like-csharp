@@ -1,6 +1,8 @@
 # Async/Await
 
-In C#, the `Task` class is the equivalent of `Promise`.  However, it is important to make the distinction here that .NET's runtime is concurrent + parallel (because it is multi-threaded) which means that given a set of *futures*, they may be executed on *different threads* whereas in JS, they will always execute on a single thread.
+Both C# and TypeScript/JavaScript use **async/await** to handle asynchronous operations, providing a cleaner, more readable alternative to traditional callbacks or promises. In both languages, the `async` keyword marks a function as asynchronous, and the `await` keyword pauses the function’s execution until a `Promise` (in JavaScript/TypeScript) or a `Task` (in C#) is resolved. In JavaScript and TypeScript, `Promise` objects represent the eventual completion (or failure) of an asynchronous operation, while in C#, `Task` represents an ongoing operation that will complete in the future. This makes handling asynchronous operations in both languages straightforward, as both use these constructs to write asynchronous code in a synchronous-looking style.
+
+However, C# takes it a step further by supporting **multithreading** and **parallelism** in addition to simple asynchronous tasks. While JavaScript is single-threaded and typically runs asynchronous tasks in a non-blocking event loop, C# can leverage the **`ThreadPool`** and **`Parallel`** libraries to run multiple tasks in parallel, utilizing multiple CPU cores. This is particularly useful for CPU-bound tasks where true parallel execution is required, such as performing calculations or processing large datasets. In contrast, TypeScript and JavaScript’s asynchronous model (through `Promises`) is only suited for I/O-bound tasks, like handling HTTP requests or reading files, and does not inherently perform operations concurrently across multiple threads.
 
 ## Basics
 

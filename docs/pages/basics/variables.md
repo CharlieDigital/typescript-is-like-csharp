@@ -1,5 +1,9 @@
 # Variables
 
+In TypeScript and JavaScript, variables are dynamically typed and can hold values of any type unless explicitly constrained. You declare them using `var`, `let`, or `const`, with `let` and `const` being block-scoped and preferred for modern development. TypeScript introduces static typing through type annotations (e.g., `let x: number = 10;`), but at runtime, JavaScript remains dynamically typed, allowing variables to change types freely.
+
+C#, on the other hand, is a statically typed language where variable types are enforced at compile time. Variables are typically declared with explicit types (`int x = 10;`), ensuring type safety. However, C# also supports type inference using `var` (`var x = 10;`), where the compiler infers the type but does not allow reassignment to a different type. Unlike JavaScript, variables in C# are strongly typed, meaning once a variable is declared with a type, it cannot hold a value of another type without explicit conversion.
+
 ## Inferred Types
 
 <CodeSplitter>

@@ -1,5 +1,9 @@
 # Conditionals
 
+Both C# and TypeScript/JavaScript support traditional conditional statements like `if-else` and `switch-case`, but C# offers additional features that enhance readability and expressiveness. In C#, `if-else` behaves similarly to JavaScript, evaluating boolean expressions to control flow. However, unlike JavaScript, C# enforces strict type checking—conditions must be explicitly `bool`, preventing common pitfalls like unintended truthy or falsy evaluations (`if ("0")` is `true` in JavaScript but invalid in C#).
+
+C#’s `switch` is more powerful than JavaScript’s, thanks to **pattern matching** and **switch expressions**. Traditional `switch-case` works similarly in both languages but in C#, cases do not automatically fall through unless explicitly using `goto case`. C#’s **pattern matching** allows matching on types, constants, and even properties, making conditionals more expressive (`case int n when n > 10:`). Additionally, **switch expressions** in C# provide a concise, functional-style alternative, returning values directly without requiring `break` statements. JavaScript lacks an equivalent, making C# conditionals more structured and safer against common errors like accidental fall-through.
+
 ## If-Else
 
 <CodeSplitter>

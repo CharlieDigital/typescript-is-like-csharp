@@ -1,6 +1,8 @@
 # Null Handling
 
-TypeScript `null` and C# `null` are semantically identical.  C# does not have a concept of `undefined`.
+In JavaScript and TypeScript, `null` and `undefined` are distinct values. `null` is an intentional absence of a value, while `undefined` represents a variable that has been declared but not assigned a value. JavaScript allows both `null` and `undefined` to be used interchangeably in some cases (e.g., loose equality comparisons), but TypeScript can enforce stricter handling with the `strictNullChecks` option, preventing unintended `null` or `undefined` assignments unless explicitly allowed.
+
+C# does not have `undefined`; every variable must have a defined value. Value types (e.g., `int`, `bool`) cannot be `null` unless explicitly made nullable using `?` (e.g., `int? x = null;`). Reference types (e.g., `string`, `object`) can be `null` by default. To improve null safety, C# includes nullable reference types (`string? name = null;`), allowing developers to indicate which variables can be `null` and leveraging compiler warnings to prevent unintended `null` dereferences.
 
 ## Nullability
 

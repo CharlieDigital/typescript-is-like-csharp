@@ -2,6 +2,18 @@
 
 Many teams find themselves outgrowing Node.js and TypeScript on the backend when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
 
+If we look at the lifecycle of a codebase from dev-to-build-to-runtime, we can start to see the problem:
+
+|Lifecycle|TypeScript|C#|
+|--|--|--|
+|**Dev**|Types present and help developers determine correctness|Ditto!|
+|**Build**|Types inspected across the codebase to ensure correctness of the application as the codebase is transformed into JavaScript which is what is actually shipped out.|C# is compiled into an [intermediate language (IL)](https://learn.microsoft.com/en-us/dotnet/standard/managed-code#intermediate-language--execution) or native binary (via [ahead of time compilation (AOT)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8)) that runs on the .NET runtime.|
+|**Runtime**|*Types no longer present* 😱 to enforce correctness of data so another mechanism is needed (schema validation) to ensure correctness and guard against invalid data from sneaking in. [Zod](https://zod.dev), [Valibot](https://valibot.dev), or other schema validators are necessary.|Type metadata still present and enforced at runtime 💪!  Runtime errors happen when there's a type mismatch at a boundary (typically serialization).  The difference is that this is "free" as a JSON payload is transformed into managed C# objects.|
+
+::: info
+We're only considering backends here; I do not think that .NET-based front-ends (e.g. Blazor) are competitive in all use cases.
+:::
+
 Teams will often consider alternatives such as:
 
 - Go
@@ -29,14 +41,6 @@ I often wonder if Microsoft would have been better off just calling it `dot` ins
 ## The Problem with TS
 
 Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy and every project JavaScript I work on is TypeScript (e.g. [CodeRev.app](https://coderev.app)).  Every JavaScript project that isn't a library should be written in TypeScript.
-
-If we look at the lifecycle of a codebase from dev-to-build-to-runtime, we can start to see the problem:
-
-|Lifecycle|TypeScript|C#|
-|--|--|--|
-|**Dev**|Types present and help developers determine correctness|Ditto!|
-|**Build**|Types inspected across the codebase to ensure correctness of the application as the codebase is transformed into JavaScript which is what is actually shipped out.|C# is compiled into an [intermediate language (IL)](https://learn.microsoft.com/en-us/dotnet/standard/managed-code#intermediate-language--execution) or native binary (via [ahead of time compilation (AOT)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8)) that runs on the .NET runtime.|
-|**Runtime**|*Types no longer present* 😱 to enforce correctness of data so another mechanism is needed (schema validation) to ensure correctness and guard against invalid data from sneaking in. [Zod](https://zod.dev), [Valibot](https://valibot.dev), or other schema validators are necessary.|Type metadata still present and enforced at runtime 💪!  Runtime errors happen when there's a type mismatch at a boundary (typically serialization).  The difference is that this is "free" as a JSON payload is transformed into managed C# objects.|
 
 The fundamental problem with TypeScript-based backends and APIs is that this API:
 
@@ -154,11 +158,11 @@ What should be clear is how much of a focus the .NET team has a ergonomics and D
 
 ## Common Myths
 
-### C# Requires Visual Studio and Expensive Licenses
+### Myth: C# Requires Visual Studio and Expensive Licenses
 
 This is not the case; in fact C# works great from VS Code!  It's completely free to use and you can use the C# extensions without a license.
 
-### .NET is Windows Only
+### Myth: .NET is Windows Only
 
 This was true of .NET Framework which had bindings to the Win32 dlls.  Since .NET Core, Microsoft has been making .NET truly cross platform and any of the "numbered versions" like .NET 6, 7, 8, 9 can all run on Linux, macOS, and Windows.
 
@@ -166,14 +170,22 @@ In fact, at one startup, we developed .NET on M1 MacBook Pros, build our contain
 
 .NET is a great cross-platform backend.
 
-### .NET is a Legacy Platform
+### Myth: .NET is a Legacy Platform
 
 This is true of ***.NET Framework***, but the numbered .NET versions (.NET 6, 7, 8, 9) are modern and the underlying platform evolves extremely fast and is perhaps more akin to Kotlin in that sense.
 
-### .NET is Hard to Learn
+### Myth: .NET is Hard to Learn
 
-That's why this doc exists 😅 In fact, .NET's congruence with TypeScript means that developers that know JavaScript and TypeScript should be able to easily transition to C#.
+That's why this doc exists 😅 In fact, .NET's congruence with TypeScript means that developers that know JavaScript and TypeScript should be able to easily transition to C#.  In fact, I would argue that C# is probably *easier* to learn because of the more strict type system.
 
-### Performance Doesn't Matter
+### Myth: .NET Web APIs are Complicated
+
+In fact, if you are building an enterprise system, you are probably going to choose Nest.js.  At that point, you are writing controller classes, using decorators, and utilizing dependency injection -- exactly the same as if you were using .NET Web APIs.  Except in Node.js, you don't get the benefits of the type system at runtime and throughput of a multi-threaded runtime.
+
+### Myth: .NET's Performance Over Node.js Doesn't Matter
 
 Performance is probably the wrong way to think about the delta between something like .NET an Node.js; it's probably better to think of it as *throughput*.  So given a certain amount of hardware spend, .NET will yield a *higher request throughput* compared to Node.js solutions.  This equates to less infra spend as you scale up and *this* can be significant.
+
+### Myth: C# is for Enterprises
+
+While it's true that C# is an excellent choice in the enterprise, it's also used in game engines like [Unity](https://unity.com/how-to/programming-unity) and [Godot](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/index.html).  This myth may have roots in the reality that early on in ***.NET Framework's*** life, the only tooling available was enterprise licenses for Visual Studio.  The modern .NET tooling in VS Code and Rider makes working with C# free and a really great experience whether you're an indie developer, small startup, mid-size business, or enterprise scale!
