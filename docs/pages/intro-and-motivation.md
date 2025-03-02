@@ -24,7 +24,65 @@ Many developers, engineering managers, and CTOs may have come across C# and .***
 
 ![Image comparing JS/TS/C#](../assets/js-ts-csharp.png)
 
+## The Problem with TS
+
+Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy.  Every JavaScript project that isn't a library should be written in TypeScript.
+
+But the fundamental problem with TypeScript-based backends and APIs is that this API:
+
+```ts
+export class CreateCatDto {
+  name: string;
+  breed: string;
+}
+
+export class CreateDogDto {
+  name: string;
+  breed: string;
+  bark: "loud" | "medium" | "quiet"
+}
+
+@Post()
+async create(@Body() createCatDto: CreateCatDto) {
+  // Add a cat to the database
+}
+```
+
+Will *happily* accept this payload at runtime:
+
+```ts
+{
+  name: "Poochie",
+  breed: "Chihuahua",
+  bark: "loud" // [!code warning]
+}
+```
+
+It will also accept this:
+
+```ts
+{
+  name: "Poochie",
+  breed: "Chihuahua",
+  bark: "eW91IHByb2JhYmx5IGRvbid0IHdhbnQgdGhpcyB1bnNhZmUgYW5kIG1hbGljaW91cyBwYXlsb2FkIGluIHlvdXIgZGF0YWJhc2UuLi4=" // [!code error]
+}
+```
+
+And now your `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
+
+That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***
+
+What if you write this to a document oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
+
+At best, you may not notice the payload.  At worst, the payload can contain *anything*.
+
+Of course, you can add a third party package to do this or even write the code yourself.  But this feels like table stakes for building a backend API.
+
 ## Why C#
+
+### It's Easy to Learn
+
+Throughout this guide, you'll notice just how similar TypeScript and C# are because of their shared designer.  This makes C# one of the easier languages to learn compared to Go or Scala if you already now TypeScript.
 
 ### Strongly Typed Yet *Flexible*
 

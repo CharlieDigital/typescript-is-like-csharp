@@ -4,7 +4,19 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "TypeScript is Like C#",
   description: "TypeScript is like C# (it really is!)",
-  head: [['link', { rel: 'icon', href: '/csharp-logo-32.png' }]],
+  head: [
+    ['link', { rel: 'icon', href: '/csharp-logo-32.png' }],
+    ['script', {
+      async: '',
+      src: 'https://www.googletagmanager.com/gtag/js?id=G-QLSJ4QC7YZ'
+    }],
+    ['script', {}, `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QLSJ4QC7YZ');
+    `],
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
