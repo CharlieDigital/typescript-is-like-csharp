@@ -4,6 +4,10 @@ In TypeScript and JavaScript, variables are dynamically typed and can hold value
 
 C#, on the other hand, is a statically typed language where variable types are enforced at compile time *and runtime*. Variables are typically declared with explicit types (`int x = 10;`), ensuring type safety. However, C# also supports type inference using `var` (`var x = 10;`), where the compiler infers the type but does not allow reassignment to a different type. Unlike JavaScript, variables in C# are strongly typed, meaning once a variable is declared with a type, it cannot hold a value of another type without explicit conversion.
 
+::: tip Note on this guide
+In this guide, I'll primarily use `let` so that the semantics match .NET `var` to make it clear how the code works.  In practice, there are many cases where I would normally use `const` in JS/TS.
+:::
+
 ## Inferred Types
 
 <CodeSplitter>
@@ -55,7 +59,7 @@ int x = 1;
 string y = "";
 
 // Reference types
-let map = new HashMap();
+var map = new HashMap();
 HashMap map = new(); // Means the same thing.
 ```
 

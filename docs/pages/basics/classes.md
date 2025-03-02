@@ -300,6 +300,28 @@ Notice that last line: these two objects are equal because records follow value 
 Record classes have some limitations when it comes to working with key framework components like the Entity Framework ORM.  It is recommended to use record types when working with truly immutable data and not in cases where you're working with database records.
 :::
 
+We can use `record` classes to emulate `const` to some extent by wrapping our values:
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+const cost = 5; // This value is immutable.
+cost += 1; // ❌ Not allowed
+```
+
+  </template>
+  <template #right>
+
+```csharp
+record Cost(int Amount);
+var cost = new Cost(5); //  The value is immutable, but the reference is still mutable.
+cost.Amount += 1; // ❌ Not allowed
+```
+
+  </template>
+</CodeSplitter>
+
 ## Anonymous Types
 
 This perhaps belongs in another section of the document, but it'll make more sense here!  C# has a concept of an [**anonymous type**](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types) which is only "shaped" in the context of a scope like a function.  Outside of the function, it appears as an `object` and isn't terribly useful!

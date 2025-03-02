@@ -102,6 +102,39 @@ var backendNames = candidates.Where(
   </template>
 </CodeSplitter>
 
+Here, we filter by min/max:
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+let minExp = candidates.reduce(
+  (prev, curr) => prev.yoe < curr.yoe ? prev : curr
+);
+console.log(minExp.name); // "Alan"
+
+let maxExp = candidates.reduce(
+  (prev, curr) => prev.yoe > curr.yoe ? prev : curr
+);
+console.log(maxExp.name); // "Charles"
+```
+
+  </template>
+  <template #right>
+
+```csharp
+var minExp = candidates.MinBy(c => c.YoE);
+Console.WriteLine(minExp.Name); // "Alan"
+
+var maxExp = candidates.MaxBy(c => c.YoE);
+Console.WriteLine(maxExp.Name); // "Charles"
+```
+
+  </template>
+</CodeSplitter>
+
+In JS/TS, we can add methods to the `Array` type via `Prototype` or use a 3rd party package, but these are already built into .NET's standard libraries.
+
 ## Reducing and Aggregating
 
 <CodeSplitter>
@@ -162,6 +195,29 @@ Both return a similar structure:
   "Postgres": ["Charles"]
 }
 ```
+
+Another example here where we perform a simple sum of all years of experience:
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+let totalYoe = candidates.reduce(
+  (yoe, c) => yoe + c.yoe, 0
+)
+console.log(totalYoe); // 15
+```
+
+  </template>
+  <template #right>
+
+```csharp
+var totalYoe = candidates.Sum(c => c.YoE);
+Console.WriteLine(totalYoe); // 15
+```
+
+  </template>
+</CodeSplitter>
 
 ## Read More
 

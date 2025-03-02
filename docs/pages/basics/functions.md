@@ -44,11 +44,11 @@ void fn(
   Action notify, // Function parameter
   string? nickName // Optional parameter
 ) {
-  let x = "1";
-  let y = "2";
+  var x = "1";
+  var y = "2";
 
   // Local function
-  let fx = () => {
+  var fx = () => {
     Console.WriteLine($"x = {x}");
   }
 
