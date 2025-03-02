@@ -2,7 +2,7 @@
 // See: https://aiktb.dev/blog/giscus-with-vitepress
 import { useData } from 'vitepress'
 
-const { title } = useData()
+const { title, isDark } = useData()
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const { title } = useData()
       data-reactions-enabled="1"
       data-emit-metadata="0"
       data-input-position="top"
-      data-theme="preferred_color_scheme"
+      :data-theme=" isDark ? 'catppuccin_macchiato' : 'light'"
       data-lang="en"
       crossorigin="anonymous"
       async
