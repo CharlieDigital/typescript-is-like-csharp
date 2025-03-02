@@ -446,3 +446,18 @@ var techToCandidates = candidates.Aggregate(
 );
 
   log(techToCandidates);
+
+  var totalYoe = candidates.Sum(c => c.YoE);
+  log(totalYoe);
+
+  var minExp = candidates.MinBy(c => c.YoE);
+  log(minExp.Name);
+
+  var maxExp = candidates.MaxBy(c => c.YoE);
+  log(maxExp.Name);
+
+#!csharp
+
+record Cost(int Amount);
+var cost = new Cost(5); //  The value is immutable, but the reference is still mutable.
+cost.amount += 1;
