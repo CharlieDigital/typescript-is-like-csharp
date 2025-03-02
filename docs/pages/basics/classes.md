@@ -292,6 +292,41 @@ Notice that last line: these two objects are equal because records follow value 
 Record classes have some limitations when it comes to working with key framework components like the Entity Framework ORM.  It is recommended to use record types when working with truly immutable data and not in cases where you're working with database records.
 :::
 
+## Anonymous Types
+
+This perhaps belongs in another section of the document, but it'll make more sense here!  C# has a concept of an [**anonymous type**](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types) which is only "shaped" in the context of a scope like a function.  Outside of the function, it appears as an `object` and isn't terribly useful!
+
+They are good for modelling data and used extensively by LINQ and in many ways resemble `Record` types in TypeScript.
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+let contact = {
+  firstName: "Charles",
+  lastName: "Babbage"
+};
+
+console.log(contact.firstName); // "Charles"
+```
+
+  </template>
+  <template #right>
+
+```csharp
+var contact = new {
+  FirstName = "Charles",
+  LastName = "Babbage"
+};
+
+Console.WriteLine(contact.FirstName); // "Charles"
+```
+
+  </template>
+</CodeSplitter>
+
+We'll encounter these again in [LINQ](../intermediate/linq.md).
+
 ## Class Detection
 
 <CodeSplitter>
@@ -363,3 +398,77 @@ This powerful feature of C# allows us to write expressive yet eminently readable
 ::: info
 In the section on reflection, we'll explore how we can use type metadata at runtime in C#.
 :::
+
+## Type Unions
+
+C# currently does not have native type unions ([though it's somewhere on the roadmap](https://github.com/dotnet/csharplang/blob/main/proposals/TypeUnions.md)).  Of course, TypeScript's superpower is its powerful type system at dev and build time (unfortunately, it means nothing at runtime).
+
+To get type unions, two packages can be used:
+
+- [OneOf](https://github.com/mcintyre321/OneOf)
+- [dunet](https://github.com/domn1995/dunet)
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+function chooseTransit(
+  numPeople: number
+) : TransitOption {
+  if (numPeople === 1) return { electric: false }
+  if (numPeople < 5) return { numSeats: 5 }
+  if (numPeople < 7) return { numSeats: 8 }
+  else return { type: 'bullet' }
+}
+
+type TrainType = 'bullet' | 'normal'
+
+type Car = { numSeats: number }
+type Scooter = { electric: boolean }
+type Train = { type: TrainType }
+
+type TransitOption = Car | Scooter | Train
+```
+
+  </template>
+  <template #right>
+
+```csharp
+Transit.TransitOption ChooseTransit(
+  int numPeople
+) {
+  if (numPeople == 1) return new Scooter(true);
+  if (numPeople < 5) return new Car(5);
+  if (numPeople < 7) return new Car(8);
+  return new Train(TrainType.Bullet);
+}
+
+enum TrainType { Bullet, Normal }
+
+record Car(int numSeats);
+record Scooter(bool electric);
+record Train(TrainType type);
+
+namespace Transit { // OneOf requires a namespace
+  [GenerateOneOf]
+  partial class TransitOption : OneOfBase<Car, Scooter, Train> { };
+}
+```
+
+  </template>
+</CodeSplitter>
+
+A key difference is that the result of this function call at runtime ***still carries the type information*** in C#.  So we can use this information with switch expressions:
+
+```csharp
+var log = (object msg) => Console.WriteLine(msg);
+
+ChooseTransit(5)
+  .Switch(
+    car => log($"Car with {car.numSeats} seats"),
+    scooter => log($"Scooter is electric: {scooter.electric}"),
+    train => log($"Train type: {train.type}")
+  );
+
+// "Car with 8 seats"
+```

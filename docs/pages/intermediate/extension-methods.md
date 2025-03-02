@@ -1,3 +1,3 @@
-# Switch Expressions
+# Extension Methods
 
 > 👋🏼 Interested in contributing?

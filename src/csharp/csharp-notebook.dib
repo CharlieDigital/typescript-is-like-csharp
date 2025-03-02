@@ -399,3 +399,10 @@ class Fixer {
 
 var fixer = new Fixer();
 fixer.Fix(pixel); // "Rebooting the device..."
+
+#!csharp
+
+var contact = new {
+  FirstName = "Charles",
+  LastName = "Babbage"
+};

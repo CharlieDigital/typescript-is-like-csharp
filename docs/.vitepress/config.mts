@@ -40,6 +40,7 @@ export default defineConfig({
               { text: 'Generics', link: '/pages/basics/generics' },
               { text: 'Async/Await', link: '/pages/basics/async-await' },
               { text: 'Packages vs Projects', link: '/pages/basics/projects' },
+              { text: 'import vs using', link: '/pages/basics/import-vs-using' },
               { text: 'CLI and Tooling', link: '/pages/basics/cli-tooling' },
             ]
           },
@@ -50,6 +51,7 @@ export default defineConfig({
               { text: 'LINQ', link: '/pages/intermediate/linq' },
               { text: 'Tuples', link: '/pages/intermediate/tuples' },
               { text: 'Records', link: '/pages/intermediate/records' },
+              { text: 'Extension Methods', link: '/pages/intermediate/extension-methods' },
               { text: 'Iterators and Enumerables', link: '/pages/intermediate/iterators-enumerables' },
               { text: 'Express vs Minimal API', link: '/pages/intermediate/express-vs-minimal-api' },
               { text: 'Nest.js vs Controller API', link: '/pages/intermediate/nest-vs-controller-api' },
