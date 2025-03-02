@@ -81,6 +81,10 @@ dotnet watch --non-interactive
   </template>
 </CodeSplitter>
 
+Check it out in action here as we generate OpenAPI bindings on save:
+
+![OpenAPI bindings generated on save using dotnet watch](../../assets/watch-build.gif)
+
 Learn more about build-watch:
 
 - [TypeScript build-watch](https://www.typescriptlang.org/docs/handbook/configuring-watch.html)

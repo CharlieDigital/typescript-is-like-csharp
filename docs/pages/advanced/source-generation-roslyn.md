@@ -6,6 +6,10 @@ By generating code at build time, source generators can significantly **improve 
 
 This also enables certain scenarios that are much more difficult to achieve in JS/TS compared to C#.
 
+In this example below, we use Roslyn to generate a `ProductRepository` automatically when we add an entity type `Product:
+
+![Roslyn in action](../../assets/generate-code-2.gif)
+
 ## Basics
 
 > 👋🏼 Interested in contributing?

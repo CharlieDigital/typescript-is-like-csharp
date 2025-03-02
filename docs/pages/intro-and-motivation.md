@@ -32,7 +32,7 @@ Many developers, engineering managers, and CTOs may have come across C# and .***
 - `.NET 5`, `.NET 6`, `.NET 7`, `.NET 8`, `.NET 9`, etc - Modern, cross-platform .NET that runs on Linux, macOS, and Windows with x64 or Arm64 bindings.
 - `.NET Core`, `.NET Standard` - Designator of the bifurcation point between legacy and modern (long legacy of terrible nomenclature from Microsoft...)
 
-::: info
+::: info What's in a name?
 I often wonder if Microsoft would have been better off just calling it `dot` instead when they made the transition from .NET Framework...
 :::
 
