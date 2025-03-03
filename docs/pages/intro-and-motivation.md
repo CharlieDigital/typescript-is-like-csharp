@@ -24,12 +24,12 @@ Teams will often consider alternatives such as:
 
 But many teams end up overlooking .NET and C#. Some teams may even have an inherent bias against C# because of its "Micro$oft" roots *while fully embracing other Microsoft products like GitHub, TypeScript, and VS Code!* (the irony)
 
-In fact, C# is probably the most natural choice for teams that are already adept at TypeScript because the languages share so much in common.  ***Both TypeScript and C# are designed by [Anders Hejlsberg](https://en.wikipedia.org/wiki/Anders_Hejlsberg) of Microsoft***.  Because of this lineage and the long influence of C# on JavaScript and vice versa, C# and TypeScript have actually been converging over the last decade.
+In fact, C# is probably the most natural choice for teams that are already adept at TypeScript because the languages share so much in common.  Both TypeScript and C# are designed by [Anders Hejlsberg](https://en.wikipedia.org/wiki/Anders_Hejlsberg) of Microsoft.  Because of this lineage and the long influence of C# on JavaScript and vice versa, C# and TypeScript have actually been converging over the last decade.
 
 Many developers, engineering managers, and CTOs may have come across C# and .***NET Framework*** at some point in their career, but haven't looked at it since Microsoft pivoted to the open source ***.NET Core*** initiative (that yielded the open source, numbered .NET versions).  Today's .NET is very different from *.NET Framework* of the 2000's.  Let's start with a simple distinction:
 
 - `.NET Framework` - Win32 bindings, legacy, and primarily maintained supported for enterprise use cases.  You'll see this as `.NET Framework 4.8.x`
-- `.NET 5`, `.NET 6`, `.NET 7`, `.NET 8`, `.NET 9`, etc - Modern, cross-platform .NET that runs on Linux, macOS, and Windows with x64 or Arm64 bindings.
+- `.NET 5`, `.NET 6`, `.NET 7`, `.NET 8`, `.NET 9`, etc - Modern, cross-platform .NET that runs on Linux, macOS, and Windows with x64 or Arm64 targets.
 - `.NET Core`, `.NET Standard` - Designator of the bifurcation point between legacy and modern (long legacy of terrible nomenclature from Microsoft...)
 
 ::: info What's in a name?
@@ -40,7 +40,7 @@ I often wonder if Microsoft would have been better off just calling it `dot` ins
 
 ## The Problem with TS
 
-Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once it goes beyond a toy and every JavaScript project I work on is TypeScript (e.g. [CodeRev.app](https://coderev.app)).  Every JavaScript project that isn't a library should be written in TypeScript.
+Don't get me wrong: for working with JavaScript, TypeScript is an absolute necessity once a project grows beyond a toy and every JavaScript project I work on is TypeScript (e.g. [CodeRev.app](https://coderev.app)).  Every JavaScript project that isn't a library should be written in TypeScript.
 
 The fundamental problem with TypeScript-based backends and APIs is that this API:
 
@@ -83,9 +83,9 @@ It will also accept this:
 }
 ```
 
-And now your `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
+And now the `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
 
-That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure that correctness and safety of your backend application!)
+That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
 
 What if you write this to a document-oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
 
@@ -130,7 +130,7 @@ For backends, .NET offers high performance roughly in the same ballpark with Jav
 
 .NET offers great tooling support in VS Code (free) and Rider (free personal, paid commercial) and is supported on Linux, macOS, and of course Windows.  It supports targeting both x64 and Arm64 architectures.
 
-The [dotnet cli](https://learn.microsoft.com/en-us/dotnet/core/tools/) is easy to use.
+The [dotnet cli](https://learn.microsoft.com/en-us/dotnet/core/tools/) is easy to use as well.
 
 Read more in [the next section on getting started](./getting-started.md).
 
@@ -173,7 +173,7 @@ This is not the case; in fact C# works great from VS Code!  It's completely free
 
 This was true of .NET Framework which had bindings to the Win32 dlls.  Since .NET Core, Microsoft has been making .NET truly cross platform and any of the "numbered versions" like .NET 6, 7, 8, 9 can all run on Linux, macOS, and Windows.
 
-In fact, at one startup, we developed .NET on M1 MacBook Pros, build our containers in GitHub Actions, and ran them in AWS on Arm64 `t4g` instances.
+In fact, at one startup, we developed .NET on M1 MacBook Pros, built our containers in GitHub Actions, and deployed those in AWS on Arm64 `t4g` instances.
 
 .NET is a great cross-platform backend.
 
@@ -187,11 +187,11 @@ That's why this doc exists 😅 In fact, .NET's congruence with TypeScript means
 
 ### Myth: .NET Web APIs are Complicated
 
-In fact, if you are building an enterprise system, you are probably going to choose Nest.js.  At that point, you are writing controller classes, using decorators, and utilizing dependency injection -- exactly the same as if you were using .NET Web APIs.  Except in Node.js, you don't get the benefits of the type system at runtime and throughput of a multi-threaded runtime.
+If you are building an enterprise system, you are probably going to choose Nest.js.  At that point, you are writing controller classes, using decorators, and utilizing dependency injection -- exactly the same as if you were using .NET Web APIs.  Except in Node.js, you don't get the benefits of the type system at runtime and throughput of a multi-threaded runtime.
 
 ### Myth: .NET's Performance Over Node.js Doesn't Matter
 
-Performance is probably the wrong way to think about the delta between something like .NET an Node.js; it's probably better to think of it as *throughput*.  So given a certain amount of hardware spend, .NET will yield a *higher request throughput* compared to Node.js solutions.  This equates to less infra spend as you scale up and *this* can be significant.
+Performance is probably the wrong way to think about the delta between something like .NET versus Node.js; it's probably better to think of it as *throughput*.  Given a certain amount of hardware spend, .NET will yield a *higher request throughput* compared to Node.js solutions.  This equates to less infra spend as you scale up and *this* can be significant.
 
 ### Myth: C# is for Enterprises
 
