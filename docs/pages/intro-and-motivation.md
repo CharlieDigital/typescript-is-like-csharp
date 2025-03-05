@@ -87,6 +87,8 @@ And now the `createCatDto` is carrying an extra `bark` property of dubious conte
 
 That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
 
+This problem is actually quite common and often rears its head as *the round-trip problem*.  This happens when you *read* a model with additional properties (e.g. via a Prisma includes) and then try to *write* the model back with a more narrow model that doesn't carry the includes: the more narrow shape will accept the wider shape!
+
 What if you write this to a document-oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
 
 At best, you may not notice the payload and it's entirely harmless.  At worst, the payload can contain *anything*.

@@ -160,7 +160,7 @@ if (account is ("Diamond Member", >= 100_000)) {
 // You are a VIP!
 ```
 
-Here again, we use it with a tuple type, but we can also use it with normal and [*anonymouse* types](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types):
+Here again, we use it with a tuple type, but we can also use it with normal and [*anonymous* types](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types):
 
 ```csharp
 var account = new {

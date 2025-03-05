@@ -13,7 +13,7 @@ C# does not have `undefined`; every variable must have a defined value. Value ty
 let x: string | null;
 
 function findUser(name: string, email?: string ) {
-  if (email?.trim()) {
+  if (!email?.trim()) {
     // Handle case when email is null or zero length
   }
 }
