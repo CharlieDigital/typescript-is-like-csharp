@@ -450,6 +450,11 @@ var techToCandidates = candidates.Aggregate(
   var totalYoe = candidates.Sum(c => c.YoE);
   log(totalYoe);
 
+  var totalYoe2 = candidates
+    .Where(c => c.Name.StartsWith("A"))
+    .Sum(c => c.YoE);
+  log(totalYoe2);
+
   var minExp = candidates.MinBy(c => c.YoE);
   log(minExp.Name);
 

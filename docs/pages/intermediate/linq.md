@@ -206,6 +206,11 @@ let totalYoe = candidates.reduce(
   (yoe, c) => yoe + c.yoe, 0
 )
 console.log(totalYoe); // 15
+
+let totalYoe2 = candidates
+  .filter(c => c.startsWith("A"))
+  .reduce((yoe, c) => yoe + c.yoe, 0)
+console.log(totalYoe); // 8
 ```
 
   </template>
@@ -214,6 +219,11 @@ console.log(totalYoe); // 15
 ```csharp
 var totalYoe = candidates.Sum(c => c.YoE);
 Console.WriteLine(totalYoe); // 15
+
+var totalYoe2 = candidates
+  .Where(c => c.Name.StartsWith("A"))
+  .Sum(c => c.YoE);
+Console.WriteLine(totalYoe2);  // 8
 ```
 
   </template>
@@ -223,4 +233,4 @@ Console.WriteLine(totalYoe); // 15
 
 C#'s `System.Linq` library offers a superset of functionality to JavaScript array operators.  [Check out the docs for more examples](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.aggregate?view=net-9.0) including operators like `.Min()`/`.Max()`, `.Skip()`, `.Take()`, `.TakeWhile()`, and more!
 
-We'll also look at how LINQ gets used later in .NET's first party ORM [Entity Framework Core](ef-core.md)
+We'll also look at how LINQ gets used later in .NET's extremely powerful first party ORM [Entity Framework Core](ef-core.md)
