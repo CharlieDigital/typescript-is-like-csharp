@@ -72,6 +72,7 @@ export default defineConfig({
               { text: 'Iterators and Enumerables', link: '/pages/intermediate/iterators-enumerables' },
               { text: 'Express vs Minimal API', link: '/pages/intermediate/express-vs-minimal-api' },
               { text: 'Nest.js vs Controller API', link: '/pages/intermediate/nest-vs-controller-api' },
+              { text: 'Decorators vs Attributes', link: '/pages/intermediate/decorators-vs-attributes' },
               { text: 'Dependency Injection', link: '/pages/intermediate/dependency-injection' },
               { text: 'Entity Framework Core (ORM)', link: '/pages/intermediate/ef-core' },
             ]
