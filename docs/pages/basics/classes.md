@@ -1,6 +1,6 @@
 # Classes and Types
 
-Classes in C# and TypeScript/JavaScript share the same basic structure, allowing the creation of blueprints for objects with properties, methods, and constructors. However, C# classes come with stronger typing, more powerful features, and stricter rules. C# uses `class` to define a class, and constructors are defined using the class name. The class members (fields, properties, methods) are explicitly typed, offering better compile-time safety compared to TypeScript, where type annotations are optional and inferred.
+Classes in C# and TypeScript/JavaScript share the same basic structure, allowing the creation of blueprints for objects with properties, methods, and constructors. However, C# classes come with stronger typing, more powerful features, and stricter rules. C# uses `class` to define a class, and constructors are defined using the class name (versus `constructor` for JavaScript). The class members (fields, properties, methods) are explicitly typed, offering better compile-time safety compared to TypeScript, where type annotations are optional and inferred.
 
 C# **generics** allow classes and methods to be defined with type parameters (`class Box<T> {}`), providing a highly type-safe way to handle different data types. While TypeScript also supports generics, C#'s implementation is more robust with additional constraints, making it easier to enforce type safety and reduce errors.
 
@@ -15,8 +15,6 @@ Additionally, C#'s **record classes**, are immutable reference types designed fo
 
 ```ts
 class Person {
-  static Type = "person"
-
   constructor(
     private firstName: string,
     private lastName: string
@@ -27,12 +25,12 @@ class Person {
   }
 
   notify() {
-    console.log(`Notified ${Person.Type}: ${this.displayName}`);
+    console.log(`Notified ${this.constructor.name}: ${this.displayName}`);
   }
 }
 
 let frankie = new Person("Frank", "Sinatra");
-frankie.notify(); // "Notified person: Frank Sinatra"
+frankie.notify(); // "Notified Person: Frank Sinatra"
 ```
 
   </template>
@@ -116,6 +114,8 @@ iphone.Call(1234567); // "Calling: 1234567"
 
 ## Interfaces
 
+Interfaces in both define contracts that implementing classes have to fulfill.  Unlike inheriting classes, a class can implement multiple interfaces (e.g. `IMobileDevice`, `IFoldingDevice`)
+
 <CodeSplitter>
   <template #left>
 
@@ -174,6 +174,8 @@ iphone.Call(1234567); // "Calling 1234567 from my Apple device"
 </CodeSplitter>
 
 ## Abstract Classes
+
+Like interfaces, abstract classes in both also define contracts, but abstract classes can provide base implementations.  A class can only extend or inherit from a single class (though JavaScript has workarounds).
 
 <CodeSplitter>
   <template #left>

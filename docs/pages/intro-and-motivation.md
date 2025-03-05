@@ -10,7 +10,7 @@ If we look at the lifecycle of a codebase from dev-to-build-to-runtime, the prob
 |**Build**|Types inspected across the codebase to ensure correctness of the application as the codebase is transformed into JavaScript which is what is actually shipped out.|C# is compiled into an [intermediate language (IL)](https://learn.microsoft.com/en-us/dotnet/standard/managed-code#intermediate-language--execution) or native binary (via [ahead of time compilation (AOT)](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/?tabs=windows%2Cnet8)) that runs on the .NET runtime.|
 |**Runtime**|*Types no longer present* 😱 to enforce correctness of data so another mechanism is needed (schema validation) to ensure correctness and guard against invalid data from sneaking in. [Zod](https://zod.dev), [Valibot](https://valibot.dev), or other schema validators are necessary.|Type metadata still present and enforced at runtime 💪!  Runtime errors happen when there's a type mismatch at a boundary (typically serialization).  The difference is that this is "free" as a JSON payload is transformed into managed C# objects.|
 
-::: info
+::: info Should you use C# for web front-ends?
 We're only considering backends here; I do not think that .NET-based front-ends (e.g. Blazor) are competitive in all use cases.
 :::
 

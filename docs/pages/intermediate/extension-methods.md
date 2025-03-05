@@ -8,4 +8,80 @@ Both C# extension methods and JavaScript prototype methods allow extending exist
 
 ## Basics
 
-> 👋🏼 Interested in contributing?
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Class definition
+class Person {
+  constructor(
+    public readonly firstName: string,
+    public readonly lastName: string
+  ) {}
+}
+
+// Without this, TS will complain about the `print` below.
+interface Person {
+  print: () => void
+}
+
+// Extend with additional methods
+Person.prototype.print = function() {
+  console.log(`${this.firstName} ${this.lastName}`)
+}
+
+const person = new Person("Ada", "Lovelace");
+person.print(); // "Ada Lovelace"
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// Class definition
+public record Person(
+  string FirstName,
+  string LastName
+);
+
+// Extend with additional methods
+public static class PersonExtension {
+  public static void Print(this Person person) {
+    Console.WriteLine($"{person.FirstName} {person.LastName}");
+  }
+}
+
+var ada = new Person("Ada", "Lovelace");
+ada.Print(); // "Ada Lovelace"
+```
+
+  </template>
+</CodeSplitter>
+
+Both methods allow extending functionality on existing classes.
+
+## Interfaces
+
+C# goes further and also allows adding extension methods on interfaces:
+
+```csharp{2,7,11}
+// Same example, but we add an interface
+public interface IContact {
+  string FirstName { get; }
+  string LastName { get; }
+}
+
+public record Person(string FirstName, string LastName) : IContact;
+
+public static class PersonExtension {
+  // Note the interface here instead 👇
+  public static void Print(this IContact contact) {
+    Console.WriteLine($"{contact.FirstName} {contact.LastName}");
+  }
+}
+
+var ada = new Person("Ada", "Lovelace");
+ada.Print(); // "Ada Lovelace"
+```
+
+However, with C#, we are limited only to methods and not properties.

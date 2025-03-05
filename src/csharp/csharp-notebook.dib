@@ -539,3 +539,29 @@ Console.WriteLine(profiles[0].Name);
 Console.WriteLine(profiles[0].Socials[0].Handle);
 Console.WriteLine(profiles[1].Name);
 Console.WriteLine(profiles[1].Socials[0].Handle);
+
+#!csharp
+
+var GetGcalEvents = async () => await Task.FromResult<string[]>([
+  "gcal-1", "gcal-2"
+]);
+
+var GetO365Events = async () => await Task.FromResult<string[]>([
+  "o365-1", "o365-2"
+]);
+
+async IAsyncEnumerable<string> GetEvents() {
+  var gcalEvents = await GetGcalEvents();
+  foreach (var evt in gcalEvents) {
+    yield return evt;
+  }
+
+  var o365Events = await GetO365Events();
+  foreach (var evt in o365Events) {
+    yield return evt;
+  }
+}
+
+await foreach (var evt in GetEvents()) {
+  Console.WriteLine(evt);
+}

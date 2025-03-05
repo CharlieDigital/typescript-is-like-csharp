@@ -64,6 +64,10 @@ ChooseTransit(5)
         train => log($"Train type: {train.type}")
     );
 
+var ada = new Person("Ada", "Lovelace");
+
+ada.Print();
+
 enum TrainType
 {
     Bullet,
@@ -80,4 +84,20 @@ namespace Transit
 {
     [GenerateOneOf]
     partial class TransitOption : OneOfBase<Car, Scooter, Train> { };
+}
+
+public interface IContact
+{
+    string FirstName { get; }
+    string LastName { get; }
+}
+
+public record Person(string FirstName, string LastName) : IContact;
+
+public static class PersonExtension
+{
+    public static void Print(this IContact contact)
+    {
+        Console.WriteLine($"{contact.FirstName} {contact.LastName}");
+    }
 }
