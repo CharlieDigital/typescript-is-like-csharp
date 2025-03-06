@@ -65,7 +65,7 @@ export default defineConfig({
           },
           {
             text: 'Intermediate',
-            collapsed: false,
+            collapsed: true,
             items: [
               { text: 'LINQ', link: '/pages/intermediate/linq' },
               { text: 'Tuples', link: '/pages/intermediate/tuples' },
@@ -81,7 +81,7 @@ export default defineConfig({
           },
           {
             text: 'Advanced',
-            collapsed: false,
+            collapsed: true,
             items: [
               { text: 'Generators and Yield', link: '/pages/advanced/generators-yield' },
               { text: 'dynamic (ExpandoObject)', link: '/pages/advanced/dynamic' },
@@ -93,7 +93,7 @@ export default defineConfig({
           },
           {
             text: 'Ergonomics',
-            collapsed: false,
+            collapsed: true,
             items: [
               { text: 'Switch Expression', link: '/pages/bonus/switch-expression' },
               { text: 'Partial Classes', link: '/pages/bonus/partial-classes' },
