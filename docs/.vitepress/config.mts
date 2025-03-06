@@ -9,6 +9,8 @@ export default defineConfig({
   },
   head: [
     ['link', { rel: 'icon', href: '/csharp-logo-32.png' }],
+    ['meta', { property: 'og:image', content: 'https://typescript-is-like-csharp.chrlschn.dev/typescript-csharp.png' }],
+    ['meta', { property: 'twitter:image', content: 'https://typescript-is-like-csharp.chrlschn.dev/typescript-csharp.png' }],
     ['script', {
       async: '',
       src: 'https://www.googletagmanager.com/gtag/js?id=G-QLSJ4QC7YZ'
