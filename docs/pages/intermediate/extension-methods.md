@@ -84,4 +84,4 @@ var ada = new Person("Ada", "Lovelace");
 ada.Print(); // "Ada Lovelace"
 ```
 
-However, with C#, we are limited only to methods and not properties.
+However, with C#, we are limited only to methods and not properties; to achieve that, we can use [Partial Members](../bonus/partial-classes.md) instead.

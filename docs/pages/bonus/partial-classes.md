@@ -39,9 +39,7 @@ UserRepository.prototype.readSome = function(filter: string) {
 }
 
 // 📃 user-repository.write.ts to break out all writes
-UserRepository.prototype.create = function(user: User) {
-
-}
+UserRepository.prototype.create = function(user: User) { }
 
 UserRepository.prototype.update = function(user: User) { }
 
@@ -90,6 +88,10 @@ partial class UserRepository {
 The C# version is less verbose and requires less effort to maintain (no need to maintain the extraneous interface).
 
 But on top of that, it allows the use of [partial *members*](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/partial-member) including properties.  The main use case for this is dev-time source generation where it is then possible to have Roslyn source generators dynamically create partial implementations at dev-time.
+
+::: tip What about extension classes?
+You might rightly squint and see that these are pretty similar to [Extension Methods](../intermediate/extension-methods.md).  There are two key differences: `partial` can be applied to other members like properties and because it gets merged into the same class, it has access to internals like `private` and `protected` members.
+:::
 
 ## Source Generation
 
