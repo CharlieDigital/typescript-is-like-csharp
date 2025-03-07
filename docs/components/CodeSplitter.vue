@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="code-splitter container">
     <div ref="leftPanel" class="panel left" :style="{ width: `${leftWidth}%` }">
       <slot name="left"></slot>
     </div>

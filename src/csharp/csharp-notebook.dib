@@ -570,3 +570,29 @@ async IAsyncEnumerable<string> GetEvents() {
 await foreach (var evt in GetEvents()) {
   Console.WriteLine(evt);
 }
+
+#!csharp
+
+class User { }
+
+partial class UserRepository {
+  partial void Delete(string id);
+}
+
+partial class UserRepository {
+  User[] ReadAll() => Array.Empty<User>();
+
+  User[] ReadSome(string filter) => Array.Empty<User>();
+}
+
+partial class UserRepository {
+  void Create(User user) { }
+
+  void Update(User user) { }
+}
+
+partial class UserRepository {
+  partial void Delete(string id) {
+    // Actual implementation here
+  }
+}

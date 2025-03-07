@@ -178,6 +178,10 @@
 .VPDoc.has-aside .content-container {
   max-width: 100% !important;
 }
+/* .VPDoc.has-aside .content-container .vp-doc > div > * {
+  margin: auto;
+  max-width: 960px;
+} */
 .aside {
   max-width: 200px !important;
   padding-left: 0 !important;

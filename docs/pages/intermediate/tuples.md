@@ -88,6 +88,8 @@ Console.WriteLine(candidateName); // "Alan"
 
 Note that we can still destructure the tuple just like before and rename the indices.
 
+We can label the TypeScript tuple, but we cannot access it with a named accessor like we can with C#.
+
 ## Aliased Tuple Types
 
 [C# 12 introduced the option to alias any type](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12#alias-any-type) which of course includes tuple types!  So we can apply a name to a tuple just like in TypeScript.
