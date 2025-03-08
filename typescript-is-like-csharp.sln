@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "console", "src\csharp\conso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi-minimal", "src\csharp\webapi-minimal\webapi-minimal.csproj", "{F20E7BB6-061B-4F1C-8B51-D23D20181384}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi-controllers", "src\csharp\webapi-controllers\webapi-controllers.csproj", "{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{F20E7BB6-061B-4F1C-8B51-D23D20181384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F20E7BB6-061B-4F1C-8B51-D23D20181384}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F20E7BB6-061B-4F1C-8B51-D23D20181384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 		{EE222B14-4095-D8D2-8B9B-4218DD5B4CA2} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{E5E14ACE-5B20-DFB5-AB16-F927620D287E} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
 		{F20E7BB6-061B-4F1C-8B51-D23D20181384} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
+		{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0B353D1-9E73-475B-B986-21AC98847F63}

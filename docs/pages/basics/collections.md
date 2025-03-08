@@ -56,7 +56,7 @@ An important note here is that the `Array` type in JavaScript encapsulates multi
 :::
 
 ::: warning
-Unlike JavaScript arrays, C# arrays a **fixed size** at initialization.  To increase the size of the array, a new allocation will be necessary.  C# `List<T>` represents a dynamically sized array-like structure.
+Unlike JavaScript arrays, C# arrays are **fixed size** at initialization.  To increase the size of the array, a new allocation will be necessary.  C# `List<T>` represents a dynamically sized array-like structure.
 :::
 
 ## Lists

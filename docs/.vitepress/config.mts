@@ -69,9 +69,10 @@ export default defineConfig({
             items: [
               { text: 'LINQ', link: '/pages/intermediate/linq' },
               { text: 'Tuples', link: '/pages/intermediate/tuples' },
-              { text: 'Records', link: '/pages/intermediate/records' },
+              // { text: 'Records', link: '/pages/intermediate/records' },
               { text: 'Extension Methods', link: '/pages/intermediate/extension-methods' },
               { text: 'Iterators and Enumerables', link: '/pages/intermediate/iterators-enumerables' },
+              { text: 'Unit Testing', link: '/pages/intermediate/unit-testing' },
               { text: 'Express vs Minimal API', link: '/pages/intermediate/express-vs-minimal-api' },
               { text: 'Nest.js vs Controller API', link: '/pages/intermediate/nest-vs-controller-api' },
               { text: 'Decorators vs Attributes', link: '/pages/intermediate/decorators-vs-attributes' },

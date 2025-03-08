@@ -1,6 +1,6 @@
 {
   "[csharp]": {
-      "editor.formatOnSave": true,
+      "editor.formatOnSave": false,
       "editor.defaultFormatter": "csharpier.csharpier-vscode"
   },
   "better-comments.tags": [

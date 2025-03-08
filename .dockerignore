@@ -1,0 +1,12 @@
+# Shared
+.git
+*Dockerfile*
+*docker-compose*
+
+# Node
+node_modules
+dist
+
+# .NET
+bin
+obj
