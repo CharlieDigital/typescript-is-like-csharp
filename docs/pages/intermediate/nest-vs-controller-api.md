@@ -4,6 +4,10 @@
 
 However, **Nest.js does not match .NET in performance**. Since Nest.js runs on Node.js, it inherits the limitations of JavaScript’s single-threaded event loop, leading to potential bottlenecks in CPU-bound workloads. While Fastify can improve Nest’s performance over Express, it still cannot compete with **.NET’s high-performance Kestrel server**, which is optimized for multi-threading and asynchronous processing. That said, **Nest.js is more production-ready than Express**, as it includes built-in support for **authentication, validation, middleware, and structured DI**, reducing the need for third-party dependencies.
 
+::: tip If you're already using Nest.js
+If your team is already using Nest.js, chances are that there is a need for the more structured approach of Nest.js over Express.js.  In this case, you will find that .NET controller web APIs are conceptually similar, but probably overall easier to work with because of the type system (e.g. parameter type checking is automatic, OpenAPI schema bindings are "free")
+:::
+
 ## Setting Up
 
 This setup follows [the Nest.js documentation](https://docs.nestjs.com/first-steps):
@@ -295,6 +299,31 @@ builder.Services.SetupHttpClientServices(); // e.g.
 
 Now we can set up multiple services in our extension method `SetupAppServices()`
 
+## Middleware
+
+Both Nest.js and .NET support middleware that serve a variety of purposes.  This guide won't cover them in detail, but will show how they map conceptually.
+
+|Purpose|Nest.js|.NET Web API|
+|--|--|--|
+|**Overview**|Nest.js has [middleware](https://docs.nestjs.com/middleware), [exception filters](https://docs.nestjs.com/exception-filters), [pipes](https://docs.nestjs.com/pipes), [guards](https://docs.nestjs.com/guards), and [interceptors](https://docs.nestjs.com/interceptors).|.NET has [middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0) and [filters](https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-9.0) (filters are really just specialized middleware)|
+|**Exception filters**|[Nest.js exception filters](https://docs.nestjs.com/exception-filters)|[.NET exception filters](https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-9.0#exception-filters)|
+|**Pipes**|[Nest.js pipes](https://docs.nestjs.com/pipes)|[.NET action filters](https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-9.0#action-filters)|
+|**Guards**|[Nest.js guards](https://docs.nestjs.com/guards)|[.NET authorization filters](https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-9.0#authorization-filters)|
+|**Interceptors**|[Nest.js interceptors](https://docs.nestjs.com/interceptors)|[.NET endpoint filters](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/min-api-filters?view=aspnetcore-9.0)|
+
+## Other Framework Features
+
+Unlike Express.js, Nest.js is a fully featured framework that feels pretty similar to .NET controller web APIs.  The table below should help map some of the main features from one to the other, regardless of which way you're going.
+
+|Feature|Nest.js|.NET Web API|
+|--|--|--|
+|**Parameter mapping**|[Nest.js query parameters](https://docs.nestjs.com/controllers#query-parameters)|[.NET explicit parameter binding](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/parameter-binding?view=aspnetcore-9.0#explicit-parameter-binding)|
+|**Payload binding**|[Nest.js payload binding](https://docs.nestjs.com/controllers#request-payloads) (`@Body` maps to .NET's `FromBody` attribute which is implicit on `POST`)|[.NET payload binding](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/parameter-binding?view=aspnetcore-9.0) (see the first example; this is the default behavior with `POST`)|
+|**Route constraints**|[Nest.js validators](https://docs.nestjs.com/techniques/validation).  By default, Nest.js will allow a route with a parameter like `increment(@Param("count") count: number)` to accept a string without complaint.  Manual validation is required to ensure the types match.  In this codebase, try `http://localhost:3001/increment/asdf` and it will still work without a validator.|[.NET route constraints](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-9.0#route-constraints) are built in, but even by default, passing a `string` to a route that expects an `int` parameter will fail with an error  In our .NET controller API, you can test this route: `http://localhost:5068/app/increment/asdf` and see that this will generate a type mismatch error.|
+|**OpenAPI**|[Nest.js setup for OpenAPI](https://docs.nestjs.com/openapi/introduction).  [Note that it requires using JavaScript `class` as well as annotations](https://docs.nestjs.com/openapi/types-and-parameters).  It is possible to then extract types from this using specialized [mapped types](https://docs.nestjs.com/openapi/mapped-types).|[.NET OpenAPI features](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-9.0) (note that these are enabled by default (see our code example above where we removed it); in general, .NET web API features can be turned on progressively)|
+
+Here, C#'s' static type system really shines because the type bindings can be largely resolved automatically with no special decoration required for the most part; there's no need to decorate classes for OpenAPI bindings except where special behavior is desired.
+
 ## Performance
 
 How do they stack up?
@@ -305,6 +334,7 @@ How do they stack up?
   <template #left>
 
 ```ts
+// Nest.js @ #106
 // 419,035; See reference link below
 @Get('plaintext')
 @Header('Server', 'NestJS')
@@ -326,6 +356,7 @@ getJson() {
   <template #right>
 
 ```csharp
+// ASP.NET Core @ #15
 // 7,014,298; See reference link below
 app.MapGet("/plaintext", () => "Hello, World!");
 
@@ -336,13 +367,14 @@ app.MapGet("/json", () => new { message = "Hello, World!" });
   </template>
 </CodeSplitter>
 
+.NET's multi-threaded runtime here has a big advantage over Node.js.  The main takeaway is that for a given dollar spend on infrastructure, you'll achieve higher throughput with .NET than with Node.js based application servers.  Even in cases where it's not I/O bound, like the JSON and plaintext examples, .NET's multi-threaded runtime smashes Node.js.
+
 Implementation:
 
 - [C# plaintext](https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/CSharp/aspnetcore/src/Minimal/Program.cs#L29)
 - [C# JSON](https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/CSharp/aspnetcore/src/Minimal/Program.cs#L33)
 - [Nest plaintext](https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/TypeScript/nest/src/sql/sql.controller.ts#L48)
 - [Nest JSON](https://github.com/TechEmpower/FrameworkBenchmarks/blob/master/frameworks/TypeScript/nest/src/sql/sql.controller.ts#L16)
-
 
 ## Packaging for Deployment
 

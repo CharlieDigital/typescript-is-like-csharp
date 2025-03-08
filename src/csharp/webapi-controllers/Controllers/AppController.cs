@@ -10,4 +10,7 @@ public class AppController(
 ) : ControllerBase {
   [HttpGet()]
   public string GetHello() => appService.GetHello();
+
+  [HttpGet("increment/{count}")]
+  public string Increment(int count) => $"You added: ${count}";
 }
