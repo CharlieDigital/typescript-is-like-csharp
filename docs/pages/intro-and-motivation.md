@@ -83,6 +83,10 @@ It will also accept this:
 }
 ```
 
+::: tip If you are already using Nest.js...
+Then you will probably like [.NET controller web APIs](./intermediate/nest-vs-controller-api.md) which is conceptually similar with controllers, routes, middleware, and more.
+:::
+
 And now the `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
 
 That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
@@ -127,6 +131,10 @@ But for all of that, .NET still performs extremely well across the board in a va
 ![TechEmpower Round 22 official results](../assets/techempower.png)
 
 For backends, .NET offers high performance roughly in the same ballpark with Java and Go with an excellent DX because of the large standard library and first party packages from Microsoft ("batteries included") as well as hot-reload (see [CLI and Tooling](./basics/cli-tooling.md)).
+
+::: tip Teams often think about performance incorrectly...
+Thinking about performance in terms of response time is only one facet; the other is *throughput* or, for a given spend on infrastructure, how many requests can you handle?  C# and .NET generally wins handily in both (with the exception of cold starts) because of its multithreaded runtime
+:::
 
 ### Tooling
 

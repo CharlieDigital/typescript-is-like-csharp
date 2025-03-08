@@ -596,3 +596,152 @@ partial class UserRepository {
     // Actual implementation here
   }
 }
+
+#!csharp
+
+enum VehicleOption { Car, Suv, Minivan }
+
+abstract class Vehicle();
+class Car : Vehicle { }
+class Suv : Vehicle { }
+class Minivan : Vehicle { }
+
+var request = new {
+  Vehicle = VehicleOption.Suv,
+  PassengerCount = 5
+};
+
+Vehicle vehicle = request switch {
+  { Vehicle: VehicleOption.Car } => new Car(),
+  { Vehicle: VehicleOption.Suv } => new Suv(),
+  { Vehicle: VehicleOption.Minivan } => new Minivan(),
+  _ => throw new ArgumentException("Invalid vehicle option")
+};
+
+Vehicle vehicle2 = request.Vehicle switch {
+  VehicleOption.Car => new Car(),
+  VehicleOption.Suv => new Suv(),
+  VehicleOption.Minivan => new Minivan(),
+  _ => throw new ArgumentException("Invalid vehicle option")
+};
+
+var label = vehicle switch {
+  Car => "Your car is arriving soon...",
+  Suv => "Your SUV is arriving soon...",
+  Minivan => "Your minivan is arriving soon...",
+  _ => "Uh oh! We can't find your vehicle"
+};
+
+Vehicle vehicle3 = (Passengers: 5, Luggage: 6) switch {
+  (> 6, > 8) => new Minivan(),
+  (> 4, > 4) => new Suv(),
+  _ => new Car()
+}; // Suv
+
+Console.WriteLine(vehicle3.GetType().Name);
+
+#!csharp
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+abstract record Vehicle {
+  public abstract int MaxSeats { get; init; }
+}
+
+record Car : Vehicle {
+  public override int MaxSeats { get; init; } = 4;
+}
+
+record Suv : Vehicle {
+  public override int MaxSeats { get; init; } = 6;
+  public bool Has3rdRow => true;
+}
+
+var suv = new Suv();
+var json = JsonSerializer.Serialize(suv);
+
+Console.WriteLine(json);
+
+var car = JsonSerializer.Deserialize<Car>(json);
+
+Console.WriteLine(car);
+
+#!csharp
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+abstract record Vehicle {
+  public abstract int MaxSeats { get; init; }
+}
+
+[JsonUnmappedMemberHandling(JsonUnmappedMemberHandling.Disallow)]
+record Car : Vehicle {
+  public override int MaxSeats { get; init; } = 4;
+}
+
+[JsonUnmappedMemberHandling(JsonUnmappedMemberHandling.Disallow)]
+record Suv : Vehicle {
+  public override int MaxSeats { get; init; } = 6;
+  public bool Has3rdRow => true;
+}
+
+var suv = new Suv();
+var json = JsonSerializer.Serialize(suv);
+
+Console.WriteLine(json);
+
+var car = JsonSerializer.Deserialize<Car>(json);
+
+Console.WriteLine(car);
+
+#!csharp
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+public enum VehicleType { Car, Suv, Minivan }
+
+public record Driver(
+  string Name,
+  VehicleType VehicleType
+);
+
+var driver = new Driver("Ada", VehicleType.Suv);
+var json = JsonSerializer.Serialize(driver);
+
+Console.WriteLine(json);
+
+var options = new JsonSerializerOptions {
+  Converters = { new JsonStringEnumConverter() },
+  PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+};
+
+json = JsonSerializer.Serialize(driver, options);
+
+Console.WriteLine(json);
+
+public record NamedDriver(
+  [property: JsonPropertyName("driverName")]
+  string Name,
+  [property: JsonPropertyName("vehicleClass")]
+  VehicleType VehicleType
+);
+
+var namedDriver = new NamedDriver("Alan", VehicleType.Car);
+json = JsonSerializer.Serialize(namedDriver, options);
+
+Console.WriteLine(json);
+
+public record LicensedDriver(
+  string Name,
+  [property: JsonIgnore]
+  string LicenseNumber,
+  VehicleType VehicleType
+);
+
+var licensedDriver = new LicensedDriver("Charles", "12345", VehicleType.Minivan);
+json = JsonSerializer.Serialize(licensedDriver, options);
+
+Console.WriteLine(json);

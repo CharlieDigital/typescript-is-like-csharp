@@ -28,7 +28,8 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Intro', link: '/pages/intro-and-motivation' }
+      { text: 'Intro', link: '/pages/intro-and-motivation' },
+      { text: 'About', link: 'https://www.linkedin.com/in/charlescchen/' },
     ],
 
     editLink: {

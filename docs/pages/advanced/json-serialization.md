@@ -6,4 +6,218 @@ In contrast, C# offers more **type safety** with its built-in `System.Text.Json`
 
 ## Basics
 
-> 👋🏼 Interested in contributing?
+<CodeSplitter>
+  <template #left>
+
+```ts
+abstract class Vehicle {
+  abstract maxSeats: number
+}
+
+class Car extends Vehicle {
+  maxSeats: number;
+  constructor() {
+    super();
+    this.maxSeats = 4;
+  }
+}
+
+class Suv extends Vehicle {
+  maxSeats: number;
+  has3rdRow: boolean;
+
+  constructor() {
+    super();
+    this.maxSeats = 6;
+    this.has3rdRow = true;
+  }
+}
+
+let suv = new Suv();
+let json = JSON.stringify(suv)
+
+console.log(json); // {"maxSeats":6,"has3rdRow":true}
+
+let car = JSON.parse(json)
+
+console.log(car) // { "maxSeats": 6, "has3rdRow": true }
+```
+
+  </template>
+  <template #right>
+
+```csharp
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+abstract record Vehicle {
+  public abstract int MaxSeats { get; init; }
+}
+
+record Car : Vehicle {
+  public override int MaxSeats { get; init; } = 4;
+}
+
+record Suv : Vehicle {
+  public override int MaxSeats { get; init; } = 6;
+  public bool Has3rdRow => true;
+}
+
+var suv = new Suv();
+var json = JsonSerializer.Serialize(suv);
+
+Console.WriteLine(json); // {"MaxSeats":6,"Has3rdRow":true}
+
+var car = JsonSerializer.Deserialize<Car>(json);
+
+Console.WriteLine(car); // Car { MaxSeats = 6 }
+```
+
+  </template>
+</CodeSplitter>
+
+## Constraining Serialization
+
+Here we can see that both `JSON.parse` and `JsonSerializer.Deserialize` have the same issue by default: it's happy to accept the SUV as a Car!
+
+In C#, we can fix this with annotations:
+
+```csharp{1,6}
+[JsonUnmappedMemberHandling(JsonUnmappedMemberHandling.Disallow)]
+record Car : Vehicle {
+  public override int MaxSeats { get; init; } = 4;
+}
+
+[JsonUnmappedMemberHandling(JsonUnmappedMemberHandling.Disallow)]
+record Suv : Vehicle {
+  public override int MaxSeats { get; init; } = 6;
+  public bool Has3rdRow => true;
+}
+
+// Error: System.Text.Json.JsonException: The JSON property 'Has3rdRow'
+// could not be mapped to any .NET member contained in type 'Submission#8+Car'.
+```
+
+This type of behavior can prevent issues when persisting to document-oriented databases, for example, by ensuring that mis-matches in the JSON structure to the class raise exceptions.
+
+## Customizing Serialization
+
+In C#, it is possible to tweak the serialization behavior using both global options as well as attributes.
+
+We'll use this baseline model:
+
+```csharp
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+public enum VehicleType { Car, Suv, Minivan }
+
+public record Driver(
+  string Name,
+  VehicleType VehicleType
+);
+```
+
+### Write Enum Labels and Lowercase Properties
+
+```csharp{8-11,13}
+var driver = new Driver("Ada", VehicleType.Suv);
+var json = JsonSerializer.Serialize(driver);
+
+Console.WriteLine(json);
+// {"Name":"Ada","VehicleType":1}
+
+// ⭐️ Write the enum label as well as lower case
+var options = new JsonSerializerOptions {
+  Converters = { new JsonStringEnumConverter() },
+  PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+};
+
+json = JsonSerializer.Serialize(driver, options);
+
+Console.WriteLine(json);
+// {"name":"Ada","vehicleType":"Suv"}
+```
+
+### Alias Property Names
+
+```csharp{3,5}
+// ⭐️ We can also change the property name in the JSON
+public record NamedDriver(
+  [property: JsonPropertyName("driverName")]
+  string Name,
+  [property: JsonPropertyName("vehicleClass")]
+  VehicleType VehicleType
+);
+
+var namedDriver = new NamedDriver("Alan", VehicleType.Car);
+json = JsonSerializer.Serialize(namedDriver, options);
+
+Console.WriteLine(json);
+// {"driverName":"Alan","vehicleClass":"Car"}
+```
+
+## Ignoring fields
+
+<CodeSplitter>
+  <template #left>
+
+```ts{19}
+type VehicleType = "car" | "suv" | "minivan"
+
+type LicensedDriver = {
+    name: string,
+    licenseNumber: string,
+    vehicleType: VehicleType
+}
+
+let licensedDriver: LicensedDriver = {
+    name: "Charles",
+    licenseNumber: "12345",
+    vehicleType: "minivan"
+}
+
+console.log(JSON.stringify(licensedDriver));
+// {"name":"Charles","licenseNumber":"12345","vehicleType":"minivan"}
+
+const {
+    licenseNumber, // 👈 Eject the field
+    ...trimmed
+} = licensedDriver;
+
+console.log(JSON.stringify(trimmed))
+// {"name":"Charles","vehicleType":"minivan"}
+```
+
+  </template>
+  <template #right>
+
+```csharp{3}
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+public enum VehicleType { Car, Suv, Minivan }
+
+public record LicensedDriver(
+  string Name,
+  [property: JsonIgnore] // 👈 Erased from JSON
+  string LicenseNumber,
+  VehicleType VehicleType
+);
+
+var licensedDriver = new LicensedDriver(
+  "Charles",
+  "12345",
+  VehicleType.Car
+);
+
+json = JsonSerializer.Serialize(licensedDriver, options);
+
+Console.WriteLine(json);
+// {"name":"Charles","vehicleType":"Minivan"}
+```
+
+  </template>
+</CodeSplitter>
+
+Overall, .NET's `System.Text.Json` library offers many powerful capabilities when it comes to managing serialization an deserialization of JSON compared to the built-in `JSON` utility in JavaScript.
