@@ -745,3 +745,36 @@ var licensedDriver = new LicensedDriver("Charles", "12345", VehicleType.Minivan)
 json = JsonSerializer.Serialize(licensedDriver, options);
 
 Console.WriteLine(json);
+
+#!csharp
+
+using System.Reflection;
+
+interface Module {
+  void Init();
+}
+
+[AttributeUsage(AttributeTargets.Class)]
+class ModuleInitializerAttribute : Attribute { }
+
+[ModuleInitializer]
+class AppModule : Module {
+  public void Init() => Console.WriteLine("Initialized the app module");
+}
+
+class OtherModule : Module {
+  public void Init() => Console.WriteLine("Initialized the other module");
+}
+
+// Runtime reflection
+var moduleTypes = Assembly.GetExecutingAssembly()
+  .GetTypes()
+  .Where(t => typeof(Module).IsAssignableFrom(t)
+    && !t.IsInterface
+    && t.GetCustomAttribute<ModuleInitializerAttribute>() != null
+  );
+
+foreach (var moduleType in moduleTypes) {
+  var module = (Module)Activator.CreateInstance(moduleType);
+  module.Init();
+}
