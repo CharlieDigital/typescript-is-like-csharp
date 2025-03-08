@@ -77,7 +77,7 @@ export default defineConfig({
               { text: 'Express vs Minimal API', link: '/pages/intermediate/express-vs-minimal-api' },
               { text: 'Nest.js vs Controller API', link: '/pages/intermediate/nest-vs-controller-api' },
               { text: 'Decorators vs Attributes', link: '/pages/intermediate/decorators-vs-attributes' },
-              { text: 'Dependency Injection', link: '/pages/intermediate/dependency-injection' },
+              // { text: 'Dependency Injection', link: '/pages/intermediate/dependency-injection' },
               { text: 'Entity Framework Core (ORM)', link: '/pages/intermediate/ef-core' },
             ]
           },
@@ -86,7 +86,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: 'Generators and Yield', link: '/pages/advanced/generators-yield' },
-              { text: 'dynamic (ExpandoObject)', link: '/pages/advanced/dynamic' },
+              // { text: 'dynamic (ExpandoObject)', link: '/pages/advanced/dynamic' },
               { text: 'JSON Serialization', link: '/pages/advanced/json-serialization' },
               { text: 'Reflection', link: '/pages/advanced/reflection' },
               { text: 'Channels', link: '/pages/advanced/channels' },
