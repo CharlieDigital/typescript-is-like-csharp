@@ -44,7 +44,7 @@ export default defineConfig({
           { text: 'Getting Started', link: '/pages/getting-started' },
           {
             text: 'Basics',
-            collapsed: false,
+            collapsed: true,
             items: [
               { text: 'Variables', link: '/pages/basics/variables' },
               { text: 'Types', link: '/pages/basics/types' },

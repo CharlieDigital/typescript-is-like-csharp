@@ -36,7 +36,7 @@ Many developers, engineering managers, and CTOs may have come across C# and .***
 I often wonder if Microsoft would have been better off just calling it `dot` instead when they made the transition from .NET Framework...
 :::
 
-::: tip Take me to the highlights!
+::: tip ✨ Take me to the highlights! ✨
 If you just want the highlights, I recommend:
 
 - [Collections](./basics/collections.md)
