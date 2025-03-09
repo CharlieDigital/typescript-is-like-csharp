@@ -4,8 +4,18 @@ using Xunit;
 
 namespace EFExample.Tests;
 
-public class TestRaceApp : IClassFixture<DatabaseFixture> {
+/**
+* Special note: this is not common practice to place unit tests inline with code
+* when it comes to C# and .NET because the build process, by default, will include
+* these files into the output runtime assembly.  We can exclude these using
+* some configuration (see the .csproj for details)
+*
+* I've included these here inline with the project source (rather than a separate
+* project as would normally be the case) because this is how Node.js developers
+* using Jest or Vitest might expect to see their unit tests
+*/
 
+public class TestRaceApp : IClassFixture<DatabaseFixture> {
   [Fact]
   public async Task Test_Add_Race() {
     var db = DatabaseFixture.CreateDbContext();
@@ -95,6 +105,178 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
 
     using var tx = await db.Database.BeginTransactionAsync();
 
+    var ((ada, alan), _) = ProduceModel();
+
+    db.AddRange(ada, alan);
+
+    await db.SaveChangesAsync();
+    db.ChangeTracker.Clear();
+
+    var loadedAda = await db.Runners
+      .Include(r => r.RaceResults)
+      .Include(r => r.Races)
+      .FirstAsync(r => r.Email == "ada@example.org");
+
+    var loadedAlan = await db.Runners
+      .Include(r => r.RaceResults)
+      .Include(r => r.Races)
+      .FirstAsync(r => r.Email == "alan@example.org");
+
+    Assert.NotNull(loadedAda);
+    Assert.NotEmpty(loadedAda.Races);
+    Assert.NotEmpty(loadedAda.RaceResults);
+    Assert.Equal(3, loadedAda.RaceResults.Count);
+
+    Assert.NotNull(loadedAlan);
+    Assert.NotEmpty(loadedAlan.Races);
+    Assert.NotEmpty(loadedAlan.RaceResults);
+    Assert.Equal(2, loadedAlan.RaceResults.Count);
+  }
+
+  [Fact]
+  public async Task Test_Filter_Multiple_RaceResult_Multiple_Conditions() {
+    var db = DatabaseFixture.CreateDbContext();
+
+    using var tx = await db.Database.BeginTransactionAsync();
+
+    var ((ada, alan), _) = ProduceModel();
+
+    db.AddRange(ada, alan);
+
+    await db.SaveChangesAsync();
+    db.ChangeTracker.Clear();
+
+    var loadedRunners = await db.Runners
+      .Where(r => r.Name.StartsWith("Ada"))
+      .Where(r => r.Name == "Alan") // logical And
+      .ToListAsync();
+
+    Assert.Empty(loadedRunners);
+
+    loadedRunners = await db.Runners
+      .Where(r => r.Name.StartsWith("Ada") && r.Name.StartsWith("Alan"))
+      .ToListAsync();
+
+    Assert.Empty(loadedRunners);
+
+    loadedRunners = await db.Runners
+      .Where(r => r.Name.StartsWith("Ada") || r.Name.StartsWith("Alan"))
+      .ToListAsync();
+
+    Assert.NotEmpty(loadedRunners);
+    Assert.Equal(2, loadedRunners.Count);
+  }
+
+  [Fact]
+  public async Task Test_Filter_Multiple_RaceResults_By_Top_Ten_Finish() {
+    var db = DatabaseFixture.CreateDbContext();
+
+    using var tx = await db.Database.BeginTransactionAsync();
+
+    var ((ada, alan), _) = ProduceModel();
+
+    db.AddRange(ada, alan);
+
+    await db.SaveChangesAsync();
+    db.ChangeTracker.Clear();
+
+    var loadedRunners = await db.Runners
+      .Where(r => r.RaceResults.Where(
+        finish => finish.Position <= 10
+          && finish.Time <= TimeSpan.FromHours(2)
+          && finish.Race.Name.Contains("New")
+        ).Any()
+      ).ToListAsync();
+
+    Assert.NotEmpty(loadedRunners);
+    Assert.Single(loadedRunners);;
+    Assert.Equal(ada.Name, loadedRunners[0].Name);
+  }
+
+  [Fact]
+  public async Task Test_Filter_Multiple_RaceResults_By_Top_Ten_Finish_With_Navigation() {
+    var db = DatabaseFixture.CreateDbContext();
+
+    using var tx = await db.Database.BeginTransactionAsync();
+
+    var ((ada, alan), _) = ProduceModel();
+
+    db.AddRange(ada, alan);
+
+    await db.SaveChangesAsync();
+    db.ChangeTracker.Clear();
+
+    var loadedAda = await db.Runners
+      .Include(r => r.RaceResults!.Where(
+        finish => finish.Position <= 10
+          && finish.Time <= TimeSpan.FromHours(2)
+          && finish.Race.Name.Contains("New")
+        )
+      )
+      .FirstAsync(r => r.Email == "ada@example.org");
+
+    Assert.NotNull(loadedAda);
+    Assert.NotNull(loadedAda.RaceResults);
+    Assert.Single(loadedAda.RaceResults);
+  }
+
+  [Fact]
+  public async Task Test_Filter_Multiple_RaceResults_By_Top_Ten_Finish_With_Projection() {
+    var db = DatabaseFixture.CreateDbContext();
+
+    using var tx = await db.Database.BeginTransactionAsync();
+
+    var ((ada, alan), _) = ProduceModel();
+
+    db.AddRange(ada, alan);
+
+    await db.SaveChangesAsync();
+    db.ChangeTracker.Clear();
+
+    var loadedAdasTop10Races = await db.Runners
+      .Where(r => r.Email == "ada@example.org")
+      .SelectMany(r => r.RaceResults!.Where(
+        finish => finish.Position <= 10)
+      )
+      .Select(finish => new {
+        Runner = finish.Runner.Name,
+        Race = finish.Race.Name,
+        finish.Position,
+        finish.Time
+      })
+      .OrderBy(r => r.Position)
+      .ToListAsync();
+
+    Assert.NotNull(loadedAdasTop10Races);
+    Assert.NotEmpty(loadedAdasTop10Races);
+    Assert.Equal(2, loadedAdasTop10Races.Count);
+    Assert.Equal(
+      ("Ada Lovelace", "New York City Marathon", 1, TimeSpan.FromMinutes(120)),
+      (
+        loadedAdasTop10Races[0].Runner,
+        loadedAdasTop10Races[0].Race,
+        loadedAdasTop10Races[0].Position,
+        loadedAdasTop10Races[0].Time
+      )
+    );
+    Assert.Equal(
+      ("Ada Lovelace", "Boston Marathon", 5, TimeSpan.FromMinutes(145)),
+      (
+        loadedAdasTop10Races[1].Runner,
+        loadedAdasTop10Races[1].Race,
+        loadedAdasTop10Races[1].Position,
+        loadedAdasTop10Races[1].Time
+      )
+    );
+  }
+
+  /// <summary>
+  /// Utility method that produces a sample dataset to persist.
+  /// </summary>
+  private (
+    (Runner Ada, Runner Alan) Runners,
+    (Race Nyc, Race Bos, Race B135, Race H100, Race Spr) Races
+  ) ProduceModel() {
     var ada = new Runner() {
       Name = "Ada Lovelace",
       Email = "ada@example.org",
@@ -140,6 +322,7 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
     ada.Races = [ny, bos, b135];
     alan.Races = [h100, spr];
 
+    // Ada's results
     var result_ny = new RaceResult() {
       Runner = ada,
       Race = ny,
@@ -153,7 +336,7 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
       Race = bos,
       BibNumber = 1,
       Position = 5,
-      Time = TimeSpan.FromMinutes(125)
+      Time = TimeSpan.FromMinutes(145)
     };
 
     var result_b135 = new RaceResult() {
@@ -164,6 +347,7 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
       Time = TimeSpan.FromMinutes(820)
     };
 
+    // Alan's results
     var result_h100 = new RaceResult() {
       Runner = alan,
       Race = h100,
@@ -176,36 +360,16 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
       Runner = alan,
       Race = spr,
       BibNumber = 1,
-      Position = 15,
+      Position = 9,
       Time = TimeSpan.FromMinutes(840)
     };
 
     ada.RaceResults = [result_ny, result_bos, result_b135];
     alan.RaceResults = [result_h100, result_spr];
 
-    db.AddRange(ada, alan);
-
-    await db.SaveChangesAsync();
-    db.ChangeTracker.Clear();
-
-    var loadedAda = await db.Runners
-      .Include(r => r.RaceResults)
-      .Include(r => r.Races)
-      .FirstAsync(r => r.Email == "ada@example.org");
-
-    var loadedAlan = await db.Runners
-      .Include(r => r.RaceResults)
-      .Include(r => r.Races)
-      .FirstAsync(r => r.Email == "alan@example.org");
-
-    Assert.NotNull(loadedAda);
-    Assert.NotEmpty(loadedAda.Races);
-    Assert.NotEmpty(loadedAda.RaceResults);
-    Assert.Equal(3, loadedAda.RaceResults.Count);
-
-    Assert.NotNull(loadedAlan);
-    Assert.NotEmpty(loadedAlan.Races);
-    Assert.NotEmpty(loadedAlan.RaceResults);
-    Assert.Equal(2, loadedAlan.RaceResults.Count);
+    return(
+      (ada, alan),
+      (ny, bos, b135, h100, spr)
+    );
   }
 }

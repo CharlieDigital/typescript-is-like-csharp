@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +7,7 @@ namespace EFExample.Data;
 public record DbConfig(string ConnectionString);
 
 public class Database(DbConfig config) : DbContext {
+  // 👇 These two define our schema
   public DbSet<Runner> Runners { get; set; } = null!;
   public DbSet<Race> Races { get; set; } = null!;
 
@@ -31,10 +31,10 @@ public class Runner {
   public required string Name { get; set; }
   public required string Email { get; set; }
   public required string Country { get; set; }
-  [JsonIgnore]
-  public List<Race> Races { get; set; } = [];
-  [JsonIgnore]
-  public List<RaceResult> RaceResults { get; set; } = [];
+  [JsonIgnore] // 👇 Do not serialize this to JSON
+  public List<Race>? Races { get; set; }
+  [JsonIgnore] // 👇 Do not serialize this to JSON
+  public List<RaceResult>? RaceResults { get; set; }
 }
 
 [Index(nameof(Date))]
@@ -42,18 +42,17 @@ public class Race {
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   public int Id { get; set; }
   public required string Name { get; set; }
-  public required DateTime Date { get; set;}
+  public required DateTime Date { get; set; }
   public required decimal DistanceKm { get; set; }
-  [JsonIgnore]
-  public List<Runner> Runners { get; set; } = [];
-  [JsonIgnore]
-  public List<RaceResult> RaceResults { get; set; } = [];
+  [JsonIgnore] // 👇 Do not serialize this to JSON
+  public List<Runner>? Runners { get; set; }
+  [JsonIgnore] // 👇 Do not serialize this to JSON
+  public List<RaceResult>? RaceResults { get; set; }
 }
 
-[Index(nameof(RunnerId), nameof(RaceId))]
+[PrimaryKey(nameof(RunnerId), nameof(RaceId))]
 [Index(nameof(BibNumber))]
 public class RaceResult {
-  public int Id { get; set; }
   public int RunnerId { get; set; }
   public int RaceId { get; set; }
   public Runner Runner { get; set; } = null!;

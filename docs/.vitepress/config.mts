@@ -78,7 +78,7 @@ export default defineConfig({
               { text: 'Nest.js vs Controller API', link: '/pages/intermediate/nest-vs-controller-api' },
               { text: 'Decorators vs Attributes', link: '/pages/intermediate/decorators-vs-attributes' },
               // { text: 'Dependency Injection', link: '/pages/intermediate/dependency-injection' },
-              { text: 'Entity Framework Core (ORM)', link: '/pages/intermediate/ef-core' },
+              { text: 'Databases and ORMs', link: '/pages/intermediate/databases-and-orms' },
             ]
           },
           {

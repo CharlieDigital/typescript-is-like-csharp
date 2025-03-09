@@ -233,4 +233,4 @@ Console.WriteLine(totalYoe2);  // 8
 
 C#'s `System.Linq` library offers a superset of functionality to JavaScript array operators.  [Check out the docs for more examples](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.aggregate?view=net-9.0) including operators like `.Min()`/`.Max()`, `.Skip()`, `.Take()`, `.TakeWhile()`, and more!
 
-We'll also look at how LINQ gets used later in .NET's extremely powerful first party ORM [Entity Framework Core](ef-core.md)
+We'll also look at how LINQ gets used later in .NET's extremely powerful first party ORM [Entity Framework Core](databases-and-orms.md)
