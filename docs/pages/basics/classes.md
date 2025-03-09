@@ -63,7 +63,7 @@ In this C# example, are a few things to call out:
 
 - We use a **primary constructor** to define the class.  This allows the class definition to accept the parameters which are treated as private fields.
 - Property accessors like `DisplayName` can be defined using lambda expressions.
-- Because C# still has the type metadata at runtime, we can use `nameof(Person)` here at runtime.
+- `nameof(Person)` can be used in general to avoid using strings in code when referencing classes, methods, and properties by name.
 
 ## Inheriting Classes
 
