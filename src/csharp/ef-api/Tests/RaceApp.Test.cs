@@ -270,6 +270,68 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
     );
   }
 
+  [Fact]
+  public async Task Test_Filter_Multiple_RaceResults_By_Top_Ten_Finish_With_Projection_To_Record() {
+    var db = DatabaseFixture.CreateDbContext();
+
+    using var tx = await db.Database.BeginTransactionAsync();
+
+    var ((ada, alan), _) = ProduceModel();
+
+    db.AddRange(ada, alan);
+
+    await db.SaveChangesAsync();
+    db.ChangeTracker.Clear();
+
+    var loadedAdasTop10Races = (await db.Runners
+      .Where(r => r.Email == "ada@example.org")
+      .SelectMany(r => r.RaceResults!.Where(
+        finish => finish.Position <= 10)
+      )
+      .Select(finish => new {
+        RunnerName = finish.Runner.Name,
+        RaceName = finish.Race.Name,
+        finish.Position,
+        finish.Time
+      })
+      .OrderBy(r => r.Position)
+      .ToListAsync())
+      .Select(r => new TestRaceResult(
+        r.RunnerName,
+        r.RaceName,
+        r.Position,
+        r.Time)
+      ).ToList();
+
+    Assert.NotNull(loadedAdasTop10Races);
+    Assert.NotEmpty(loadedAdasTop10Races);
+    Assert.Equal(2, loadedAdasTop10Races.Count);
+    Assert.Equal(
+      ("Ada Lovelace", "New York City Marathon", 1, TimeSpan.FromMinutes(120)),
+      (
+        loadedAdasTop10Races[0].RunnerName,
+        loadedAdasTop10Races[0].RaceName,
+        loadedAdasTop10Races[0].Position,
+        loadedAdasTop10Races[0].Time
+      )
+    );
+    Assert.Equal(
+      ("Ada Lovelace", "Boston Marathon", 5, TimeSpan.FromMinutes(145)),
+      (
+        loadedAdasTop10Races[1].RunnerName,
+        loadedAdasTop10Races[1].RaceName,
+        loadedAdasTop10Races[1].Position,
+        loadedAdasTop10Races[1].Time
+      )
+    );
+  }
+  public record TestRaceResult(
+    string RunnerName,
+    string RaceName,
+    int Position,
+    TimeSpan Time
+  );
+
   /// <summary>
   /// Utility method that produces a sample dataset to persist.
   /// </summary>
