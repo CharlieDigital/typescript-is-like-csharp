@@ -69,6 +69,10 @@ dotnet watch --non-interactive # ✅ Server ready!
   </template>
 </CodeSplitter>
 
+::: tip Source code
+💡 The source code for this walkthrough is available in GitHub [for .NET](https://github.com/CharlieDigital/typescript-is-like-csharp/tree/main/src/csharp/webapi-minimal) and [for Express.js](https://github.com/CharlieDigital/typescript-is-like-csharp/tree/main/src/typescript/express-app).
+:::
+
 ## Application
 
 Let's take a look at the application that's created:

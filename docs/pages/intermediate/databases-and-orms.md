@@ -6,10 +6,6 @@ The Node.js ecosystem has a large number of NPM packages available including [**
 
 We'll compare the most popular Node.js library, Prisma, against EF Core and see where they align and where they differ.  We'll also see how the usage of LINQ in EF enables much more fluid query building.
 
-::: tip All examples are in the repo
-All of the code here is functional and in the repo to experiment with!
-:::
-
 ::: warning Start the Postgres Docker instance first
 Before running the examples and unit tests, start the Postgres container instance via `docker compose up`.
 
@@ -52,6 +48,10 @@ dotnet add package XUnit
 
   </template>
 </CodeSplitter>
+
+::: tip Source code
+💡 The source code for this walkthrough [is available in GitHub](https://github.com/CharlieDigital/typescript-is-like-csharp/tree/main/src/csharp/ef-api).
+:::
 
 ## Wiring Postgres
 

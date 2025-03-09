@@ -46,6 +46,10 @@ dotnet watch --non-interactive # ✅ Server ready!
 Nest.js does a great job of also including testing out-of-the-box whereas the `dotnet` CLI expects you to set up unit testing separately and does not include it out-of-the-box.
 :::
 
+::: tip Source code
+💡 The source code for this walkthrough is available in GitHub [for .NET](https://github.com/CharlieDigital/typescript-is-like-csharp/tree/main/src/csharp/webapi-controllers) and [for Nest.js](https://github.com/CharlieDigital/typescript-is-like-csharp/tree/main/src/typescript/nest-app).
+:::
+
 ## Application
 
 ### Entry Point

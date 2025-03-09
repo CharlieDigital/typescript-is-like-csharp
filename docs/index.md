@@ -16,6 +16,9 @@ hero:
     - theme: alt
       text: Show me the Basics
       link: /pages/basics/variables
+    - theme: alt
+      text: Let's Deep Dive!
+      link: /pages/intermediate/nest-vs-controller-api
 
 features:
   - title: Easy to Learn
