@@ -43,6 +43,9 @@ dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 # Add to allow snake_case naming (because Pg and caps are no fun)
 dotnet add package EFCore.NamingConventions
 
+# Add for migrations
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
 # Add for unit tests
 dotnet add package XUnit
 ```
@@ -64,7 +67,7 @@ Next, we wire our Postgres driver and connect it to our runtime.
   </template>
   <template #right>
 
-```csharp
+```csharp{24,25,29-34}
 // 📄 Database.cs
 // This is just for us to inject the connection string (and other config)
 public record DbConfig(string ConnectionString);
@@ -80,8 +83,8 @@ public class Database(DbConfig config) : DbContext {
     optionsBuilder
       .UseNpgsql(config.ConnectionString, o => o.UseAdminDatabase("postgres"))
       .UseSnakeCaseNamingConvention()
-      .EnableDetailedErrors()
-      .EnableSensitiveDataLogging();
+      .EnableDetailedErrors() // ⚠️ ONLY DEV CODE
+      .EnableSensitiveDataLogging(); // ⚠️ ONLY DEV CODE
   }
 }
 
@@ -93,7 +96,9 @@ builder.Services.AddDbContext<Database>();
 
 var app = var app = builder.Build();
 
-// Get our database from DI and ensure we create it (because our Docker container is ephemeral)
+// ⚠️ ONLY DEMO CODE; NOT FOR PROD ⚠️
+// Get our database from DI and ensure we create it
+// (because our Docker container is ephemeral)
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetService<Database>()!;
 db.Database.EnsureCreated();
@@ -102,9 +107,19 @@ db.Database.EnsureCreated();
   </template>
 </CodeSplitter>
 
+::: warning This is just demo code!
+Note that the last block of code is just demo code!  You do not need to do this in normal apps.  Here we are just applying the schema at startup for the purposes of this demo.
+:::
+
 ## Creating a Schema
 
 Let's see how we define a schema for each platform.
+
+::: tip Keep an eye out for types
+As you to through this series of exercises, keep an eye out for how the EF Core examples allow types to flow through the entire chain, preventing errors and mistakes at dev, build, *and* runtime.
+
+At no point in these examples does EF require usage of strings to reference properties, operations, and so on.
+:::
 
 <CodeSplitter>
   <template #left>
@@ -438,12 +453,120 @@ See the unit tests for full implementations.  The purpose of the API implementat
   </template>
   <template #right>
 
-```csharp
-// 🚧  WIP
+```csharp{40,49,54-58}
+// 📄 ResultsRepository.cs: Sample repository
+public class ResultsRepository(
+  Database db // 👈 Injected via DI
+) {
+  public async Task<IEnumerable<RunnerRaceResult>> Top10FinishesByRunner(string email)
+    => (await db.Runners
+      .Where(r => r.Email == email)
+      .SelectMany(r => r.RaceResults!.Where(
+        finish => finish.Position <= 10)
+      )
+      // ✨ Notice how everything is fully typed downstack
+      .Select(finish => new {
+          RunnerName = finish.Runner.Name,
+          RaceName = finish.Race.Name,
+          finish.Position,
+          finish.Time,
+          RaceDate = finish.Race.Date
+        }
+      )
+      .OrderBy(r => r.Position)
+      .ToListAsync())
+      .Select(r => new RunnerRaceResult(
+        r.RunnerName,
+        r.RaceName,
+        r.Position,
+        r.Time,
+        r.RaceDate
+      ));
+}
+
+public record RunnerRaceResult(
+  string RunnerName,
+  string RaceName,
+  int Position,
+  TimeSpan Time,
+  DateTime RaceDate
+);
+
+// 📄 Program.cs: set up our DI
+builder.Services.AddScoped<ResultsRepository>();
+builder.Services.AddSingleton(new DbConfig(connectionString));
+builder.Services.AddDbContext<Database>();
+
+// 📄 AppController.cs: Add our endpoint and DI
+[ApiController]
+[Route("[controller]")]
+public class AppController(
+  ILogger<AppController> logger,
+  ResultsRepository resultsRepository
+) : ControllerBase {
+  [HttpGet]
+  public string Get() => "Hello, World!";
+
+  [HttpGet("/top10/{email}")]
+  public async Task<List<RunnerRaceResult>> GetTop10FinishesByRunner(string email) {
+    var results = await resultsRepository.Top10FinishesByRunner(email);
+    return [.. results];
+  }
+}
 ```
 
   </template>
 </CodeSplitter>
+
+## Hoisting Navigations
+
+EF Core will attempt to persist the entire object tree if you round-trip the entity.  To prevent this -- for example, we only want to round-trip the runner -- we can use a simple technique here to split out the navigation collections from the results:
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// 🚧  WIP
+```
+
+  </template>
+  <template #right>
+
+```csharp{4,5,20-22}
+// 📄 ResultsRepository.cs: Retrieve a runner and her results
+public async Task<Runner> RunnerResults(string email)
+  => await db.Runners
+    .Include(r => r.RaceResults) // 👈 Included
+    .Include(r => r.Races) // 👈 Included
+    .FirstAsync(r => r.Email == email);
+
+// We "hoist" our dependent properties here.
+public record RunnerResults(
+  Runner Runner,
+  Races[] Races,
+  RaceResult[] Results
+);
+
+// 📄 AppController.cs: Endpoint for runner and results
+[HttpGet("/results/{email}")]
+public async Task<RunnerResults> GetRunnerResults(string email) {
+  var result = await resultsRepository.RunnerResults(email);
+  return new(
+    result,  // 👈 Will NOT have .Races and .Result in JSON output
+    [..result.RaceResults ?? []], // 👈 Hoisted
+    [..result.Races ?? []]  // 👈 Hoisted
+  );
+}
+```
+
+  </template>
+</CodeSplitter>
+
+Remember how we used `[JsonIgnore]` in our model? This means that at serialization at the boundary, `Runner.Races` and `Runner.RaceResults` will automatically be stripped out (nice)!  So to keep them in the output JSON, we need to "hoist" them up into a "DTO" record.
+
+::: tip
+This is an extremely useful pattern and should generally be used for all navigation properties as it will allow round-tripping the entity for updates without passing the navigations along.
+:::
 
 ## Adding Migrations
 
@@ -457,8 +580,17 @@ See the unit tests for full implementations.  The purpose of the API implementat
   </template>
   <template #right>
 
-```csharp
-// 🚧  WIP
+```shell
+# From /src/csharp/ef-api
+dotnet ef migrations add Initial
+
+# Generate idempotent SQL file (best for upstream deployment)
+dotnet ef migrations script \
+  --output Migrations/Scripted/migration.sql \
+  --idempotent
+
+# Apply updates
+dotnet ef database update
 ```
 
   </template>

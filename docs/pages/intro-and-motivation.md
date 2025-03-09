@@ -36,7 +36,15 @@ Many developers, engineering managers, and CTOs may have come across C# and .***
 I often wonder if Microsoft would have been better off just calling it `dot` instead when they made the transition from .NET Framework...
 :::
 
-![Image comparing JS/TS/C#](../assets/js-ts-csharp.png)
+::: tip Take me to the highlights!
+If you just want the highlights, I recommend:
+
+- [Collections](./basics/collections.md)
+- [Classes](./basics/classes.md)
+- [Express vs Minimal API](./intermediate/express-vs-minimal-api.md)
+- [Nest.js vs Controller API](./intermediate/nest-vs-controller-api.md)
+- [Databases and ORMs](./intermediate/databases-and-orms.md)
+:::
 
 ## The Problem with TS
 
@@ -89,7 +97,7 @@ Then you will probably like [.NET controller web APIs](./intermediate/nest-vs-co
 
 And now the `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
 
-That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  ***Extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
+That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  Of course we can add validations and schemas to prevent a `CreateCatDTO` from accepting a `CreateDogDTO` at runtime, but this is ***extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
 
 This problem is actually quite common and often rears its head as *the round-trip problem*.  This happens when you *read* a model with additional properties (e.g. via a Prisma includes) and then try to *write* the model back with a more narrow model that doesn't carry the includes: the more narrow shape will accept the wider shape!
 
