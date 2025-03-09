@@ -106,6 +106,33 @@ var backendNames = candidates.Where(
   </template>
 </CodeSplitter>
 
+Finding a single match:
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Find single
+let ada = candidates.find(
+  c => c.name === "Ada"
+)
+// { Ada }
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// Find single
+var ada = candidates.FirstOrDefault(
+  c => c.Name == "Ada"
+);
+// { Ada }
+```
+
+  </template>
+</CodeSplitter>
+
 Here, we filter by min/max:
 
 <CodeSplitter>

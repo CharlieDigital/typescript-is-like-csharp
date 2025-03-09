@@ -461,6 +461,9 @@ var techToCandidates = candidates.Aggregate(
   var maxExp = candidates.MaxBy(c => c.YoE);
   log(maxExp.Name);
 
+  var ada = candidates.FirstOrDefault(c => c.Name == "Ada");
+  log(ada);
+
 #!csharp
 
 record Cost(int Amount);

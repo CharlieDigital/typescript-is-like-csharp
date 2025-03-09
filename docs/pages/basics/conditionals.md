@@ -45,6 +45,20 @@ if (y == 10) {
 See below for how we can combine *pattern matching* with `if` conditions
 :::
 
+If you're coming from the C# side, then one key topic to understand is the difference between `==` (loose equality) and `===` (strict equality) in JavaScript:
+
+```ts
+console.log(5 == "5");  // true (type coercion: string converted to number)
+console.log(5 === "5"); // false (different types)
+
+console.log(false == 0);  // true (both coerced to `0`)
+console.log(null == undefined); // true (special coercion rule)
+```
+
+By default, `===` is the safer comparison operator to use!
+
+C# only has strict equality and does not have the same concept.
+
 ## Switch-Case
 
 <CodeSplitter>

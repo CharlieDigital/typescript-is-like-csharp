@@ -102,3 +102,7 @@ This extension method allows us to simplify the code and extract the results.
 ::: warning
 There is one very important distinction between `Task` and `Promise`: `Task` can be both concurrent ***and*** parallel while `Promise` is only concurrent.  `Task` can run in different threads on .NET's thread pool, which is not the case for `Promise` as it is single threaded.  So some care needs to be taken when mutating state like using `Interlocked` or structures like `ConcurrentDictionary` and `ConcurrentBag`.
 :::
+
+::: tip Read more on C# `async/await`
+Dive deeper into the details of `async/await` in C# and best practices [in David Fowler's writeup](https://github.com/davidfowl/AspNetCoreDiagnosticScenarios/blob/master/AsyncGuidance.md).
+:::

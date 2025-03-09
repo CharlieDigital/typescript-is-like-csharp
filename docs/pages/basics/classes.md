@@ -276,7 +276,7 @@ iphone.ConnectCable(); // "Connecting Lighting cable..."
 
 ## Record Classes
 
-C# [record classes](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) provide immutability semantics to classes (we won't cover `record struct` here).
+C# [record classes](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) provide immutability semantics to classes via the positional properties in the constructor (we won't cover `record struct` here).
 
 ```csharp
 record Contact(
@@ -287,12 +287,17 @@ record Contact(
 };
 
 var alan = new Contact("Alan", "Turing");
-alan.FirstName = "Allen"; // ❌ Error: cannot modify a record
-alan = alan with { FirstName = "Al" }; // OK
+
+alan.FirstName = "Allen"; // ❌ Error: cannot modify positional property on a record class
+
+alan = alan with { FirstName = "Al" }; // ✅ OK
+
 var (FirstName, LastName) = alan; // Deconstructing a record
+
 Console.WriteLine(alan.DisplayName); // "Al Turing"
 
 var al = new Contact("Al", "Turing");
+
 Console.WriteLine(al == alan); // True
 ```
 
