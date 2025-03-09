@@ -17,4 +17,19 @@ public class AppController(
     var results = await resultsRepository.Top10FinishesByRunner(email);
     return [.. results];
   }
+
+  [HttpGet("/results/{email}")]
+  public async Task<RunnerResults> GetRunnerResults(string email) {
+    var result = await resultsRepository.RunnerResults(email);
+    return new(
+      result,
+      [..result.RaceResults ?? []],
+      [..result.Races ?? []]
+    );
+  }
 }
+public record RunnerResults(
+  Runner Runner,
+  RaceResult[] Results,
+  Race[] Races
+);

@@ -37,4 +37,10 @@ public class ResultsRepository(
         r.Time,
         r.RaceDate
       ));
+
+    public async Task<Runner> RunnerResults(string email)
+      => await db.Runners
+        .Include(r => r.RaceResults)
+        .Include(r => r.Races)
+        .FirstAsync(r => r.Email == email);
 }
