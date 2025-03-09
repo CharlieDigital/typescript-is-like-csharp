@@ -10,6 +10,12 @@ We'll compare the most popular Node.js library, Prisma, against EF Core and see 
 All of the code here is functional and in the repo to experiment with!
 :::
 
+::: warning Start the Postgres Docker instance first
+Before running the examples and unit tests, start the Postgres container instance via `docker compose up`.
+
+See the `docker-compose.yaml` file for more details.  The databases are dropped and re-created on each run.
+:::
+
 ## Setting Up
 
 Here, we'll create a simple API app using Nest.js and .NET controller web APIs along with unit tests to demonstrate how these ORMs work and how they plug into the DI system of common platform runtimes.
@@ -96,7 +102,7 @@ db.Database.EnsureCreated();
   </template>
 </CodeSplitter>
 
-## Creating our Database Schema
+## Creating a Schema
 
 Let's see how we define a schema for each platform.
 
@@ -421,6 +427,25 @@ Let's examine how we create repositories and connect them to our DI to make them
 ::: info These implementations are not complete
 See the unit tests for full implementations.  The purpose of the API implementations is purely to demonstrate how the DI works and how things get wired up.
 :::
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// 🚧  WIP
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// 🚧  WIP
+```
+
+  </template>
+</CodeSplitter>
+
+## Adding Migrations
 
 <CodeSplitter>
   <template #left>

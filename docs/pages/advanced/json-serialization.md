@@ -221,3 +221,7 @@ Console.WriteLine(json);
 </CodeSplitter>
 
 Overall, .NET's `System.Text.Json` library offers many powerful capabilities when it comes to managing serialization an deserialization of JSON compared to the built-in `JSON` utility in JavaScript.
+
+:::tip
+We'll see in [Databases and ORMs](../intermediate/databases-and-orms.md) why declarative JSON field erasure is very useful.
+:::

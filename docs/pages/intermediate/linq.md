@@ -6,6 +6,10 @@ LINQ in C# enables functional programming by providing a set of methods like `Wh
 
 In JavaScript and TypeScript, similar operations are performed using methods like `filter()`, `map()`, and `reduce()`, which achieve the same transformations as LINQ’s `Where()` and `Select()`. However, JavaScript methods typically execute eagerly, creating new arrays for each operation. This can lead to higher memory usage and slower performance for large collections. C#’s deferred execution and use of `IEnumerable<T>` allow LINQ to be more memory-efficient and performant, especially when chaining multiple operations.
 
+::: tip To really see the full utility of LINQ and expression trees...
+Be sure to check out the [Databases and ORM](../intermediate/databases-and-orms.md) to see how LINQ makes working with databases in .NET fluent, productive, and less prone to type errors.
+:::
+
 ## Setup
 
 Our examples below will assume the following starting model:
