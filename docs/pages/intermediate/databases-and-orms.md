@@ -191,6 +191,10 @@ public class RaceResult {
   </template>
 </CodeSplitter>
 
+::: tip Data annotations for mapping and data quality
+Here, we see some basic data annotations to specify indices and primary keys.  **[EF Core data annotations](https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties?tabs=data-annotations%2Cwithout-nrt)** allow customization of the schema mapping.  If you prefer more explicitness, you can also use [**fluent configuration**](https://learn.microsoft.com/en-us/ef/core/modeling/#use-fluent-api-to-configure-a-model) instead.  Combine these with [**.NET web API data annotations**](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-9.0), .NET offers a painless way to handle most common data validation use cases.
+:::
+
 ## Writing Data
 
 ### Adding a Single Record

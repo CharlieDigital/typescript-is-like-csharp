@@ -98,7 +98,15 @@ record Suv : Vehicle {
 // could not be mapped to any .NET member contained in type 'Submission#8+Car'.
 ```
 
+::: tip Manage this behavior globally
+The [`JsonSerializerOptions` class](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.jsonserializeroptions?view=net-9.0#properties) allows managing this more globally to prevent having to apply the `JsonUnmappedMemberHandling` on every class.  Set the [`UnmappedMemberHandling`](https://learn.microsoft.com/en-us/dotnet/api/system.text.json.jsonserializeroptions.unmappedmemberhandling?view=net-9.0#system-text-json-jsonserializeroptions-unmappedmemberhandling) to `JsonUnmappedMemberHandling.Disallow`.
+:::
+
 This type of behavior can prevent issues when persisting to document-oriented databases, for example, by ensuring that mis-matches in the JSON structure to the class raise exceptions.
+
+::: tip Use data annotations for validation
+C# will already prevent many types of data quality issues out-of-the-box because it won't allow assignment of a `string` to an `int` property (JS doesn't care).  But you can also leverage [data annotations](https://weblogs.asp.net/ricardoperes/net-8-data-annotations-validation) to handle validation at the boundary.
+:::
 
 ## Customizing Serialization
 
