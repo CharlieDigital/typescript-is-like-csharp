@@ -444,7 +444,7 @@ The result of the select from the .NET side is an [anonymous type](../basics/cla
 Let's examine how we create repositories and connect them to our DI to make them available to controllers and services.
 
 ::: info These implementations are not complete
-See the unit tests for full implementations.  The purpose of the API implementations is purely to demonstrate how the DI works and how things get wired up.
+See [**the unit tests in the repo**](https://github.com/CharlieDigital/typescript-is-like-csharp/blob/main/src/csharp/ef-api/Tests/RaceApp.Test.cs) for full implementations.  The purpose of the API implementations is purely to demonstrate how the DI works and how things get wired up.
 :::
 
 <CodeSplitter>
@@ -457,12 +457,14 @@ See the unit tests for full implementations.  The purpose of the API implementat
   </template>
   <template #right>
 
-```csharp{40,49,54-58}
+```csharp{42,51,56-60}
 // 📄 ResultsRepository.cs: Sample repository
 public class ResultsRepository(
   Database db // 👈 Injected via DI
 ) {
-  public async Task<IEnumerable<RunnerRaceResult>> Top10FinishesByRunner(string email)
+  public async Task<
+    IEnumerable<RunnerRaceResult>
+  > Top10FinishesByRunner(string email)
     => (await db.Runners
       .Where(r => r.Email == email)
       .SelectMany(r => r.RaceResults!.Where(
@@ -556,7 +558,7 @@ public record RunnerResults(
 public async Task<RunnerResults> GetRunnerResults(string email) {
   var result = await resultsRepository.RunnerResults(email);
   return new(
-    result,  // 👈 Will NOT have .Races and .Result in JSON output
+    result,  // 👈 Will NOT have .Races and .RaceResults in JSON output
     [..result.RaceResults ?? []], // 👈 Hoisted
     [..result.Races ?? []]  // 👈 Hoisted
   );

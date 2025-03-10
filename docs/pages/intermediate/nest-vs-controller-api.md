@@ -226,7 +226,7 @@ We'll create an `AppService.cs` just like the Nest.js example.
   <template #left>
 
 ```ts{9,16,21}
-// app.module.ts
+// 📄 app.module.ts
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -238,7 +238,7 @@ import { AppService } from './app.service';
 })
 export class AppModule {}
 
-// app.controller.ts
+// 📄 app.controller.ts
 export class AppController {
   constructor(
     private readonly appService: AppService
@@ -255,15 +255,15 @@ export class AppController {
   <template #right>
 
 ```csharp{3,14,17}
-// AppService.cs to match Nest.js
+// 📄 AppService.cs to match Nest.js
 public class AppService {
   public string GetHello() => "Hello, World!";
 }
 
-// Basic method of registering a service in Program.cs
+// 📄 Program.cs: basic method of registering a service
 builder.Services.AddScoped<AppService>();
 
-// Change our AppController.cs
+// 📄 AppController.cs: add constructor injection
 [ApiController]
 [Route("[controller]")]
 public class AppController(
@@ -326,13 +326,13 @@ Unlike Express.js, Nest.js is a fully featured framework that feels pretty simil
 |**Route constraints**|[Nest.js validators](https://docs.nestjs.com/techniques/validation).  By default, Nest.js will allow a route with a parameter like `increment(@Param("count") count: number)` to accept a string without complaint.  Manual validation is required to ensure the types match.  In this codebase, try `http://localhost:3001/increment/asdf` and it will still work without a validator.|[.NET route constraints](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-9.0#route-constraints) are built in, but even by default, passing a `string` to a route that expects an `int` parameter will fail with an error  In our .NET controller API, you can test this route: `http://localhost:5068/app/increment/asdf` and see that this will generate a type mismatch error.|
 |**OpenAPI**|[Nest.js setup for OpenAPI](https://docs.nestjs.com/openapi/introduction).  [Note that it requires using JavaScript `class` as well as annotations](https://docs.nestjs.com/openapi/types-and-parameters).  It is possible to then extract types from this using specialized [mapped types](https://docs.nestjs.com/openapi/mapped-types).|[.NET OpenAPI features](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/overview?view=aspnetcore-9.0) (note that these are enabled by default (see our code example above where we removed it); in general, .NET web API features can be turned on progressively)|
 
-Here, C#'s' static type system really shines because the type bindings can be largely resolved automatically with no special decoration required for the most part; there's no need to decorate classes for OpenAPI bindings except where special behavior is desired.
+Here, C#'s static type system really shines because the type bindings can be largely resolved automatically with no special decoration required for the most part; there's no need to decorate classes for OpenAPI bindings except where special behavior is desired.
 
 ## Performance
 
 How do they stack up?
 
-![](../../assets/techempower.png)
+![Nest.js vs .NET web API performance](../../assets/techempower.png)
 
 <CodeSplitter>
   <template #left>

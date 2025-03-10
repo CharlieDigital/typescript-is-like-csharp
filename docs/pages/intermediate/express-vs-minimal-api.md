@@ -186,6 +186,10 @@ app.Run();
   </template>
 </CodeSplitter>
 
+::: tip Progressively enable HTTP application server features as needed
+From here, it is easy to extend .NET's minimal API to include request filtering, CORS, authentication and authorization, and much, much more just by progressively turning features on and off (no need to add 3rd party packages for core functionality).  Check out [**the official quick reference**](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis?view=aspnetcore-9.0) for how to work with minimal APIs if you prefer this style!
+:::
+
 ## Performance
 
 How do they stack up?

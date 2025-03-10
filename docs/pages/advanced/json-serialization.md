@@ -9,7 +9,7 @@ In contrast, C# offers more **type safety** with its built-in `System.Text.Json`
 <CodeSplitter>
   <template #left>
 
-```ts
+```ts{25,29}
 abstract class Vehicle {
   abstract maxSeats: number
 }
@@ -46,7 +46,7 @@ console.log(car) // { "maxSeats": 6, "has3rdRow": true }
   </template>
   <template #right>
 
-```csharp
+```csharp{18,22}
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -128,6 +128,8 @@ public record Driver(
 
 ### Write Enum Labels and Lowercase Properties
 
+By default, C# enums are represented as their numeric value.  To transmit the label and ensure our properties are `camelCase` instead of `PascalCase`, we can set the options:
+
 ```csharp{8-11,13}
 var driver = new Driver("Ada", VehicleType.Suv);
 var json = JsonSerializer.Serialize(driver);
@@ -167,6 +169,8 @@ Console.WriteLine(json);
 
 ## Ignoring fields
 
+This is a very important tool to get "free" DTO types by simply ensuring proper configuration of field and property include/excludes at serialization.  In JavaScript, you might end up defining a client Zod schema and a server Zod schema representing the same object but with fields stripped out for the client.
+
 <CodeSplitter>
   <template #left>
 
@@ -189,7 +193,7 @@ console.log(JSON.stringify(licensedDriver));
 // {"name":"Charles","licenseNumber":"12345","vehicleType":"minivan"}
 
 const {
-    licenseNumber, // 👈 Eject the field
+    licenseNumber, // 👈 Eject the field; can't forget to do this
     ...trimmed
 } = licensedDriver;
 
@@ -200,7 +204,7 @@ console.log(JSON.stringify(trimmed))
   </template>
   <template #right>
 
-```csharp{3}
+```csharp{8}
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -228,7 +232,7 @@ Console.WriteLine(json);
   </template>
 </CodeSplitter>
 
-Overall, .NET's `System.Text.Json` library offers many powerful capabilities when it comes to managing serialization an deserialization of JSON compared to the built-in `JSON` utility in JavaScript.
+In JavaScript, you'll have to manually "eject" the field or write a transformer/mapper.  Overall, .NET's `System.Text.Json` library offers many powerful capabilities when it comes to managing serialization an deserialization of JSON compared to the built-in `JSON` utility in JavaScript.
 
 :::tip
 We'll see in [Databases and ORMs](../intermediate/databases-and-orms.md) why declarative JSON field erasure is very useful.
