@@ -75,7 +75,7 @@ let names = candidates.map(
 
 // Combine
 let backendNames = candidates.filter(
-  c => c.position === 'backend'
+  c => c.osition === 'backend'
 ).map(
   c => c.name
 ); // ["Ada"]
@@ -97,9 +97,9 @@ var names = candidates.Select(
 
 // Combine
 var backendNames = candidates.Where(
-  c => c.position === 'backend'
+  c => c.Position == Position.Backend
 ).Select(
-  c => c.name
+  c => c.Name
 ); // ["Ada"]
 ```
 
