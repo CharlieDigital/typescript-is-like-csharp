@@ -116,9 +116,11 @@ Note that the last block of code is just demo code!  You do not need to do this 
 Let's see how we define a schema for each platform.
 
 ::: tip Keep an eye out for types
-As you to through this series of exercises, keep an eye out for how the EF Core examples allow types to flow through the entire chain, preventing errors and mistakes at dev, build, *and* runtime.
+As you go through this series of exercises, keep an eye out for how the EF Core examples allow types to flow through the entire chain, preventing errors and mistakes at dev, build, *and* runtime.
 
 At no point in these examples does EF require usage of strings to reference properties, operations, and so on.
+
+This is because [expression trees](https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/) are first-class entities in C# and allow runtime evaluation of C# expressions as syntax elements.
 :::
 
 <CodeSplitter>
@@ -131,7 +133,7 @@ At no point in these examples does EF require usage of strings to reference prop
   </template>
   <template #right>
 
-```csharp{3,4}
+```csharp{3,4,15,21-24,29,35-38,46,49,50}
 public class Database(DbConfig config) : DbContext {
   // 👇 These two define our schema
   public DbSet<Runner> Runners { get; set; } = null!;
@@ -181,8 +183,8 @@ public class RaceResult {
   public int RunnerId { get; set; }
   public int RaceId { get; set; }
   public Runner Runner { get; set; } = null!;
-  public int BibNumber { get; set; }
   public Race Race { get; set; } = null!;
+  public int BibNumber { get; set; }
   public int Position { get; set; }
   public TimeSpan Time { get; set; }
 }
@@ -508,7 +510,7 @@ builder.Services.AddDbContext<Database>();
 [Route("[controller]")]
 public class AppController(
   ILogger<AppController> logger,
-  ResultsRepository resultsRepository
+  ResultsRepository resultsRepository // 👈 Injected here
 ) : ControllerBase {
   [HttpGet]
   public string Get() => "Hello, World!";

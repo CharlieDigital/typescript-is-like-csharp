@@ -204,7 +204,7 @@ console.log(JSON.stringify(trimmed))
   </template>
   <template #right>
 
-```csharp{8}
+```csharp{8,9}
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
