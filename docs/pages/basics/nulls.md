@@ -55,8 +55,8 @@ let handle = email?.split("@")[0] ?? userId;
 
 handle ??= "unknown"
 // 👆👇These are equivalent
-if (handle == null) {
-  handle == "unknown"
+if (handle === null) {
+  handle === "unknown"
 }
 ```
 
@@ -100,17 +100,17 @@ Tim Deschryver has [the best writeup on pattern matching](https://timdeschryver.
 ```ts
 type List<T> = { }
 
-// "Elements are string or null"
-let list: List<string | null>;
+// "Elements are string or null or undefined"
+let list: List<string | null | undefined>;
 
-let arr: Array<string | null>[];
+let arr: Array<string | null | undefined>[];
 ```
 
   </template>
   <template #right>
 
 ```csharp
-// List<T> is standard library collection type
+// List<T> is a standard library collection type
 
 // "Elements are string or null"
 List<string?> list;

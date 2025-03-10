@@ -36,8 +36,8 @@ var nameToAge = new OrderedDictionary<string, int> {
 };
 
 // Enumerate
-foreach (var entry of nameToAge.Values) {
-  console.log(entry) // 12, 23, 43
+foreach (var entry in nameToAge.Values) {
+  Console.WriteLine(entry) // 12, 23, 43
 }
 
 // Convert to List<T> (T is inferred automatically)

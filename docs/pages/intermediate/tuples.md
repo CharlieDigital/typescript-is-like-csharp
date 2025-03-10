@@ -128,7 +128,7 @@ printCandidates(candidates);
   </template>
   <template #right>
 
-```csharp
+```csharp{1-4,8,14}
 using Candidate = (
   int YoE,
   Position Position
@@ -172,7 +172,7 @@ In C#, we can use tuples to mimic how object maps work for in JS/TS. Effectively
 <CodeSplitter>
   <template #left>
 
-```ts
+```ts{4-10}
 // This example uses an object to retain field access
 type Platform = "Mastodon" | "Bluesky" | "Threads";
 
@@ -210,7 +210,7 @@ console.log(profiles[1].socials[0].handle); // "@sndrchn"
   </template>
   <template #right>
 
-```csharp
+```csharp{2-8}
 // An aliased tuple with another tuple as a property `Socials`
 using Profile = (
   string Name,

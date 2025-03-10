@@ -171,7 +171,7 @@ In JS/TS, we can add methods to the `Array` type via `Prototype` or use a 3rd pa
 <CodeSplitter>
   <template #left>
 
-```ts
+```ts{14}
 // Accumulate a map of the tech to the candidates
 let techToCandidates = candidates.reduce(
   (map, c) => {
@@ -192,7 +192,7 @@ let techToCandidates = candidates.reduce(
   </template>
   <template #right>
 
-```csharp
+```csharp{3}
 // Accumulate a map of the tech to the candidates
 var techToCandidates = candidates.Aggregate(
   new Dictionary<string, List<string>>(),

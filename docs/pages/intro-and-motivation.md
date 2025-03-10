@@ -52,7 +52,7 @@ Don't get me wrong: for working with JavaScript, TypeScript is an absolute neces
 
 The fundamental problem with TypeScript-based backends and APIs is that this API:
 
-```ts{13}
+```ts{14}
 export class CreateCatDto {
   name: string;
   breed: string;
@@ -115,7 +115,7 @@ Throughout this guide, you'll notice just how similar TypeScript and C# are beca
 
 ### Strongly Typed Yet *Flexible*
 
-It turns out that -- if you are doing anything of consequence -- you actually probably want to have strong, static types on your backend because this will help reduce mistakes and errors while also reducing verbosity in the overall codebase required in JS to ensure some level of type safety (e.g. Zod schemas).
+It turns out that -- if you are doing anything of consequence -- you actually probably want to have strong, static types on your backend at runtime because this will help reduce mistakes and errors while also reducing verbosity in the overall codebase required in JS to ensure some level of type safety (e.g. Zod schemas).
 
 But .NET has a few interesting tricks up its sleeve when it comes to types such as:
 
@@ -179,13 +179,17 @@ Check out some of the latest releases:
 - [C# 11](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-11)
 - [C# 10](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-10)
 
-What should be clear is how much of a focus the .NET team has a ergonomics and DX.
+What should be clear is how much of a focus the .NET team has in terms of improving ergonomics and DX with each C# version.
 
 ## Common Myths
 
+::: tip
+There are ***a lot*** of myths about C# because many folks might have encountered it in the .NET Framework days and never looked at it afterwards.  Let's look at some of the most common ones.
+:::
+
 ### Myth: C# Requires Visual Studio and Expensive Licenses
 
-This is not the case; in fact C# works great from VS Code!  It's completely free to use and you can use the C# extensions without a license.
+This is not the case; in fact C# works great from VS Code!  It's completely free to use and you can use the C# extensions without a license when using [the C# extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
 
 ### Myth: .NET is Windows Only
 

@@ -23,7 +23,7 @@ for (const entry of entries) {
   <template #right>
 
 ```csharp
-for (var i = 0i; i < 10; i++) {
+for (var i = 0; i < 10; i++) {
 
 }
 
@@ -34,6 +34,10 @@ foreach (var entry in entries) {
 
   </template>
 </CodeSplitter>
+
+::: warning `for..in` with JS
+It is very common to mistakenly type this when switching back and forth from C# and TS.  `for...in` and `for...of` have two different use cases!  `for...in` [iterates properties of the object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in).
+:::
 
 ## `while` and `do-while`
 
