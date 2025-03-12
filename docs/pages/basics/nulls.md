@@ -56,7 +56,7 @@ let handle = email?.split("@")[0] ?? userId;
 handle ??= "unknown"
 // 👆👇These are equivalent
 if (handle === null) {
-  handle === "unknown"
+  handle = "unknown"
 }
 ```
 
@@ -69,7 +69,7 @@ var handle = email?.Split("@")[0] ?? userId;
 handle ??= "unknown"
 // 👆👇These are equivalent
 if (handle == null) {
-  handle == "unknown"
+  handle = "unknown"
 }
 ```
 

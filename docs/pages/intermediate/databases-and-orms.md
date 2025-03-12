@@ -540,7 +540,7 @@ EF Core will attempt to persist the entire object tree if you round-trip the ent
   </template>
   <template #right>
 
-```csharp{4,5,20-22}
+```csharp{4,5,11,12,20-22}
 // 📄 ResultsRepository.cs: Retrieve a runner and her results
 public async Task<Runner> RunnerResults(string email)
   => await db.Runners
@@ -551,8 +551,8 @@ public async Task<Runner> RunnerResults(string email)
 // We "hoist" our dependent properties here.
 public record RunnerResults(
   Runner Runner,
-  Races[] Races,
-  RaceResult[] Results
+  Races[] Races, // 👈 We'll hoist includes here
+  RaceResult[] Results // 👈 We'll hoist includes here
 );
 
 // 📄 AppController.cs: Endpoint for runner and results
