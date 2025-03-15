@@ -123,3 +123,47 @@ In .NET, there's no need to match your namespace to your directory structure, bu
 
 With JS, you may commonly end up with an `index.ts` that's just filled with exports for a given directory.
 :::
+
+## Ergonomics
+
+The ergonomics of using namespaces in C# is probably better than using file paths as module scopes.  In JS and TS, it is common to see code like this from the [Cal.com repo](https://github.com/calcom/cal.com/blob/main/apps/api/v2/src/modules/organizations/attributes/options/organizations-attributes-options.controller.ts):
+
+```js
+import { API_VERSIONS_VALUES } from "@/lib/api-versions";
+import { PlatformPlan } from "@/modules/auth/decorators/billing/platform-plan.decorator";
+import { Roles } from "@/modules/auth/decorators/roles/roles.decorator";
+import { ApiAuthGuard } from "@/modules/auth/guards/api-auth/api-auth.guard";
+import { PlatformPlanGuard } from "@/modules/auth/guards/billing/platform-plan.guard";
+import { IsAdminAPIEnabledGuard } from "@/modules/auth/guards/organizations/is-admin-api-enabled.guard";
+import { IsOrgGuard } from "@/modules/auth/guards/organizations/is-org.guard";
+import { RolesGuard } from "@/modules/auth/guards/roles/roles.guard";
+import { CreateOrganizationAttributeOptionInput } from "@/modules/organizations/attributes/options/inputs/create-organization-attribute-option.input";
+import { AssignOrganizationAttributeOptionToUserInput } from "@/modules/organizations/attributes/options/inputs/organizations-attributes-options-assign.input";
+import { UpdateOrganizationAttributeOptionInput } from "@/modules/organizations/attributes/options/inputs/update-organizaiton-attribute-option.input.ts";
+import {
+  AssignOptionUserOutput,
+  UnassignOptionUserOutput,
+} from "@/modules/organizations/attributes/options/outputs/assign-option-user.output";
+import { CreateAttributeOptionOutput } from "@/modules/organizations/attributes/options/outputs/create-option.output";
+import { DeleteAttributeOptionOutput } from "@/modules/organizations/attributes/options/outputs/delete-option.output";
+import { GetOptionUserOutput } from "@/modules/organizations/attributes/options/outputs/get-option-user.output";
+import { GetAllAttributeOptionOutput } from "@/modules/organizations/attributes/options/outputs/get-option.output";
+import { UpdateAttributeOptionOutput } from "@/modules/organizations/attributes/options/outputs/update-option.output";
+import { OrganizationAttributeOptionService } from "@/modules/organizations/attributes/options/services/organization-attributes-option.service";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from "@nestjs/common";
+import { ApiOperation, ApiTags as DocsTags } from "@nestjs/swagger";
+```
+
+And having to use "barrel files" [like this one](https://github.com/calcom/cal.com/blob/main/packages/lib/index.ts) to export multiple sub-modules as a single module:
+
+```js
+export { default as isPrismaObj, isPrismaObjOrUndefined } from "./isPrismaObj";
+export * from "./isRecurringEvent";
+export * from "./isEventTypeColor";
+export * from "./schedules";
+export * from "./event-types";
+```
+
+Overall, C#'s namespaces feel more ergonomic and their decoupling from file paths makes them easier to abstract collections of related entities without having to conform your physical file organization structure.
+
+C#'s [global using](../bonus/global-usings.md) makes this even easier and works like the [`unjs/unimport` package](https://github.com/unjs/unimport) to provide global imports and clean up messy module imports in JS/TS.

@@ -77,7 +77,7 @@ Will *happily* accept this payload at runtime:
 {
   name: "Poochie",
   breed: "Chihuahua",
-  bark: "loud" // [!code warning]
+  bark: 42 // [!code warning]
 }
 ```
 
@@ -88,26 +88,121 @@ It will also accept this:
   name: "Poochie",
   breed: "Chihuahua",
   bark: "eW91IHByb2JhYmx5IGRvbid0IHdhbnQgdGhpcyB1bnNhZmUgYW5kIG1hbGljaW91cyBwYXlsb2FkIGluIHlvdXIgZGF0YWJhc2UuLi4=" // [!code error]
+  // 👆 Would be passed through to a document-oriented database!
 }
 ```
-
-::: tip If you are already using Nest.js...
-Then you will probably like [.NET controller web APIs](./intermediate/nest-vs-controller-api.md) which is conceptually similar with controllers, routes, middleware, and more.
-:::
 
 And now the `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
 
 That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  Of course we can add validations and schemas to prevent a `CreateCatDTO` from accepting a `CreateDogDTO` at runtime, but this is ***extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
 
-This problem is actually quite common and often rears its head as *the round-trip problem*.  This happens when you *read* a model with additional properties (e.g. via a Prisma includes) and then try to *write* the model back with a more narrow model that doesn't carry the includes: the more narrow shape will accept the wider shape!
+::: tip If you are already using Nest.js...
+Then you will probably like [.NET controller web APIs](./intermediate/nest-vs-controller-api.md) which is conceptually similar with controllers, routes, middleware, and more.
+:::
 
-What if you write this to a document-oriented database without checking the schema?  What if you serialize it to `jsonb` and store it in Postgres?  What if your ORM tries to map and persist this?
+The [Cal.com codebase](https://github.com/calcom/cal.com) is a good example of this in action.  [Here's an example of a controller action](https://github.com/calcom/cal.com/blob/main/apps/api/v2/src/modules/organizations/schedules/organizations-schedules.controller.ts#L123-L140) "done right":
 
-At best, you may not notice the payload and it's entirely harmless.  At worst, the payload can contain *anything*.
+```ts
+// organizations-schedules.controller.ts
+@Roles("ORG_ADMIN")
+@PlatformPlan("ESSENTIALS")
+@UseGuards(IsUserInOrg)
+@Patch("/users/:userId/schedules/:scheduleId")
+@DocsTags("Orgs / Users / Schedules")
+@ApiOperation({ summary: "Update a schedule" })
+async updateUserSchedule(
+  @Param("userId", ParseIntPipe) userId: number, // 👈 Note the validation for int
+  @Param("scheduleId", ParseIntPipe) scheduleId: number, // 👈 Note the validation for int
+  @Body() bodySchedule: UpdateScheduleInput_2024_06_11
+): Promise<UpdateScheduleOutput_2024_06_11> {
+  const updatedSchedule = await this.schedulesService.updateUserSchedule(
+    userId, scheduleId, bodySchedule
+  );
 
-Of course, you can add a third party package to ensure adherence to a known schema or even write the code yourself.  But this feels like really basic *table stakes* for building a backend API where you care about your data; why is there a dependency on third parties and why would you build this yourself?
+  return {
+    status: SUCCESS_STATUS,
+    data: updatedSchedule,
+  };
+}
+```
+
+And [an example of a model](https://github.com/calcom/cal.com/blob/main/apps/api/v2/src/modules/organizations/attributes/index/inputs/create-organization-attribute.input.ts):
+
+```js
+import { CreateOrganizationAttributeOptionInput } from "@/modules/organizations/attributes/options/inputs/create-organization-attribute-option.input";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { AttributeType } from "@prisma/client";
+import { Type } from "class-transformer";
+import {
+  IsArray,
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from "class-validator";
+
+export class CreateOrganizationAttributeInput {
+  @IsString() // [!code warning] JS needs to be explicitly told this is a string
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly name!: string; // 👈 Even though we already have this type annotation
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  readonly slug!: string;
+
+  @IsEnum(AttributeType)
+  @IsNotEmpty()
+  @ApiProperty({ enum: AttributeType })
+  readonly type!: AttributeType;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateOrganizationAttributeOptionInput) // [!code warning] JS needs to be explicitly informed about this type
+  @ApiProperty({ type: [CreateOrganizationAttributeOptionInput] })
+  readonly options!: CreateOrganizationAttributeOptionInput[];
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiPropertyOptional()
+  readonly enabled?: boolean;
+}
+```
+
+Without the basic facilities for effective runtime type checking, JavaScript at runtime is entirely dependent on *extra work* to inform the runtime about type metadata.  A perfect example of this is [Cal.com's `event-types.ts` zod schemas](https://github.com/calcom/cal.com/blob/main/apps/api/v1/lib/validations/event-type.ts):
+
+```ts
+const schemaEventTypeEditParams = z
+  .object({
+    title: z.string().optional(),
+    slug: z
+      .string()
+      .transform((s) => slugify(s))
+      .optional(),
+    length: z.number().int().optional(),
+    seatsPerTimeSlot: z.number().optional(),
+    seatsShowAttendees: z.boolean().optional(),
+    seatsShowAvailabilityCount: z.boolean().optional(),
+    bookingFields: eventTypeBookingFields.optional(),
+    scheduleId: z.number().optional(),
+  })
+  .strict();
+```
+
+Effortless type safety feels like it's *table stakes* for what you want from a backend runtime.  Certainly it doesn't matter for small, hobby projects, but beyond those use cases, JavaScript's "simplicity" is quickly subsumed by the complexity of mimicking rich runtime types.
 
 ## Why C#
+
+C# solves some of these problems that teams run into at scale with systems of consequence because it retains type metadata at runtime and enforces basic type alignment, eliminating some grunt work on the backend.  But it's also remarkably similar to TypeScript in syntax while providing higher performance and throughput.  It feels like the perfect alternative for teams burned out from TypeScript and Node.js.
+
+::: info "Didn't you see? The TypeScript team at Microsoft used Go for the compiler!"
+Indeed, C# is not the right choice for every project and in the case of the TypeScript compiler, Go was the right tool for the right job and matched the existing coding style better than C# and .NET.  While you *can* write CLI's in C# and .NET and you *can* write serverless functions in C#, neither use case are where it shines. But C# is a ***great choice*** for teams building serious backend APIs.
+:::
+
+Here are a few reasons to consider C# and .NET for your next backend application:
 
 ### It's Easy to Learn
 
