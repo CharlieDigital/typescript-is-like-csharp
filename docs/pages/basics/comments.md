@@ -96,3 +96,9 @@ Because C# comments are XML, they cannot contain `<`, `>`, `&`, and a few other 
 ::: tip
 It is very tedious to type out the XML!  So get an extension for your IDE that does it automatically when you type `///`.
 :::
+
+## Inheriting Docs
+
+C# provides really nice tooling that helps with comment and documentation reuse [via `<inheritdoc />` and `<include />`](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags#reuse-documentation-text)
+
+This can make it painless to keep the comment chain across your generated classes that inherit from a base class as well as normal inheritance chains.

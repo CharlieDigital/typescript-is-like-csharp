@@ -105,7 +105,7 @@ The [`JsonSerializerOptions` class](https://learn.microsoft.com/en-us/dotnet/api
 This type of behavior can prevent issues when persisting to document-oriented databases, for example, by ensuring that mis-matches in the JSON structure to the class raise exceptions.
 
 ::: tip Use data annotations for validation
-C# will already prevent many types of data quality issues out-of-the-box because it won't allow assignment of a `string` to an `int` property (JS doesn't care).  But you can also leverage [data annotations](https://weblogs.asp.net/ricardoperes/net-8-data-annotations-validation) to handle validation at the boundary.
+C# will already prevent many types of data quality issues out-of-the-box because it won't allow assignment of a `string` to an `int` property (JS doesn't care).  But you can also leverage [data annotations](https://dotnetfullstackdev.medium.com/new-data-annotations-in-net-8-ef5d61813596) to handle validation at the boundary.
 :::
 
 ## Customizing Serialization

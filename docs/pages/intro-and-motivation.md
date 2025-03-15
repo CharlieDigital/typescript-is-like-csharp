@@ -174,7 +174,12 @@ export class CreateOrganizationAttributeInput {
 
 Without the basic facilities for effective runtime type checking, JavaScript at runtime is entirely dependent on *extra work* to inform the runtime about type metadata.  A perfect example of this is [Cal.com's `event-types.ts` zod schemas](https://github.com/calcom/cal.com/blob/main/apps/api/v1/lib/validations/event-type.ts):
 
+
+<CodeSplitter>
+  <template #left>
+
 ```ts
+// From the Cal.com codebase
 const schemaEventTypeEditParams = z
   .object({
     title: z.string().optional(),
@@ -192,6 +197,31 @@ const schemaEventTypeEditParams = z
   .strict();
 ```
 
+  </template>
+  <template #right>
+
+```csharp
+// What this might look like in C#
+record EventTypeEditParams(
+  string? Title,
+  string? RawSlug,
+  int? Length,
+  int? SeatsPerTimeSlot,
+  bool? SeatsShowAttendees,
+  bool? SeatsShowAvailabilityCount,
+  EventTypeBookingFields[]? BookingFields,
+  int? ScheduleId
+) {
+  public string? Slug => Slugify(this.RawSlug)
+}
+
+// The type itself enforces the data types
+// It is not possible to assign `"hello"` to `.Length`
+```
+
+  </template>
+</CodeSplitter>
+
 Effortless type safety feels like it's *table stakes* for what you want from a backend runtime.  Certainly it doesn't matter for small, hobby projects, but beyond those use cases, JavaScript's "simplicity" is quickly subsumed by the complexity of mimicking rich runtime types.
 
 ## Why C#
@@ -202,7 +232,15 @@ C# solves some of these problems that teams run into at scale with systems of co
 Indeed, C# is not the right choice for every project and in the case of the TypeScript compiler, Go was the right tool for the right job and matched the existing coding style better than C# and .NET.  While you *can* write CLI's in C# and .NET and you *can* write serverless functions in C#, neither use case are where it shines. But C# is a ***great choice*** for teams building serious backend APIs.
 :::
 
-Here are a few reasons to consider C# and .NET for your next backend application:
+[Sam Cox of Tracebit has a great writeup on why they chose C# for the backend](https://tracebit.com/blog/why-tracebit-is-written-in-c-sharp) and outlines many of the motivations I have found to be compelling for using C# (not despite, but *because* of my experience with both C# and TypeScript on the backend):
+
+> Professionally, I’ve worked in large and critical codebases in Python and TypeScript. I’ve seen the value they can bring (ecosystem, hiring, Engineer ramp times) but I’ve also experienced what felt like real drawbacks (dynamic typing, packaging & dependencies, maintaining large codebases).
+>
+> If I had to define the key criterion I was looking for in a programming language, it would be **Productivity**. In general, I think a stack that lets you feel like you’re spending your time on what matters is the essence of a good developer experience.
+>
+> It was important to me that the language was statically-typed. Having worked with both statically and dynamically-typed languages before, I believe that any ‘overhead’ that static typing introduces when writing code is repaid many times over.
+
+Here are a few more reasons to consider C# and .NET for your next backend application:
 
 ### It's Easy to Learn
 
