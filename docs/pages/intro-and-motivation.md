@@ -126,7 +126,7 @@ async updateUserSchedule(
 }
 ```
 
-And [an example of a model](https://github.com/calcom/cal.com/blob/main/apps/api/v2/src/modules/organizations/attributes/index/inputs/create-organization-attribute.input.ts):
+And [an example of a model](https://github.com/calcom/cal.com/blob/main/apps/api/v2/src/modules/organizations/attributes/index/inputs/create-organization-attribute.input.ts) using [`class-validator`](https://github.com/typestack/class-validator) for payload validation:
 
 ```js
 import { CreateOrganizationAttributeOptionInput } from "@/modules/organizations/attributes/options/inputs/create-organization-attribute-option.input";
@@ -172,8 +172,7 @@ export class CreateOrganizationAttributeInput {
 }
 ```
 
-Without the basic facilities for effective runtime type checking, JavaScript at runtime is entirely dependent on *extra work* to inform the runtime about type metadata.  A perfect example of this is [Cal.com's `event-types.ts` zod schemas](https://github.com/calcom/cal.com/blob/main/apps/api/v1/lib/validations/event-type.ts):
-
+Without the basic facilities for effective runtime type checking, JavaScript at runtime is entirely dependent on *extra work* to inform the runtime about type metadata.  Another example of this is [Cal.com's `event-types.ts` zod schemas](https://github.com/calcom/cal.com/blob/main/apps/api/v1/lib/validations/event-type.ts) which shows a different pattern using Zod schemas (this being their V1 API versus the previous V2 API example above):
 
 <CodeSplitter>
   <template #left>
@@ -290,6 +289,12 @@ Read more in [the next section on getting started](./getting-started.md).
 Microsoft's [excellent documentation](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/) is cohesive and thorough, making it easy to read and understand.  In Node, you might read documentation across a variety of third party sites for different packages (Zod, Prisma, Nest.js) which have different levels of thoroughness, different navigation, different writing styles, and so on.  .NET's large standard library means that much of it also has consistent first party documentation.
 
 Perhaps more importantly, it means that you'll likely get better results with LLMs because of the high quality documentation.
+
+### Consistency
+
+One key issue with the rich ecosystem of Node.js is that no two projects look the same from a package and tooling perspective, even for very common workloads and foundational needs.  On the other hand, .NET's rich first-party libraries means that more often than not, projects are going to look very consistent in terms of the libraries and tooling.  Let's face it: CRUD APIs are CRUD APIs; having consistency can be a big boon to productivity by allowing developers to pick up common libraries quickly.
+
+Consistency and productivity is a big benefit of having the platform ship a broad and deep baseline set of feature/functions while the OSS ecosystem around .NET is dominated by broadly used and battle-tested libraries.  This aspect of C# and the .NET platform are very highly underrated for teams that are focused on shipping!
 
 ### Security
 
