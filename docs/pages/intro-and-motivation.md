@@ -357,6 +357,6 @@ Performance is probably the wrong way to think about the delta between something
 
 While it's true that C# is an excellent choice in the enterprise, it's also used in game engines like [Unity](https://unity.com/how-to/programming-unity) and [Godot](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/index.html).  This myth may have roots in the reality that early on in ***.NET Framework's*** life, the only tooling available was enterprise licenses for Visual Studio.  The modern .NET tooling in VS Code and Rider makes working with C# free and a really great experience whether you're an indie developer, small startup, mid-size business, or enterprise scale!
 
-## Ready go Dive In?
+## Ready to Dive In?
 
 If any of this rang true to you, let's dive in and see why C# and .NET might be right for your team!
