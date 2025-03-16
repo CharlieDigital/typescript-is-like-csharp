@@ -186,3 +186,8 @@
   max-width: 200px !important;
   padding-left: 0 !important;
 }
+
+blockquote p {
+  margin-top: 16px !important;
+  margin-bottom: 16px !important;
+}

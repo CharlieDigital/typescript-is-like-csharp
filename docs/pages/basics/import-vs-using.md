@@ -4,6 +4,8 @@ In C#, the `using` keyword is used to import namespaces, which are collections o
 
 In TypeScript and JavaScript, the `import` keyword is used to bring in modules, typically from external files or packages. JavaScript and TypeScript organize code into **modules**, and the `import` statement allows you to selectively bring in specific functions, classes, or objects from these modules. For example, `import { myFunction } from './myModule';` imports a named export from a file. TypeScript’s `import` works similarly to JavaScript’s ES6 `import` and offers the added benefit of static type checking.
 
+It is important to note the distinction here that C# namespaces are *virtualized* paths meaning you can assign any file in any path to any namespace if it makes sense to put them into the same namespace.  On the other hand, JavaScript modules are path based meaning that there are some more challenges when there is a need to coalesce related artifacts together into one module.
+
 ## Basics
 
 <CodeSplitter>
@@ -167,3 +169,11 @@ export * from "./event-types";
 Overall, C#'s namespaces feel more ergonomic and their decoupling from file paths makes them easier to abstract collections of related entities without having to conform your physical file organization structure.
 
 C#'s [global using](../bonus/global-usings.md) makes this even easier and works like the [`unjs/unimport` package](https://github.com/unjs/unimport) to provide global imports and clean up messy module imports in JS/TS.
+
+::: tip JavaScript module loading notes
+JavaScript's module loading could be seen as optimized for browser-based scenarios where it can be advantageous to load files only on demand to deliver smaller payloads across the wire.  In a server-based environment, it can still be useful for serverless scenarios optimized for startup speed.
+
+.NET's runtime `AppDomain` also only loads assemblies on demand as referenced classes are used (except in ahead of time compilation scenarios), but optimizing for this behavior by creating a large number of assemblies (e.g. creating a lot of JavaScript *packages*) is not recommended since JS modules are file based while .NET modules are binary based.  This also means that with C#, you should feel free to organize related artifacts in namespaces however you see fit to reduce the friction of working with large blocks of imports like we see above.
+
+For example, it can be advantageous to have several files in different directories all share the same namespace because they are often or always used together.  This means that a single `using My.Shared.Namespace` is all that's needed and thereby avoiding the wordiness of JS module imports.
+:::
