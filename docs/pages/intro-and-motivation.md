@@ -16,7 +16,7 @@ We're only considering backends here; I do not think that .NET-based front-ends 
 
 But even at dev time, TypeScript's fluid and flexible type system at scale can be problematic and affect productivity especially when teams are not disciplined about explicit types.  This can often yield cases where it is necessary to trace a field down several layers of types before finding the actual type.  It also affects how well refactoring works across large codebases where developers have heavily used utility types like `Pick` and `Omit` to create large, dependent type chains.
 
-Once teams start to encounter these frictions points at scale, they will often consider alternatives such as:
+Once teams start to encounter these friction points at scale, they will often consider alternatives such as:
 
 - Go
 - Java
