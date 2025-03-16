@@ -89,4 +89,11 @@ const onMouseUp = () => {
     overflow: hidden !important;
   }
 }
+
+@media (max-width: 600px) {
+  .container {
+    margin-left: -22px;
+    margin-right: -22px
+  }
+}
 </style>
