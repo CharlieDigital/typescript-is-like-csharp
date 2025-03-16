@@ -106,3 +106,17 @@ There is one very important distinction between `Task` and `Promise`: `Task` can
 ::: tip Read more on C# `async/await`
 Dive deeper into the details of `async/await` in C# and best practices [in David Fowler's writeup](https://github.com/davidfowl/AspNetCoreDiagnosticScenarios/blob/master/AsyncGuidance.md).
 :::
+
+## Concurrency and Parallelism
+
+A simple analogy for concurrency is a waiter in a restaurant.
+
+- The waiter is responsible for taking orders and delivering them to the kitchen (`async placeOrder() { }`).
+- While the waiter is waiting for the dish to be prepared, the waiter can go back to the dining area to take more orders, deliver completed orders, clean tables, and help final prep; the waiter can ***concurrently*** work on various tasks while waiting for an order to be ready.
+- Then once an order is ready, the waiter goes back to the kitchen to retrieve and deliver the order to the diner (`const order = await placeOder()`)
+
+This is exactly how the single-threaded event loop of Node.js works and also how concurrency works conceptually in .NET.
+
+So what's different with .NET?  Because the runtime is multi-threaded, there is a *thread pool* and *task scheduler* that schedules work on multiple threads.  In our analogy, it's like having multiple waiters.  With multiple waiters, there are of course considerations like coordinating which waiter services which tables.  Likewise, in a multi-threaded environment, it is sometimes necessary to understand how to manage *synchronization* for workloads spread across different threads.
+
+Don't let this scare you off!  Most of the time, this is transparent because the framework provide primitives like `ConcurrentBag` and `ConcurrentDictionary` as well as `Interlocked`.  The DI container is also designed to make it easier to manage object dependencies with different lifecycles (singleton, per-request, transient).  Request scoped variables access is single-threaded unless the code path explicitly starts multiple threads (e.g. via Task Parallel Library).
