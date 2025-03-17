@@ -148,7 +148,7 @@ public class TestRaceApp : IClassFixture<DatabaseFixture> {
 
     var loadedRunners = await db.Runners
       .Where(r => r.Name.StartsWith("Ada"))
-      .Where(r => r.Name == "Alan") // logical And
+      .Where(r => r.Name == "Alan Turing") // logical And
       .ToListAsync();
 
     Assert.Empty(loadedRunners);

@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Runner {
+  id            Int   @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  country       String
+  races         RaceResult[]
+
+  @@index([email])
+  @@map("runner") // Pg doesn't like upper case
+}
+
+model Race {
+  id            Int   @id @default(autoincrement())
+  name          String
+  date          DateTime
+  distanceKm    Float
+  runners       RaceResult[]
+
+  @@index([date])
+  @@map("race") // Pg doesn't like upper case
+}
+
+model RaceResult {
+  runnerId      Int
+  raceId        Int
+  position      Int
+  time          Int
+  bibNumber     Int
+  runner        Runner @relation(fields: [runnerId], references: [id])
+  race          Race @relation(fields: [raceId], references: [id])
+
+  @@id([runnerId, raceId])
+  @@index([bibNumber])
+  @@map("race_result")
+}
+
+// Run: npx prisma migrate reset
+// Run: npx prisma migrate dev --name init

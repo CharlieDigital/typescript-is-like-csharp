@@ -19,15 +19,36 @@ Here, we'll create a simple API app using Nest.js and .NET controller web APIs a
 <CodeSplitter>
   <template #left>
 
-```ts
-// 🚧  WIP
+```shell
+# Create the app in /src/typescript/prisma-api
+cd src/typescript
+nest new prisma-api
+cd prisma-api
+
+# Add Prisma
+yarn add -D prisma
+
+# Initialize prisma (see output below)
+npx prisma init
+
+# Next steps:
+# 1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
+# 2. Set the provider of the datasource block in schema.prisma to match your database: postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.
+# 3. Run prisma db pull to turn your database schema into a Prisma schema.
+# 4. Run prisma generate to generate the Prisma Client. You can then start querying your database.
+# 5. Tip: Explore how you can extend the ORM with scalable connection pooling, global caching, and real-time database events. Read: https://pris.ly/cli/beyond-orm
+
+# Install the Prisma schema extension for VS Code: https://marketplace.visualstudio.com/items?itemName=Prisma.prisma
+
+# Add the client
+yarn add @prisma/client
 ```
 
   </template>
   <template #right>
 
 ```shell
-# Add our packages in /src/csharp/ef-api
+# Create the app in /src/csharp/ef-api
 cd src/csharp
 mkdir ef-api
 cd ef-api
@@ -60,10 +81,48 @@ Next, we wire our Postgres driver and connect it to our runtime.
 <CodeSplitter>
   <template #left>
 
-```ts
-// 🚧  WIP
-```
+```ts{20,30}
+// 📄 Update .env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/prisma-api?schema=public"
 
+// 📄 Add to .eslintrc.js to fix linting issues for Nest in sub-folder
+// See: https://github.com/microsoft/vscode-eslint/issues/1170#issuecomment-811871985
+project: path.join(__dirname, "tsconfig.eslint.json"),
+
+// 📄 prisma.service.ts (imports omitted)
+@Injectable()
+export class PrismaService extends PrismaClient implements OnModuleInit {
+  async onModuleInit() {
+    await this.$connect();
+  }
+}
+
+// 📄 app.service.ts (imports omitted)
+@Injectable()
+export class AppService {
+  constructor(
+    private readonly prismaService: PrismaService
+  ) { }
+
+  // Snipped...
+}
+
+// 📄 app.module.ts (imports omitted)
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService, PrismaService],
+})
+export class AppModule {}
+
+// 📄 tsconfig.json
+{
+  compilerOptions: {
+    // Add to support auto-transaction rollback.
+    "types": ["@types/jest", "@quramy/jest-prisma"]
+  }
+}
+```
   </template>
   <template #right>
 
@@ -127,7 +186,46 @@ This is because [expression trees](https://learn.microsoft.com/en-us/dotnet/csha
   <template #left>
 
 ```ts
-// 🚧  WIP
+// 📄 schema.prisma
+model Runner {
+  id            Int   @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  country       String
+  races         RaceResult[]
+
+  @@index([email])
+  @@map("runner") // Pg doesn't like upper case
+}
+
+model Race {
+  id            Int   @id @default(autoincrement())
+  name          String
+  date          DateTime
+  distanceKm    Float
+  runners       RaceResult[]
+
+  @@index([date])
+  @@map("race") // Pg doesn't like upper case
+}
+
+model RaceResult {
+  runnerId      Int
+  raceId        Int
+  position      Int
+  time          Int
+  bibNumber     Int
+  runner        Runner @relation(fields: [runnerId], references: [id])
+  race          Race @relation(fields: [raceId], references: [id])
+
+  @@id([runnerId, raceId])
+  @@index([bibNumber])
+  @@map("race_result")
+}
+
+// 1️⃣ Run: npx prisma generate
+// 2️⃣ Run: npx prisma migrate reset
+// 3️⃣ Run: npx prisma migrate dev --name init
 ```
 
   </template>
@@ -205,7 +303,13 @@ Here, we see some basic data annotations to specify indices and primary keys.  *
   <template #left>
 
 ```ts
-// 🚧  WIP
+await tx.race.create({
+  data: {
+    name: 'New York City Marathon',
+    date: new Date(),
+    distanceKm: 5,
+  }
+})
 ```
 
   </template>
@@ -224,6 +328,10 @@ await db.SaveChangesAsync();
   </template>
 </CodeSplitter>
 
+::: tip Note on how EF and Prisma operate
+In Entity Framework, model mutations are *tracked* and not written to the database until an explicit call ot `SaveChangesAsync()` whereas Prisma performs a direct mutation on the database on each call to `create()` or `update()`.  In .NET with EF, the running code can continue to modify the model and add records and flush the changes in one call.
+:::
+
 ### Adding Complex Relations
 
 Here, we create a runner, a race, and a result for the runner and race.
@@ -232,7 +340,29 @@ Here, we create a runner, a race, and a result for the runner and race.
   <template #left>
 
 ```ts
-// 🚧  WIP
+const ada = await tx.runner.create({
+  data: {
+    name: 'Ada Lovelace',
+    email: 'ada@example.org',
+    country: 'United Kingdom',
+  }
+})
+
+await tx.race.create({
+  data: {
+    name: 'New York City Marathon',
+    date: new Date(),
+    distanceKm: 5,
+    runners: {
+      create: {
+        runnerId: ada.id,
+        position: 1,
+        bibNumber: 1,
+        time: 120,
+      }
+    }
+  }
+})
 ```
 
   </template>
@@ -271,6 +401,10 @@ await db.SaveChangesAsync();
   </template>
 </CodeSplitter>
 
+::: tip
+Note that it is also possible to use the same pattern on the .NET side when creating the race results, but I think the code is clearer when the relationships are explicitly wired up.
+:::
+
 ## Reading Data
 
 Here, we'll see how .NET's [Language Integrated Query (LINQ)](./linq.md) libraries make querying databases feel fluid through the use of a fluent, functional DX.
@@ -281,7 +415,29 @@ Here, we'll see how .NET's [Language Integrated Query (LINQ)](./linq.md) librari
   <template #left>
 
 ```ts
-// 🚧  WIP
+// Composing where clauses
+const loadedRunners = await tx.runner.findMany({
+  where: {
+    AND: [
+      { name: { startsWith: 'Ada' } },
+      { name: 'Alan Turing' }
+    ]
+  }
+}) // ✅ 0 results
+
+// ℹ️ Skip the middle example because it's not
+// relevant here for Prisma because JavaScript
+// doesn't have expression trees.
+
+// 2 results
+const loadedRunners2 = await tx.runner.findMany({
+  where: {
+    OR: [
+      { name: { startsWith: 'Ada' } },
+      { name: 'Alan Turing' }
+    ]
+  }
+}) // ✅ 2 results
 ```
 
   </template>
@@ -291,7 +447,7 @@ Here, we'll see how .NET's [Language Integrated Query (LINQ)](./linq.md) librari
 // Composing Where clauses
 var loadedRunners = await db.Runners
   .Where(r => r.Name.StartsWith("Ada"))
-  .Where(r => r.Name == "Alan") // logical And
+  .Where(r => r.Name == "Alan Turing") // logical And
   .ToListAsync();
   // ✅ 0 results
 
@@ -319,6 +475,10 @@ loadedRunners = await db.Runners
   </template>
 </CodeSplitter>
 
+::: info Thoughts on verbosity?
+I've formatted the Prisma example to actually condense the code a bit.  Overall, I find the Prisma query to be difficult to read and difficult to compose because it doesn't benefit from intellisense and autocomplete the same way that EF does.
+:::
+
 ::: tip .NET [Expression trees](https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/)
 The logical expressions in the examples above should stand out because here, we've directly used the language level equality expression. *Expression trees* allow us to *evaluate the expression* at runtime to break apart its component structures to build the underlying SQL query (instead of using strings).
 :::
@@ -329,7 +489,24 @@ The logical expressions in the examples above should stand out because here, we'
   <template #left>
 
 ```ts
-// 🚧  WIP
+// Read the runners and include the navigation properties
+const loadedRunners = await tx.runner.findMany({
+  include: {
+    races: {
+      include: { race: true }
+    }
+  }
+})
+
+// Read a specific runner with filtering
+const loadedAda = await tx.runner.findFirst({
+  where: { email: 'ada@example.org' },
+  include: {
+    races: {
+      include: { race: true }
+    }
+  }
+})
 ```
 
   </template>
@@ -337,7 +514,7 @@ The logical expressions in the examples above should stand out because here, we'
 
 ```csharp
 // Read the runners and include the navigation properties
-var loadedRunner = await db.Runners
+var loadedRunners = await db.Runners
   .Include(r => r.RaceResults)
   .Include(r => r.Races)
   .ToListAsync();
@@ -358,7 +535,48 @@ var loadedAda = await db.Runners
   <template #left>
 
 ```ts
+// Read with a filter on the navigation for races where
+// the runner finished in the top 10, 2 hours or less, and
+// the race name contained the word "New"
+const loadedAda2 = await tx.runner.findFirst({
+  where: { email: 'ada@example.org' },
+  include: {
+    races: {
+      where: {
+        AND: [
+          { position: { lte: 10 } },
+          { time: { lte: 120 } },
+          {
+            race: {
+              name: { contains: 'New' }
+            }
+          }
+        ]
+      }
+    }
+  }
+})
+// ✅ Only Ada (Runner + RaceResult populated)
 
+// Same read, but we only want the runners (not their results)
+const loadedRunners2 = await tx.runner.findMany({
+  where: {
+    races: {
+      some: {
+        AND: [
+          { position: { lte: 10 } },
+          { time: { lte: 120 } },
+          {
+            race: {
+              name: { contains: 'New' }
+            }
+          }
+        ]
+      }
+    }
+  },
+})
+// ✅ Only Ada (Runner only)
 ```
 
   </template>
@@ -376,7 +594,7 @@ var loadedAda = await db.Runners
     )
   )
   .FirstAsync(r => r.Email == "ada@example.org");
-  // Only Ada (Runner + RaceResult populated)
+  // ✅ Only Ada (Runner + RaceResult populated)
 
 // Same read, but we only want the runners (not their results)
 var loadedRunners = await db.Runners
@@ -386,14 +604,16 @@ var loadedRunners = await db.Runners
       && finish.Race.Name.Contains("New")
     ).Any()
   ).ToListAsync();
-  // Only Ada (Runner only)
+  // ✅ Only Ada (Runner only)
 ```
 
   </template>
 </CodeSplitter>
 
+I've taken some liberal formatting here to help make the Prisma query more readable, but you can see that as the query gets larger, it is actually quite difficult to manage and refactor while the EF query remains quite legible and easy to understand.
+
 ::: tip Expression trees are not evaluated
-Here, the expression trees are not actually evaluated; they are only read to produce the equivalent SQL.
+Here, the .NET expression trees are not actually evaluated; they are only read to produce the equivalent SQL.
 :::
 
 ## Projection
@@ -402,7 +622,29 @@ Here, the expression trees are not actually evaluated; they are only read to pro
   <template #left>
 
 ```ts
-// 🚧  WIP
+// Load Ada's top 10 races, order by finish position, and
+// project the results
+const loadedAdasTop10Races = await tx.raceResult.findMany({
+  select:{
+    runner: { select: { name: true } },
+    race: { select: { name: true } },
+    position: true,
+    time: true
+  },
+  where: {
+    runner: { email: 'ada@example.org' },
+    position: { lte: 10 }
+  },
+  orderBy: { position: 'asc' }
+})
+
+// ⚠️ Note the difference in the format; it's not truly flattened
+/**
+* [
+*  { runner: { name: 'Ada Lovelace' }, race: { name: 'New York City Marathon' }, position: 1, time: 120 },
+*  { runner: { name: 'Ada Lovelace' }, race: { name: 'Boston Marathon' }, position: 5, time: 145 }
+* ]
+*/
 ```
 
   </template>
