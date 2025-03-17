@@ -6,6 +6,10 @@ The Node.js ecosystem has a large number of NPM packages available including [**
 
 We'll compare the most popular Node.js library, Prisma, against EF Core and see where they align and where they differ.  We'll also see how the usage of LINQ in EF enables much more fluid query building.
 
+::: tip ⭐️ A focus on productivity ⭐️
+Pay attention to the notes and callouts here because they go in depth on how Entity Framework can ***significantly*** boost productivity for backend teams.
+:::
+
 ::: warning Start the Postgres Docker instance first
 Before running the examples and unit tests, start the Postgres container instance via `docker compose up`.
 
@@ -187,6 +191,7 @@ This is because [expression trees](https://learn.microsoft.com/en-us/dotnet/csha
 
 ```ts
 // 📄 schema.prisma
+// 🏃‍♀️ Runners
 model Runner {
   id            Int   @id @default(autoincrement())
   name          String
@@ -198,6 +203,7 @@ model Runner {
   @@map("runner") // Pg doesn't like upper case
 }
 
+// 🏎️ Races
 model Race {
   id            Int   @id @default(autoincrement())
   name          String
@@ -209,6 +215,9 @@ model Race {
   @@map("race") // Pg doesn't like upper case
 }
 
+// 🥇 Results (maps many-to-many)
+// This is an explicit table since we need access to the properties
+// through the navigation of the properties
 model RaceResult {
   runnerId      Int
   raceId        Int
@@ -237,11 +246,7 @@ public class Database(DbConfig config) : DbContext {
   public DbSet<Runner> Runners { get; set; } = null!;
   public DbSet<Race> Races { get; set; } = null!;
 
-  // ℹ️ Note that we don't map the relation table directly
-
-  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-    // Snipped...
-  }
+  // Snipped...
 }
 
 // 🏃‍♀️ Runners
@@ -482,7 +487,7 @@ I've formatted the Prisma example to actually condense the code a bit.  Overall,
 :::
 
 ::: tip .NET [Expression trees](https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/)
-The logical expressions in the examples above should stand out because here, we've directly used the language level equality expression. *Expression trees* allow us to *evaluate the expression* at runtime to break apart its component structures to build the underlying SQL query (instead of using strings).
+The logical expressions in the examples above should stand out because here, we've directly used the language level equality expression. *Expression trees* allow us to *evaluate the expression* at runtime to break apart its component structures to build the underlying SQL query (instead of using strings (Kysely) or manually constructing an expression tree (Prisma)).
 :::
 
 ### Read with Navigation Includes
@@ -612,11 +617,17 @@ var loadedRunners = await db.Runners
   </template>
 </CodeSplitter>
 
-I've taken some liberal formatting here to help make the Prisma query more readable, but you can see that as the query gets larger, it is actually quite difficult to manage and refactor while the EF query remains quite legible and easy to understand.
+I've taken some liberal formatting here to help make the Prisma query more readable, but you can see that as the query gets larger, it is actually quite difficult to manage and refactor while the EF query remains quite legible and easy to understand.  .NET has first-class expression trees that can be evaluated at runtime to produce the queries whereas on the Prisma side, the code is effectively *building and expression tree*.
 
 With Prisma, a better strategy might be to use Prisma on the write side and [Kysely](https://kysely.dev/) on the read side much like how some teams with C# might use Entity Framework on the write side and [Dapper](https://github.com/DapperLib/Dapper) on the read side for more complex queries (though Entity Framework's threshold for complex read queries is higher than Prisma's).
 
 Prisma queries quickly become hard to manage and refactor as the number of conditions increase.
+
+::: warning Refactoring pains...
+Because Prisma entities are generated from the schema, refactoring can be a bit more...tedious.  With Entity Framework, we can easily change the model in code and have the full support of the IDE to refactor our entity references.  The migration will adjust schema changes automatically; effectively, Entity Framework always operates against the code model and therefore generally provides a better DX and superior productivity.
+
+With Prisma, this is a much more tedious task because the entity model is an artifact of the schema!
+:::
 
 ## Projection
 
