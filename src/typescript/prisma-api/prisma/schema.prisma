@@ -49,5 +49,6 @@ model RaceResult {
   @@map("race_result")
 }
 
-// Run: npx prisma migrate reset
-// Run: npx prisma migrate dev --name init
+// 1️⃣ Run: npx prisma generate
+// 2️⃣ Run: npx prisma migrate reset
+// 3️⃣ Run: npx prisma migrate dev --name init

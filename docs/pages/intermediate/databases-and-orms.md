@@ -307,7 +307,7 @@ await tx.race.create({
   data: {
     name: 'New York City Marathon',
     date: new Date(),
-    distanceKm: 5,
+    distanceKm: 42.195,
   }
 })
 ```
@@ -823,8 +823,16 @@ This is an extremely useful pattern and should generally be used for all navigat
 <CodeSplitter>
   <template #left>
 
-```ts
-// 🚧  WIP
+```shell
+# From /src/typescript/prisma-api
+npx prisma migrate dev --name init
+
+# https://github.com/prisma/prisma/discussions/24875#discussioncomment-10774638
+# Generate idempotent SQL file (best for upstream deployment)
+npx prisma migrate diff \
+  --from-empty \
+  --to-schema-datamodel ./prisma/schema.prisma \
+  --script > ./prisma/migrations/000000000000_init/migration.sql
 ```
 
   </template>
