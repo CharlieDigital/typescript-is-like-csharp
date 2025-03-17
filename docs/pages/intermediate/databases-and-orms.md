@@ -291,6 +291,8 @@ public class RaceResult {
   </template>
 </CodeSplitter>
 
+Of note is that the actual client types for Prisma are generated via the command `npx prisma generate` while the Entity Framework model is simply the same as your data model.  The latter is known as a "code first" approach which lets developers build a natural model and simply annotate how it should be mapped to the database layer for persistence.
+
 ::: tip Data annotations for mapping and data quality
 Here, we see some basic data annotations to specify indices and primary keys.  **[EF Core data annotations](https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties?tabs=data-annotations%2Cwithout-nrt)** allow customization of the schema mapping.  If you prefer more explicitness, you can also use [**fluent configuration**](https://learn.microsoft.com/en-us/ef/core/modeling/#use-fluent-api-to-configure-a-model) instead.  Combine these with [**.NET web API data annotations**](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-9.0), .NET offers a painless way to handle most common data validation use cases.
 :::
@@ -315,7 +317,7 @@ await tx.race.create({
   </template>
   <template #right>
 
-```csharp
+```csharp{7}
 db.Races.Add(new () {
   Name = "New York City Marathon",
   Date = new DateTime(),
@@ -328,9 +330,9 @@ await db.SaveChangesAsync();
   </template>
 </CodeSplitter>
 
-::: tip Note on how EF and Prisma operate
-In Entity Framework, model mutations are *tracked* and not written to the database until an explicit call ot `SaveChangesAsync()` whereas Prisma performs a direct mutation on the database on each call to `create()` or `update()`.  In .NET with EF, the running code can continue to modify the model and add records and flush the changes in one call.
-:::
+In Entity Framework, model mutations are *tracked* and not written to the database until an explicit call to `SaveChangesAsync()` whereas Prisma performs a direct mutation on the database on each call to `create()` or `update()`.  In .NET with EF, the running code can continue to modify the model and add records and flush the changes in one transaction.
+
+This can be very useful when constructing large object graphs.
 
 ### Adding Complex Relations
 
@@ -340,7 +342,7 @@ Here, we create a runner, a race, and a result for the runner and race.
   <template #left>
 
 ```ts
-const ada = await tx.runner.create({
+const runner = await tx.runner.create({
   data: {
     name: 'Ada Lovelace',
     email: 'ada@example.org',
@@ -348,19 +350,21 @@ const ada = await tx.runner.create({
   }
 })
 
-await tx.race.create({
+const race = await tx.race.create({
   data: {
     name: 'New York City Marathon',
     date: new Date(),
-    distanceKm: 5,
-    runners: {
-      create: {
-        runnerId: ada.id,
-        position: 1,
-        bibNumber: 1,
-        time: 120,
-      }
-    }
+    distanceKm: 42.195,
+  }
+})
+
+await tx.raceResult.create({
+  data: {
+    runnerId: runner.id,
+    raceId: race.id,
+    position: 1,
+    bibNumber: 1,
+    time: 120,
   }
 })
 ```
@@ -401,9 +405,7 @@ await db.SaveChangesAsync();
   </template>
 </CodeSplitter>
 
-::: tip
-Note that it is also possible to use the same pattern on the .NET side when creating the race results, but I think the code is clearer when the relationships are explicitly wired up.
-:::
+An important observation here is how the two queries behave.  On the Prisma side, the entities are actually created and returned from the database with actual IDs that we then use in later queries to wire everything up.  On the .NET side, we're simply dealing with an object graph and relying on Entity Framework to persist the entire graph in a single transaction on the call to `SaveChangesAsync`.
 
 ## Reading Data
 
@@ -612,9 +614,9 @@ var loadedRunners = await db.Runners
 
 I've taken some liberal formatting here to help make the Prisma query more readable, but you can see that as the query gets larger, it is actually quite difficult to manage and refactor while the EF query remains quite legible and easy to understand.
 
-::: tip Expression trees are not evaluated
-Here, the .NET expression trees are not actually evaluated; they are only read to produce the equivalent SQL.
-:::
+With Prisma, a better strategy might be to use Prisma on the write side and [Kysely](https://kysely.dev/) on the read side much like how some teams with C# might use Entity Framework on the write side and [Dapper](https://github.com/DapperLib/Dapper) on the read side for more complex queries (though Entity Framework's threshold for complex read queries is higher than Prisma's).
+
+Prisma queries quickly become hard to manage and refactor as the number of conditions increase.
 
 ## Projection
 
@@ -678,6 +680,8 @@ var loadedAdasTop10Races = await db.Runners
 
   </template>
 </CodeSplitter>
+
+It's important to make a note of the output shape from the query.  Note that on the Entity Framework side, the results are actually projected into a flat model that doesn't have an entity mapping in our domain (we'll see later how to handle this).  The `.Select(finish => { ... })` expression translates into a `SELECT` projection with aliases that actually executes in the database and the return result is already flattened.
 
 ::: info Anonymous types in action
 The result of the select from the .NET side is an [anonymous type](../basics/classes.md#anonymous-types).  For transmitting, it probably makes sense to convert this into a `Record`.

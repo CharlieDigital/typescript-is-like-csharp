@@ -13,7 +13,7 @@ describe('Database access', () => {
         data: {
           name: 'New York City Marathon',
           date: new Date(),
-          distanceKm: 5,
+          distanceKm: 42.195,
         }
       })
 
@@ -40,19 +40,21 @@ describe('Database access', () => {
         }
       })
 
-      await tx.race.create({
+      const nyc = await tx.race.create({
         data: {
           name: 'New York City Marathon',
           date: new Date(),
-          distanceKm: 5,
-          runners: {
-            create: {
-              runnerId: ada.id,
-              position: 1,
-              bibNumber: 1,
-              time: 120,
-            }
-          }
+          distanceKm: 42.195,
+        }
+      })
+
+      await tx.raceResult.create({
+        data: {
+          runnerId: ada.id,
+          raceId: nyc.id,
+          position: 1,
+          bibNumber: 1,
+          time: 120,
         }
       })
 
