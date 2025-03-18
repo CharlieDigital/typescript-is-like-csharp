@@ -24,7 +24,7 @@ Before you ready your pitchforks, check out some of the similarities between Typ
 |**Generics?**|✅|✅|Same use of generics for classes, interfaces, functions, and variables|
 |**Tuples? Anonymous types?**|✅|✅|Both have flexible ways of representing objects as shapes|
 
-It's not just that they have a large crossover of language features, it is also that they are remarkably similar in their syntax.  Just a preview from some of the other sections covered in this guide:
+It is not just that they have a large crossover of language features, it is also that they are remarkably similar in their syntax.  Just a preview from some of the other sections covered in this guide:
 
 ### Inheriting Classes
 
@@ -35,7 +35,7 @@ It's not just that they have a large crossover of language features, it is also 
 class MobileDevice {
   call(recipient: number) {
     console.log(`Calling: ${recipient}`);
-}f
+  }
 }
 
 class AndroidPhone extends MobileDevice { }
