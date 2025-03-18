@@ -1,5 +1,201 @@
 # Intro and Motivation
 
+Many folks haven't followed the evolution of C# over the years after encountering it in the past when it was bound to the Windows-only ***.NET Framework*** (dark days...) and have strong, lingering misperceptions about C# and .NET today.
+
+Over the years, .NET and C# have evolved heavily (as has Microsoft) and now ***"modern .NET"*** -- e.g. ***.NET 9*** -- is open source, builds and deploys cross-platform with ease, and the development experience is well-supported whether you're on Windows, Mac, or Linux.
+
+During that time, the language design of both C# and TypeScript (JavaScript as well) have *converged* more than other languages.  The two languages are now remarkably similar in their core syntax such that developers that know one can typically pick up the other fairly easily.
+
+This guide aims to provide a walkthrough of just how similar these two languages are, but also highlight where C# and .NET can solve some of the pain points that many teams using TypeScript *on the backend* will no doubt encounter.
+
+## Are They *Really* Similar?
+
+Before you ready your pitchforks, check out some of the similarities between TypeScript and C#:
+
+|Feature|TypeScript|C#|Notes|
+|--|:--:|:--:|--|
+|**Designed by Anders Hejlsberg at Microsoft?**|✅|✅|What a legend!|
+|**`async/await` concurrency?**|✅|✅|Same model of concurrency with `Promise` and `Task` (though C# is also parallel)|
+|**`try-catch-finally` error handling?**|✅|✅|Same model of error handling with `Error` and `Exception`|
+|**`class` and `interface` inheritance?**|✅|✅|Same model of single-`class` inheritance and implementing multiple interfaces|
+|**Mix of OOP and functional paradigms?**|✅|✅|Same mix of object-oriented and functional paradigms; not strictly in either camp|
+|**Functions as first class objects?**|✅|✅|Same approach to functions as first-class objects|
+|**Lambda expressions and closures?**|✅|✅|Same exact syntax for lambda expressions and closures|
+|**Generics?**|✅|✅|Same use of generics for classes, interfaces, functions, and variables|
+|**Tuples? Anonymous types?**|✅|✅|Both have flexible ways of representing objects as shapes|
+
+It's not just that they have a large crossover of language features, it is also that they are remarkably similar in their syntax.  Just a preview from some of the other sections covered in this guide:
+
+### Inheriting Classes
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+class MobileDevice {
+  call(recipient: number) {
+    console.log(`Calling: ${recipient}`);
+}f
+}
+
+class AndroidPhone extends MobileDevice { }
+
+class ApplePhone extends MobileDevice { }
+
+let pixel = new AndroidPhone();
+pixel.call(1234567); // "Calling: 1234567"
+
+let iphone = new ApplePhone();
+iphone.call(1234567); // "Calling: 1234567"
+```
+
+  </template>
+  <template #right>
+
+```csharp
+class MobileDevice {
+  public void Call(int recipient) {
+    Console.WriteLine($"Calling: {recipient}");
+  }
+}
+
+class AndroidPhone : MobileDevice { }
+
+class ApplePhone : MobileDevice { }
+
+var pixel = new AndroidPhone();
+pixel.Call(1234567); // "Calling: 1234567"
+
+var iphone = new ApplePhone();
+iphone.Call(1234567); // "Calling: 1234567"
+```
+
+  </template>
+</CodeSplitter>
+
+[More](./basics/classes.md)
+
+### Functions
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Return a function
+function fn() : () => void {
+  return () => {
+    console.log("Here");
+  }
+}
+
+fn()();
+
+// Accept a function
+function fn(
+  label: string,
+  fx: (name: string) => string
+) : string {
+  return fx(label)
+}
+
+console.log(
+  fn("Steve", (name) => `Hello, ${name}`);
+); // Hello, Steve
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// Return a function
+Action fn() {
+  return () => {
+    Console.WriteLine("Here");
+  };
+}
+
+fn()();
+
+// Accept a function
+string fn(
+  string name,
+  Func<string, string> fx
+) {
+  return fx(name);
+}
+
+Console.WriteLine(
+  fn("Steve", (name) => $"Hello, {name}")
+); // Hello, Steve
+
+```
+
+  </template>
+</CodeSplitter>
+
+[More](./basics/functions.md)
+
+### Collections
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Explicit type
+let pets: string[] = ["Tomi", "Rascal", "Puck"];
+
+// Implicit type
+let pets2 = ["Tomi", "Rascal", "Puck"];
+
+// Copy
+let pets3 = [...pets2];
+
+// Access
+let tomi = pets3[0]; // "Tomi"
+
+// Slice
+pets3.slice(0, 2) // ["Tomi", "Rascal"]
+```
+
+  </template>
+  <template #right>
+
+```csharp
+// Explicit type
+string[] pets = ["Tomi", "Rascal", "Puck"];
+
+// Implicit type
+var pets2 = new[] {"Tomi", "Rascal", "Puck"};
+
+// Copy (Need explicit type here)
+string[] pets3 = [.. pets2];
+
+// Access
+var tomi = pets3[0]; // "Tomi"
+
+// Slice
+pets3[0..2] // ["Tomi", "Rascal"]
+```
+
+  </template>
+</CodeSplitter>
+
+[More](./basics/collections.md)
+
+Hopefully, I've piqued your curiosity!
+
+::: tip ✨ I'm convinced; take me to the highlights! ✨
+If you just want the highlights, I recommend:
+
+- [Collections](./basics/collections.md)
+- [Classes](./basics/classes.md)
+- [Express vs Minimal API](./intermediate/express-vs-minimal-api.md)
+- [Nest.js vs Controller API](./intermediate/nest-vs-controller-api.md)
+- [Databases and ORMs](./intermediate/databases-and-orms.md)
+:::
+
+## A Bit of Background
+
 Many teams find themselves outgrowing Node.js and TypeScript ***on the backend*** when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
 
 If we look at the lifecycle of a codebase from dev-to-build-to-runtime, the problem becomes clear:
@@ -36,16 +232,6 @@ One of the reasons .NET and C# get the side eye is that many developers, enginee
 
 ::: info What's in a name?
 I often wonder if Microsoft would have been better off just calling it `dot` instead when they made the transition from .NET Framework...
-:::
-
-::: tip ✨ Take me to the highlights! ✨
-If you just want the highlights, I recommend:
-
-- [Collections](./basics/collections.md)
-- [Classes](./basics/classes.md)
-- [Express vs Minimal API](./intermediate/express-vs-minimal-api.md)
-- [Nest.js vs Controller API](./intermediate/nest-vs-controller-api.md)
-- [Databases and ORMs](./intermediate/databases-and-orms.md)
 :::
 
 ## The Problem with TS
