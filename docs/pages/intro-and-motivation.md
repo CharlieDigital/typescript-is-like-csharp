@@ -436,7 +436,7 @@ Here are a few more reasons to consider C# and .NET for your next backend applic
 
 ### It's Easy to Learn
 
-Throughout this guide, you'll notice just how similar TypeScript and C# are because of their shared designer.  This makes C# one of the easier languages to learn compared to Go or Scala if you already now TypeScript.  I don't think it's a coincidence that C# is used in game engines like [Unity](https://unity.com/how-to/programming-unity) and [Godot](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/index.html); it offers the right amount of structure vs DX/ergonomics vs ease of adoption to make it broadly appealing.
+Throughout this guide, you'll notice just how similar TypeScript and C# are because of their shared designer.  This makes C# one of the easier languages to learn compared to Go or Scala if you already know TypeScript.  I don't think it's a coincidence that C# is used in game engines like [Unity](https://unity.com/how-to/programming-unity) and [Godot](https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/index.html); it offers the right amount of structure vs DX/ergonomics vs ease of adoption vs performance to make it broadly appealing.
 
 ### Strongly Typed Yet *Flexible*
 
