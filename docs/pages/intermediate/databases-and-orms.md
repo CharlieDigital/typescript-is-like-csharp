@@ -240,7 +240,7 @@ model RaceResult {
   </template>
   <template #right>
 
-```csharp{3,4,10,17-20,24,31-35,42,45,46}
+```csharp{3,4,11,17-20,25,31-35,42,45,46}
 public class Database(DbConfig config) : DbContext {
   // 👇 These two define our schema
   public DbSet<Runner> Runners { get; set; } = null!;
