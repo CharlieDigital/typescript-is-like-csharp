@@ -709,14 +709,75 @@ See [**the unit tests in the repo**](https://github.com/CharlieDigital/typescrip
 <CodeSplitter>
   <template #left>
 
-```ts
-// 🚧  WIP
+```ts{43,52,55-60}
+// 📄 results-repository.ts: Sample repository
+@Injectable()
+export class ResultsRepository {
+  constructor(
+    private readonly prismaService: PrismaService
+  ) {
+  }
+
+  async top10FinishesByRunner(email: string) : Promise<RunnerRaceResult[]> {
+    return (await this.prismaService.raceResult.findMany({
+      select:{
+        runner: { select: { name: true } },
+        race: { select: { name: true, date: true } },
+        position: true,
+        time: true
+      },
+      where: {
+        runner: { email: 'ada@example.org' },
+        position: { lte: 10 }
+      },
+      orderBy: { position: 'asc' }
+    })).map(r => ({
+      runnerName: r.runner.name,
+      raceName: r.race.name,
+      position: r.position,
+      time: r.time,
+      raceDate: r.race.date
+    }))
+  }
+}
+
+export type RunnerRaceResult = {
+  runnerName: string,
+  raceName: string,
+  position: number,
+  time: number,
+  raceDate: Date
+}
+
+// 📄 app.module.ts: Register DI
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService, PrismaService, ResultsRepository],
+})
+export class AppModule {}
+
+// 📄 app.controller.ts: Add our endpoint and DI
+@Controller()
+export class AppController {
+  constructor(
+    private readonly appService: AppService,
+    private readonly resultsRepository: ResultsRepository
+  ) {}
+
+  @Get('/top10/:email')
+  async getTop10FinishesByRunner(
+    @Param('email') email: string
+  ): Promise<RunnerRaceResult[]> {
+    return await this.resultsRepository.top10FinishesByRunner(email)
+  }
+}
 ```
 
   </template>
   <template #right>
 
-```csharp{42,51,56-60}
+```csharp{42,50,55-61}
 // 📄 ResultsRepository.cs: Sample repository
 public class ResultsRepository(
   Database db // 👈 Injected via DI
@@ -729,7 +790,6 @@ public class ResultsRepository(
       .SelectMany(r => r.RaceResults!.Where(
         finish => finish.Position <= 10)
       )
-      // ✨ Notice how everything is fully typed downstack
       .Select(finish => new {
           RunnerName = finish.Runner.Name,
           RaceName = finish.Race.Name,
@@ -773,7 +833,9 @@ public class AppController(
   public string Get() => "Hello, World!";
 
   [HttpGet("/top10/{email}")]
-  public async Task<List<RunnerRaceResult>> GetTop10FinishesByRunner(string email) {
+  public async Task<
+    List<RunnerRaceResult>
+  > GetTop10FinishesByRunner(string email) {
     var results = await resultsRepository.Top10FinishesByRunner(email);
     return [.. results];
   }
@@ -783,6 +845,10 @@ public class AppController(
   </template>
 </CodeSplitter>
 
+::: info An important distinction
+On the TypeScript side, the `.map` projection takes place on the *client side* after the result has been returned.  On the .NET side, the projection and aliasing takes place *on the database server*; the first `.Select()` expression is transformed into a SQL `SELECT field AS alias, ...` whereas the second `Select()` materializes it into the record.
+:::
+
 ## Hoisting Navigations
 
 EF Core will attempt to persist the entire object tree if you round-trip the entity.  To prevent this -- for example, we only want to round-trip the runner -- we can use a simple technique here to split out the navigation collections from the results:
@@ -790,8 +856,40 @@ EF Core will attempt to persist the entire object tree if you round-trip the ent
 <CodeSplitter>
   <template #left>
 
-```ts
-// 🚧  WIP
+```ts{18,19}
+// 📄 results-repository.ts: Retrieve a runner and her results
+async runnerResults(email: string) { // [!code warning] Only a shape here, not a type
+  return await this.prismaService.runner.findFirst({
+    where: {
+      email: 'ada@example.org'
+    },
+    include: {
+      races: { // 👈 Included
+        include: { race: true } // 👈 Included
+      }
+    }
+  })
+}
+
+// We "hoist" our dependent properties here.
+type RunnerResults = {
+  runner: Runner,
+  results: RaceResult[], // 👈 We'll hoist includes here
+  races: Race[] // 👈 We'll hoist includes here
+}
+
+// 📄 app.controller.cs: Endpoint for runner and results
+@Get('/results/:email')
+async getRunnerResult (
+  @Param('email') email: string
+) : Promise<RunnerResults> {
+  const result = await this.resultsRepository.runnerResults(email)
+  return {
+    runner: result, // [!code warning] Requires manual trimming
+    results: result.races, // [!code warning] Requires manual trimming
+    races: result.races.flatMap(r => r.race) // [!code warning] Requires manual trimming
+  }
+}
 ```
 
   </template>
@@ -828,6 +926,8 @@ public async Task<RunnerResults> GetRunnerResults(string email) {
 </CodeSplitter>
 
 Remember how we used `[JsonIgnore]` in our model? This means that at serialization at the boundary, `Runner.Races` and `Runner.RaceResults` will automatically be stripped out (nice)!  So to keep them in the output JSON, we need to "hoist" them up into a "DTO" record.
+
+On the Prisma side, it's not so easy. We'll either have to do a deeper selection or explicitly delete fields off of our objects to ensure they do not round trip.  It's possible to use [lodash's `omit`](https://www.geeksforgeeks.org/lodash-_-omit-method/) or JavaScript `delete` to remove the navigations manually.
 
 ::: tip
 This is an extremely useful pattern and should generally be used for all navigation properties as it will allow round-tripping the entity for updates without passing the navigations along.

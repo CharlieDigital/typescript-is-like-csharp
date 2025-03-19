@@ -261,6 +261,42 @@ describe('Database access', () => {
       console.log(loadedAdasTop10Races)
 
       expect(loadedAdasTop10Races.length).toBe(2)
+
+      const loadedAdasTop10RacesFlat = (await tx.raceResult.findMany({
+        select:{
+          runner: { select: { name: true } },
+          race: { select: { name: true, date: true } },
+          position: true,
+          time: true
+        },
+        where: {
+          runner: { email: 'ada@example.org' },
+          position: { lte: 10 }
+        },
+        orderBy: { position: 'asc' }
+      })).map(r => ({
+        runnerName: r.runner.name,
+        raceName: r.race.name,
+        position: r.position,
+        time: r.time,
+        raceDate: r.race.date
+      }))
+
+      const loadedRunnerResults = await tx.runner.findFirst({
+        where: {
+          email: 'ada@example.org'
+        },
+        include: {
+          races: {
+            include: {
+              race: true
+            }
+          }
+        }
+      })
+
+      expect(loadedRunnerResults.races.length).toBe(3)
+      expect(loadedRunnerResults.races[0].race).toBeDefined()
     })
   })
 })
