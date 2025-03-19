@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "TypeScript is Like C#",
-  description: "Outgrowing Node.js? If you already know TypeScript, then learning C# is easy!  This guide walks you through the similarities (and differences) between TypeScript and C#",
+  description: "A guide for backend devs. If you already know TypeScript, then learning C# is easy!  This guide walks you through the similarities (and differences) between TypeScript and C#",
   sitemap: {
     hostname: 'https://typescript-is-like-csharp.chrlschn.dev'
   },

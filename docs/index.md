@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "TypeScript is Like C#"
-  text: "Outgrowing Node.js?"
+  text: "A Backend Guide"
   image:
     src: /csharp-logo.png
     alt: C# logo
@@ -18,7 +18,7 @@ hero:
       link: /pages/basics/variables
     - theme: alt
       text: Let's Deep Dive!
-      link: /pages/intermediate/nest-vs-controller-api
+      link: /pages/intermediate/databases-and-orms
 
 features:
   - title: Easy to Learn

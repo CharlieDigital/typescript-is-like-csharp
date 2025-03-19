@@ -617,7 +617,7 @@ var loadedRunners = await db.Runners
   </template>
 </CodeSplitter>
 
-I've taken some liberal formatting here to help make the Prisma query more readable, but you can see that as the query gets larger, it is actually quite difficult to manage and refactor while the EF query remains quite legible and easy to understand.  .NET has first-class expression trees that can be evaluated at runtime to produce the queries whereas on the Prisma side, the code is effectively *building and expression tree*.
+I've taken some liberal formatting here to help make the Prisma query more readable (Prettier would make this code even more lines!), but you can see that as the query gets larger, it is actually quite difficult to manage and refactor while the EF query remains quite legible and easy to understand.  .NET has first-class expression trees that can be evaluated at runtime to produce the queries whereas on the Prisma side, the code is effectively *building and expression tree*.
 
 With Prisma, a better strategy might be to use Prisma on the write side and [Kysely](https://kysely.dev/) on the read side much like how some teams with C# might use Entity Framework on the write side and [Dapper](https://github.com/DapperLib/Dapper) on the read side for more complex queries (though Entity Framework's threshold for complex read queries is higher than Prisma's).
 
@@ -709,7 +709,7 @@ See [**the unit tests in the repo**](https://github.com/CharlieDigital/typescrip
 <CodeSplitter>
   <template #left>
 
-```ts{43,52,55-60}
+```ts{43,53,56-61}
 // 📄 results-repository.ts: Sample repository
 @Injectable()
 export class ResultsRepository {
