@@ -189,7 +189,7 @@ This is because [expression trees](https://learn.microsoft.com/en-us/dotnet/csha
 <CodeSplitter>
   <template #left>
 
-```ts
+```ts{3,8,15,20,29,35,36}
 // 📄 schema.prisma
 // 🏃‍♀️ Runners
 model Runner {
@@ -240,7 +240,7 @@ model RaceResult {
   </template>
   <template #right>
 
-```csharp{3,4,15,21-24,29,35-38,46,49,50}
+```csharp{3,4,10,17-20,24,31-35,42,45,46}
 public class Database(DbConfig config) : DbContext {
   // 👇 These two define our schema
   public DbSet<Runner> Runners { get; set; } = null!;
