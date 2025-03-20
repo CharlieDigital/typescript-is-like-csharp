@@ -6,10 +6,14 @@ Over the years, .NET and C# have evolved heavily (as has Microsoft) and now ***"
 
 During that time, the language design of both C# and TypeScript (JavaScript as well) have *converged* more than other languages.  The two languages are now remarkably similar in their core syntax such that developers that know one can typically pick up the other fairly easily.
 
-This guide aims to provide a walkthrough of just how similar these two languages are, but also highlight where C# and .NET can solve some of the pain points that many teams using TypeScript *on the backend* will no doubt encounter.
+This guide aims to provide a walkthrough of just how similar these two languages are and in fact can be used bi-directionally. In many cases, it will highlight where C# and .NET can solve some of the pain points that many teams using TypeScript *on the backend* will no doubt encounter.
 
 ::: tip Don't forget to check the repo!
 Many of the code examples in this guide are actually in [the GitHub repo](https://github.com/CharlieDigital/typescript-is-like-csharp).  Be sure to check it out so you can see the full examples and play around with the code yourself.
+:::
+
+::: info
+This guide was inspired by the [Kotlin is Like C#](https://ttu.github.io/kotlin-is-like-csharp/) guide I came across while learning Kotlin.
 :::
 
 ## Are They *Really* Similar?

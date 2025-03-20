@@ -73,7 +73,7 @@ export default defineConfig({
               // { text: 'Records', link: '/pages/intermediate/records' },
               { text: 'Extension Methods', link: '/pages/intermediate/extension-methods' },
               { text: 'Iterators and Enumerables', link: '/pages/intermediate/iterators-enumerables' },
-              { text: 'Unit Testing', link: '/pages/intermediate/unit-testing' },
+              { text: '🚧 Unit Testing', link: '/pages/intermediate/unit-testing' },
               { text: 'Express vs Minimal API', link: '/pages/intermediate/express-vs-minimal-api' },
               { text: 'Nest.js vs Controller API', link: '/pages/intermediate/nest-vs-controller-api' },
               { text: 'Decorators vs Attributes', link: '/pages/intermediate/decorators-vs-attributes' },
@@ -88,9 +88,9 @@ export default defineConfig({
               { text: 'Generators and Yield', link: '/pages/advanced/generators-yield' },
               // { text: 'dynamic (ExpandoObject)', link: '/pages/advanced/dynamic' },
               { text: 'JSON Serialization', link: '/pages/advanced/json-serialization' },
-              { text: 'Reflection', link: '/pages/advanced/reflection' },
-              { text: 'Channels', link: '/pages/advanced/channels' },
-              { text: 'Source Generation (Roslyn)', link: '/pages/advanced/source-generation-roslyn' },
+              { text: '🚧 Reflection', link: '/pages/advanced/reflection' },
+              { text: '🚧 Channels', link: '/pages/advanced/channels' },
+              { text: '🚧 Source Generation (Roslyn)', link: '/pages/advanced/source-generation-roslyn' },
             ]
           },
           {
@@ -99,16 +99,16 @@ export default defineConfig({
             items: [
               { text: 'Switch Expression', link: '/pages/bonus/switch-expression' },
               { text: 'Partial Classes', link: '/pages/bonus/partial-classes' },
-              { text: 'Global Using', link: '/pages/bonus/global-usings' }
+              { text: '🚧 Global Using', link: '/pages/bonus/global-usings' }
             ]
           },
           {
             text: 'How Do I...',
             collapsed: true,
             items: [
-              { text: 'Set up Formatters?', link: '/pages/how-to/code-formatting' },
-              { text: 'Interface with the Backend?', link: '/pages/how-to/openapi-bindings' },
-              { text: 'Build for other Platforms?', link: '/pages/how-to/cross-platform-build' }
+              { text: '🚧 Set up Formatters?', link: '/pages/how-to/code-formatting' },
+              { text: '🚧 Interface with the Backend?', link: '/pages/how-to/openapi-bindings' },
+              { text: '🚧 Build for Other Platforms?', link: '/pages/how-to/cross-platform-build' }
             ]
           },
         ]

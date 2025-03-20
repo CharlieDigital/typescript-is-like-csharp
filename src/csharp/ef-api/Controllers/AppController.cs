@@ -14,8 +14,7 @@ public class AppController(
 
   [HttpGet("/top10/{email}")]
   public async Task<List<RunnerRaceResult>> GetTop10FinishesByRunner(string email) {
-    var results = await resultsRepository.Top10FinishesByRunner(email);
-    return [.. results];
+    return [.. await resultsRepository.Top10FinishesByRunner(email)];
   }
 
   [HttpGet("/results/{email}")]

@@ -240,7 +240,7 @@ model RaceResult {
   </template>
   <template #right>
 
-```csharp{3,4,11,17-20,25,31-35,42,45,46}
+```csharp{3,4,11,17-20,25,31-34,42,45,46}
 public class Database(DbConfig config) : DbContext {
   // 👇 These two define our schema
   public DbSet<Runner> Runners { get; set; } = null!;
@@ -777,7 +777,7 @@ export class AppController {
   </template>
   <template #right>
 
-```csharp{42,50,55-61}
+```csharp{42,50,55-60}
 // 📄 ResultsRepository.cs: Sample repository
 public class ResultsRepository(
   Database db // 👈 Injected via DI
@@ -836,8 +836,7 @@ public class AppController(
   public async Task<
     List<RunnerRaceResult>
   > GetTop10FinishesByRunner(string email) {
-    var results = await resultsRepository.Top10FinishesByRunner(email);
-    return [.. results];
+    return [.. await resultsRepository.Top10FinishesByRunner(email)];
   }
 }
 ```
