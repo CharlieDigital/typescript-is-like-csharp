@@ -102,6 +102,15 @@ export default defineConfig({
               { text: 'Global Using', link: '/pages/bonus/global-usings' }
             ]
           },
+          {
+            text: 'How Do I...',
+            collapsed: true,
+            items: [
+              { text: 'Set up Formatters?', link: '/pages/how-to/code-formatting' },
+              { text: 'Interface with the Backend?', link: '/pages/how-to/openapi-bindings' },
+              { text: 'Build for other Platforms?', link: '/pages/how-to/cross-platform-build' }
+            ]
+          },
         ]
       }
     ],
