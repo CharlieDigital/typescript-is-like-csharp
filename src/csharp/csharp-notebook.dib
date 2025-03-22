@@ -1,6 +1,6 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+{"kernelInfo":{"defaultKernelName":null,"items":[{"name":"csharp","languageName":"C#","aliases":["c#","cs"]},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"html","languageName":"HTML"},{"name":"sql","languageName":"SQL"},{"name":"kql","languageName":"KQL"},{"name":"mermaid","languageName":"Mermaid"},{"name":"http","languageName":"HTTP"},{"name":"value"}]}}
 
 #!csharp
 
@@ -780,4 +780,27 @@ var moduleTypes = Assembly.GetExecutingAssembly()
 foreach (var moduleType in moduleTypes) {
   var module = (Module)Activator.CreateInstance(moduleType);
   module.Init();
+}
+
+#!csharp
+
+enum Status {
+  Default = 0,
+  Queued = 1,
+  Processing = 2,
+  Completed = 4,
+  Success = 8,
+  Error = 16
+}
+
+var completedSuccessfully = Status.Completed | Status.Success;
+
+if ((completedSuccessfully & Status.Success) == Status.Success) {
+  Console.WriteLine("Completed successfully");
+}
+
+var completedWithError = Status.Completed | Status.Error;
+
+if ((completedWithError & Status.Error) == Status.Error) {
+  Console.WriteLine("Completed with error");
 }

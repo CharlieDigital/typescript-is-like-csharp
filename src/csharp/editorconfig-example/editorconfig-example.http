@@ -1,0 +1,6 @@
+@editorconfig_example_HostAddress = http://localhost:5293
+
+GET {{editorconfig_example_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

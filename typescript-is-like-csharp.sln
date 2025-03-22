@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi-controllers", "src\c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ef-api", "src\csharp\ef-api\ef-api.csproj", "{434C6079-771B-47BB-8D5B-79B7A318D42F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csharpier-example", "src\csharp\csharpier-example\csharpier-example.csproj", "{E3F08C24-1A3F-438B-A521-7AE0659D115F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "editorconfig-example", "src\csharp\editorconfig-example\editorconfig-example.csproj", "{BC63DEF9-3356-4789-8345-F3764D12B53C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,14 @@ Global
 		{434C6079-771B-47BB-8D5B-79B7A318D42F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{434C6079-771B-47BB-8D5B-79B7A318D42F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{434C6079-771B-47BB-8D5B-79B7A318D42F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3F08C24-1A3F-438B-A521-7AE0659D115F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F08C24-1A3F-438B-A521-7AE0659D115F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F08C24-1A3F-438B-A521-7AE0659D115F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F08C24-1A3F-438B-A521-7AE0659D115F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC63DEF9-3356-4789-8345-F3764D12B53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC63DEF9-3356-4789-8345-F3764D12B53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC63DEF9-3356-4789-8345-F3764D12B53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC63DEF9-3356-4789-8345-F3764D12B53C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +58,8 @@ Global
 		{F20E7BB6-061B-4F1C-8B51-D23D20181384} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
 		{854403DF-D24C-41D6-A0A4-0C95DEF6EBFD} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
 		{434C6079-771B-47BB-8D5B-79B7A318D42F} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
+		{E3F08C24-1A3F-438B-A521-7AE0659D115F} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
+		{BC63DEF9-3356-4789-8345-F3764D12B53C} = {EE222B14-4095-D8D2-8B9B-4218DD5B4CA2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0B353D1-9E73-475B-B986-21AC98847F63}
