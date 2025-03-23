@@ -4,6 +4,10 @@ Both **Express.js** and **.NET Minimal Web APIs** provide lightweight ways to bu
 
 **.NET Minimal Web APIs**, introduced in .NET 6, offer a streamlined way to build APIs with high performance and **built-in production-ready features** (no hunting for NPM packages!). Unlike Express, .NET Minimal APIs leverage the highly optimized ASP.NET Core pipeline, benefiting from asynchronous request handling, automatic dependency injection, and built-in middleware for logging, authentication, and rate limiting—many of which only need to be progressively enabled and configured rather than installed separately.
 
+::: tip
+For something between .NET Minimal APIs and .NET Controller APIs, check out [FastEndpoints](https://fast-endpoints.com/) which offers performance comparable to .NET Minimal APIs while offering a better way to organize endpoints into single responsibility files/classes.
+:::
+
 ## Setting Up
 
 We'll follow [this guide](https://blog.logrocket.com/how-to-set-up-node-typescript-express/) to set up Express with TypeScript

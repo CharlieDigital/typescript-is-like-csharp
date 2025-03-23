@@ -12,8 +12,8 @@ This guide aims to provide a walkthrough of just how similar these two languages
 Many of the code examples in this guide are actually in [the GitHub repo](https://github.com/CharlieDigital/typescript-is-like-csharp).  Be sure to check it out so you can see the full examples and play around with the code yourself.
 :::
 
-::: info
-This guide was inspired by the [Kotlin is Like C#](https://ttu.github.io/kotlin-is-like-csharp/) guide I came across while learning Kotlin.
+::: info Inspired by...
+This guide was inspired by the [Kotlin is Like C#](https://ttu.github.io/kotlin-is-like-csharp/) guide I came across while learning Kotlin.  I liked the format and decided to take it to the next level!
 :::
 
 ## Are They *Really* Similar?
@@ -290,7 +290,7 @@ It will also accept this:
 
 And now the `createCatDto` is carrying an extra `bark` property of dubious content because JavaScript doesn't care!  *TypeScript's type safety means nothing at runtime.*
 
-That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  Of course we can add validations and schemas to prevent a `CreateCatDTO` from accepting a `CreateDogDTO` at runtime, but this is ***extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
+That's because the type information no longer exists at runtime and there's no enforcement of type which requires adding schema validators like [Zod](https://zod.dev/) or [Valibot](https://valibot.dev/) to actually check the incoming payload conforms to some shape.  Of course we can add validations and schemas to prevent a `CreateCatDto` from accepting a `CreateDogDto` at runtime, but this is ***extra work.***  (In fact, you might be here exactly because you're fed up with this extra work to ensure the correctness and safety of your backend application!)
 
 ::: tip If you are already using Nest.js...
 Then you will probably like [.NET controller web APIs](./intermediate/nest-vs-controller-api.md) which is conceptually similar with controllers, routes, middleware, and more.
