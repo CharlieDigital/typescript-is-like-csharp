@@ -793,6 +793,10 @@ enum Status {
   Error = 16
 }
 
+var status = Status.Processing;
+
+Console.WriteLine(status);
+
 var completedSuccessfully = Status.Completed | Status.Success;
 
 if ((completedSuccessfully & Status.Success) == Status.Success) {
@@ -804,3 +808,29 @@ var completedWithError = Status.Completed | Status.Error;
 if ((completedWithError & Status.Error) == Status.Error) {
   Console.WriteLine("Completed with error");
 }
+
+#!csharp
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+enum Status {
+  Default = 0,
+  Queued = 1,
+  Processing = 2,
+  Completed = 4,
+  Success = 8,
+  Error = 16
+}
+
+record Job(string Name, Status Status);
+
+var options = new JsonSerializerOptions {
+  Converters = { new JsonStringEnumConverter() }
+};
+
+var job1 = new Job("job1", Status.Completed);
+
+Console.WriteLine(JsonSerializer.Serialize(job1));
+
+Console.WriteLine(JsonSerializer.Serialize(job1, options));

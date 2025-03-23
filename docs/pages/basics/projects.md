@@ -8,7 +8,7 @@ Both support the concept of projects. In .NET, these are sometimes called "libra
 
 Typically, C# projects will have a `.sln` file which you can think of as being equivalent to a workspace config file for Node.js projects.  When you add additional projects, these need to be registered in the `.sln` file.  The `.sln` is created automatically and typically I would avoid editing manually.  There's not much setup involved on the C# side
 
-For node, different project managers have different workspace configurations.  Here, [we'll look at NPM workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces).  There's a bit more setup required and it's different depending on your preferred package manager.
+For Node, different project managers have different workspace configurations.  Here, [we'll look at NPM workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces).  There's a bit more setup required and it's different depending on your preferred package manager.
 
 <CodeSplitter>
   <template #left>

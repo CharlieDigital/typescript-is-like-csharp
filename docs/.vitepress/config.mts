@@ -107,7 +107,7 @@ export default defineConfig({
                 link: "/pages/intermediate/iterators-enumerables",
               },
               {
-                text: "🚧 Unit Testing",
+                text: "Unit Testing",
                 link: "/pages/intermediate/unit-testing",
               },
               {

@@ -335,7 +335,7 @@ await db.SaveChangesAsync();
   </template>
 </CodeSplitter>
 
-In Entity Framework, model mutations are *tracked* and not written to the database until an explicit call to `SaveChangesAsync()` whereas Prisma performs a direct mutation on the database on each call to `create()` or `update()`.  In .NET with EF, the running code can continue to modify the model and add records and flush the changes in one transaction.
+A keen eye might notice that the `Add()` is not `async` in Entity Framework while it is `await`ed in Prisma.  In Entity Framework, model mutations are *tracked* and not written to the database until an explicit call to `SaveChangesAsync()` which produces one transaction with all tracked model mutations.  On the other hand, Prisma performs a direct mutation on the database on each call to `create()` or `update()` and multiple updates across related entities requires manual transaction management.  In .NET with EF, the running code can continue to modify the model and add records and flush the changes in one atomic transaction.
 
 This can be very useful when constructing large object graphs.
 
