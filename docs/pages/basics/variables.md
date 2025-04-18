@@ -24,7 +24,6 @@ const x = 1;  // Block scope; immutable
 
 ```csharp
 var x = 1;  // Block scope
-const x = 1;  // Compiler "inlined"; NOT the same as JS const
 ```
 
   </template>
@@ -33,7 +32,7 @@ const x = 1;  // Compiler "inlined"; NOT the same as JS const
 ::: warning Use C# `record` classes for immutability
 C#'s `const` keyword does not mean the same thing as in JS. [See the docs](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const) to understand the `const` designator in C#.
 
-To achieve immutability, use C# `record` class classes with positional properties (which we'll visit later in [Classes and Types](./classes.md#record-classes)).
+To achieve immutability, use C# `record` classes with positional properties (which we'll visit later in [Classes and Types](./classes.md#record-classes)).
 :::
 
 ## Explicit Types
@@ -57,6 +56,7 @@ let map = new Map();
 // Primitives
 int x = 1;
 string y = "";
+const int x = 1;  // Compiler "inlined"; NOT the same as JS const
 
 // Reference types
 var map = new HashMap();
