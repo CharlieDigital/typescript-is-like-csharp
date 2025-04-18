@@ -24,7 +24,6 @@ const x = 1;  // Block scope; immutable
 
 ```csharp
 var x = 1;  // Block scope
-const x = 1;  // Compiler "inlined"; NOT the same as JS const
 ```
 
   </template>
@@ -57,6 +56,7 @@ let map = new Map();
 // Primitives
 int x = 1;
 string y = "";
+const int x = 1;  // Compiler "inlined"; NOT the same as JS const
 
 // Reference types
 var map = new HashMap();
