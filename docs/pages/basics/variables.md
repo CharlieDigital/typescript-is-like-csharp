@@ -32,7 +32,7 @@ var x = 1;  // Block scope
 ::: warning Use C# `record` classes for immutability
 C#'s `const` keyword does not mean the same thing as in JS. [See the docs](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const) to understand the `const` designator in C#.
 
-To achieve immutability, use C# `record` class classes with positional properties (which we'll visit later in [Classes and Types](./classes.md#record-classes)).
+To achieve immutability, use C# `record` classes with positional properties (which we'll visit later in [Classes and Types](./classes.md#record-classes)).
 :::
 
 ## Explicit Types
