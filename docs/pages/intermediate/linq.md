@@ -75,7 +75,7 @@ let names = candidates.map(
 
 // Combine
 let backendNames = candidates.filter(
-  c => c.osition === 'backend'
+  c => c.position === 'backend'
 ).map(
   c => c.name
 ); // ["Ada"]
