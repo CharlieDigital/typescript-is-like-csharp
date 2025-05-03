@@ -10,8 +10,6 @@ For something between .NET Minimal APIs and .NET Controller APIs, check out [Fas
 
 ## Setting Up
 
-We'll follow [this guide](https://blog.logrocket.com/how-to-set-up-node-typescript-express/) to set up Express with TypeScript
-
 <CodeSplitter>
   <template #left>
 
@@ -44,14 +42,14 @@ app.listen(port, () => {
   console.log('Server is running at http://localhost:' + port);
 });" > index.ts
 
-# Add packages to support hot reload
-npm i -D nodemon ts-node concurrently
+# Add packages to support typescript file and hot reload
+npm i -D tsx
 
 # Update package.json
 # "scripts": {
 #  "build": "npx tsc",
 #  "start": "node dist/index.js",
-#  "dev": "nodemon src/index.ts"
+#  "dev": "tsx watch src/index.ts"
 # }
 
 npm run dev # ✅ Server ready!
