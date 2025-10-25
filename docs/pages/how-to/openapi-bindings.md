@@ -2,7 +2,7 @@
 
 If you're building a **Serious Backend™**, chances are that you're going to need an OpenAPI specification as an output for a number of reasons.
 
-First is typically to generate the client TypeScript bindings.  Yes, even if you're using TypeScript on the backend, this makes sense because the frontend model is typically only a subset oF the backend model and the OpenAPI interface is the boundary between front- and back-ends.
+First is typically to generate the client TypeScript bindings.  Yes, even if you're using TypeScript on the backend, this makes sense because the frontend model is typically only a subset of the backend model and the OpenAPI interface is the boundary between front- and back-ends.
 
 Second is that many platforms like [AWS API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-open-api.html) and [Google Cloud API Gateway](https://cloud.google.com/api-gateway/docs/openapi-overview) consume OpenAPI specs.  If you are building an enterprise API or any sort of API where you'll want to implement an API gateway, you'll want OpenAPI.  So even if your frontend is a TypeScript React, Vue, or Svelte application, it makes sense to use the OpenAPI bindings to generate the clients if an API gateway is in the system design.
 

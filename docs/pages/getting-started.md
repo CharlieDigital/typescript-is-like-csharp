@@ -17,6 +17,7 @@ There are three primary IDEs depending on which platform you are on:
 |IDE|Platforms|Pricing|Great For...|
 |--|--|--|--|
 |VS Code|Linux, macOS, Windows|Free|Console apps, web APIs, Blazor web apps; get the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) (or the [C# DevKit extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) if you prefer some of the visual features around project and solution management similar to Visual Studio)|
+|Cursor|Linux, macOS, Windows|Free|Used the Cursor provided C# extension or install [Dotrush](https://open-vsx.org/extension/nromanov/dotrush)|
 |Rider|Linux, macOS, Windows|[Free for non-commercial use](https://www.jetbrains.com/rider/buy/?section=personal&billing=yearly)|All .NET project types, devs who like JetBrains IDEs, devs who need the BEST refactoring tools.|
 |Visual Studio|Windows|[Free community license](https://visualstudio.microsoft.com/downloads/)|All .NET project types|
 
@@ -35,3 +36,42 @@ Where Jetbrains Rider shines is when you need to do complex refactorings.
 [VS Code Polyglot Notebooks](https://code.visualstudio.com/docs/languages/polyglot) (available via [this extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-interactive-vscode)) are a great way to experiment with C# without setting up a runtime infrastructure.
 
 This is a great way to get started and experiment and, in fact, you'll find a notebook in this repo in [`src/csharp/csharp-notebook.dib`](https://github.com/CharlieDigital/typescript-is-like-csharp/blob/main/src/csharp/csharp-notebook.dib)!
+
+## Use .NET 10 File-Based Apps
+
+Introduced with .NET 10, file-based apps are the easiest way to get started with C#.
+
+Just create a file and you're ready go to!
+
+```bash
+> mkdir file-app-demo
+> cd file-app-demo
+> echo 'Console.WriteLine("Easy!");' > app.cs
+> dotnet run app.cs
+
+> Easy!
+```
+
+Now you can edit this file and start writing code and when you're ready, it can be converted to a normal project as well.
+
+[Check out the tutorial on the Microsoft docs for more info](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/file-based-programs).
+
+This is the easiest way to start writing simple console apps and you can even build web APIs by adding in standard packages and SDKs!
+
+```csharp
+#:sdk Microsoft.NET.Sdk.Web
+// 👆 This line pulls in the Web API SDK
+
+Console.WriteLine("App starting");
+
+// 👇 Now configure and start the web server
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/", () => "Hello World!"); // 👈 A single endpoint
+
+app.Run();
+
+// dotnet run app.cs
+// curl http://localhost:5000 -> "Hello World!"
+```

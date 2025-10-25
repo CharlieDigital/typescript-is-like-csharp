@@ -204,7 +204,7 @@ If you just want the highlights, I recommend:
 
 ## A Bit of Background
 
-Many teams find themselves outgrowing Node.js and TypeScript ***on the backend*** when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of a strong static type system.
+Many teams find themselves outgrowing Node.js and TypeScript ***on the backend*** when building systems of consequence.  In particular, TypeScript helps at dev and build time, but of course it's just JavaScript at runtime with all of its pitfalls and potential issues due to the lack of runtime type metadata.
 
 If we look at the lifecycle of a codebase from dev-to-build-to-runtime, the problem becomes clear:
 
@@ -367,7 +367,7 @@ export class CreateOrganizationAttributeInput {
   readonly enabled?: boolean;
 }
 ```
-A common theme in TypeScript is that teams end up creating a vast landscape of *ancillary models that describe their actual models* because despite the richness and flexibilty of the TypeScript type system, the underlying JavaScript type system at runtime isn't rich enough and there's not enough type metadata available on the domain models by themselves (thus a secondary validation schema for something as simple as "this should be an integer").  This becomes apparent when looking at [ORMs in TypeScript versus C#](./intermediate/databases-and-orms.md) which again requires a schema to produce a domain model or falls back on strings.
+A common theme in TypeScript is that teams end up creating a vast landscape of *ancillary models that describe their actual models* because despite the richness and flexibilty of the TypeScript type system, the underlying JavaScript type system at runtime isn't rich enough and there's not enough type metadata available on the domain models by themselves (thus a secondary validation schema for something as simple as "this should be an integer").  This becomes apparent when looking at [ORMs in TypeScript versus C#](./intermediate/databases-and-orms.md) which again requires a schema to produce a runtime model (Prisma) or falls back on strings (Drizzle, Kysely).
 
 Without the basic facilities for effective runtime type checking, JavaScript at runtime is entirely dependent on *extra work* to inform the runtime about type metadata.  Another example of this is [Cal.com's `event-types.ts` zod schemas](https://github.com/calcom/cal.com/blob/main/apps/api/v1/lib/validations/event-type.ts) which shows a different pattern using Zod schemas (this being their V1 API versus the previous V2 API example above):
 
