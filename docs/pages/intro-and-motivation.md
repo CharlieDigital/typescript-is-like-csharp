@@ -528,7 +528,7 @@ This is not the case; in fact C# works great from VS Code!  It's completely free
 
 ### Myth: .NET is Windows Only
 
-This was true of .NET Framework which had bindings to the Win32 dlls.  Since .NET Core, Microsoft has been making .NET truly cross platform and any of the "numbered versions" like .NET 6, 7, 8, 9 can all run on Linux, macOS, and Windows.
+This was true of .NET Framework which had bindings to the Win32 dlls.  Since .NET Core, Microsoft has been making .NET truly cross platform and any of the "numbered versions" like .NET 6, 7, 8, 9, 10 can all run on Linux, macOS, and Windows.
 
 In fact, at one startup, we developed .NET on M1 MacBook Pros, built our containers in GitHub Actions, and deployed those in AWS on Arm64 `t4g` instances.
 
@@ -536,7 +536,7 @@ In fact, at one startup, we developed .NET on M1 MacBook Pros, built our contain
 
 ### Myth: .NET is a Legacy Platform
 
-This is true of ***.NET Framework***, but the numbered .NET versions (.NET 6, 7, 8, 9) are modern and the underlying platform evolves extremely fast and is perhaps more akin to Kotlin in that sense.
+This is true of ***.NET Framework***, but the numbered .NET versions (.NET 6, 7, 8, 9, 10) are modern and the underlying platform evolves extremely fast and is perhaps more akin to Kotlin in that sense.
 
 ### Myth: .NET is Hard to Learn
 
