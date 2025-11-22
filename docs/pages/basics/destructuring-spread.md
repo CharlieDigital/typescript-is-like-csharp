@@ -2,7 +2,7 @@
 
 C# supports [a limited set of destructuring](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/functional/deconstruct) and spread operations compared to JS and while generally useful, are not as powerful (and potentially dangerous?) as JS destructuring and spread.
 
-In JavaScript, destructuring and spread a commonly used to perform object shape manipulations and transformations while in C#, they are more restricted in that sense and are more basic operations.
+In JavaScript, destructuring and spread are commonly used to perform object shape manipulations and transformations while in C#, they are more restricted in that sense and are more basic operations.
 
 Let's take a look.
 

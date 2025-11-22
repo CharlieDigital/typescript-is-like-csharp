@@ -906,3 +906,12 @@ var who = new {
 };
 
 Console.WriteLine(who); // { FirstName = Ada, LastName = Lovelace, Nickname = Chuck }
+
+#!csharp
+
+var socials = (GitHub: "https://...", LinkedIn: "https://...");
+
+var socialsObj = new {
+  GitHub = "https://...",
+  LinkedIn = "https://..."
+};
