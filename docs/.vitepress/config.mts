@@ -81,6 +81,10 @@ export default defineConfig({
               { text: "Comments", link: "/pages/basics/comments" },
               { text: "Functions", link: "/pages/basics/functions" },
               { text: "Classes and Types", link: "/pages/basics/classes" },
+              {
+                text: "Destructuring and Spread",
+                link: "/pages/basics/destructuring-spread",
+              },
               { text: "Generics", link: "/pages/basics/generics" },
               { text: "Async/Await", link: "/pages/basics/async-await" },
               { text: "Packages vs Projects", link: "/pages/basics/projects" },

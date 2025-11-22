@@ -1,6 +1,6 @@
 #!meta
 
-{"kernelInfo":{"defaultKernelName":"javascript","items":[{"aliases":[],"languageName":"javascript","name":"javascript"}]}}
+{"kernelInfo":{"defaultKernelName":"javascript","items":[{"name":"csharp","languageName":"C#","aliases":["c#","cs"]},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"javascript"},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
 
 #!javascript
 
@@ -86,3 +86,30 @@ fn("Hello, World!");
 
 var contacts = ["Allie", "Stella", "Carson"];
 contacts.forEach(fn)
+
+#!javascript
+
+let mine = ["apple", "banana"];
+let yours = ["orange", "grape"];
+
+let ours = [...mine, ...yours];
+console.log(ours); // ["apple","banana","orange","grape"]
+
+#!javascript
+
+let ada = {
+  firstName: "Ada",
+  lastName: "Lovelace"
+};
+
+let charles = {
+  firstName: "Charles",
+  lastName: "Babbage",
+  nickName: "Chuck"
+};
+
+let adaClone = { ...ada };
+console.log(adaClone); // { firstName: "Ada", lastName: "Lovelace" }
+
+let who = { ...ada, ...charles };
+console.log(who); // { firstName: "Charles", lastName: "Babbage", nickName: "Chuck" }}

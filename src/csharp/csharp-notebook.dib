@@ -834,3 +834,75 @@ var job1 = new Job("job1", Status.Completed);
 Console.WriteLine(JsonSerializer.Serialize(job1));
 
 Console.WriteLine(JsonSerializer.Serialize(job1, options));
+
+#!csharp
+
+public record Person(string FirstName, string LastName);
+
+var person = new Person("Ada", "Lovelace");
+
+var (first, last) = person;
+
+Console.WriteLine(first); // Ada
+Console.WriteLine(last); // Lovelace
+
+#!csharp
+
+public class Person {
+  public string FirstName { get; set; }
+  public string LastName { get; set; }
+  // 👇 Manually added method
+  public void Deconstruct(
+    out string firstName,
+    out string lastName
+  ) {
+    firstName = FirstName;
+    lastName = LastName;
+  }
+}
+
+var ada = new Person {
+  FirstName = "Ada",
+  LastName = "Lovelace"
+};
+
+var (firstName, lastName) = ada;
+
+Console.WriteLine(firstName); // Ada
+Console.WriteLine(lastName); // Lovelace
+
+#!csharp
+
+var mine = new [] { "apple", "banana" };
+var yours = new [] { "orange", "grape" };
+
+string[] ours = [.. mine, .. yours];
+Console.WriteLine(string.Join(", ", ours)); // "apple, banana, orange, grape"
+
+#!csharp
+
+var ada = new {
+  FirstName = "Ada",
+  LastName = "Lovelace"
+};
+
+var charles = new {
+  FirstName = "Charles",
+  LastName = "Babbage",
+  Nickname = "Chuck"
+};
+
+var adaClone = new {
+  ada.FirstName,
+  ada.LastName,
+};
+
+Console.WriteLine(adaClone); // { FirstName = Ada, LastName = Lovelace }
+
+var who = new {
+  ada.FirstName,
+  ada.LastName,
+  charles.Nickname
+};
+
+Console.WriteLine(who); // { FirstName = Ada, LastName = Lovelace, Nickname = Chuck }
