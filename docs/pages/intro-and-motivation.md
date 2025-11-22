@@ -2,7 +2,7 @@
 
 Many folks haven't followed the evolution of C# over the years after encountering it in the past when it was bound to the Windows-only ***.NET Framework*** (dark days...) and have strong, lingering misperceptions about C# and .NET today.
 
-Over the years, .NET and C# have evolved heavily (as has Microsoft) and now ***"modern .NET"*** -- e.g. ***.NET 9*** -- is open source, builds and deploys cross-platform with ease, and the development experience is well-supported whether you're on Windows, Mac, or Linux.
+Over the years, .NET and C# have evolved heavily (as has Microsoft) and now ***"modern .NET"*** -- e.g. ***.NET 10*** -- is open source, builds and deploys cross-platform with ease, and the development experience is well-supported whether you're on Windows, Mac, or Linux.
 
 During that time, the language design of both C# and TypeScript (JavaScript as well) have *converged* more than other languages.  The two languages are now remarkably similar in their core syntax such that developers that know one can typically pick up the other fairly easily.
 
@@ -235,7 +235,7 @@ In reality, C# is possibly the most natural choice for teams that are already ad
 One of the reasons .NET and C# get the side eye is that many developers, engineering managers, and CTOs may have come across C# and .***NET Framework*** at some point in their career, but haven't looked at it since Microsoft pivoted to the open source ***.NET Core*** initiative (that yielded the open source, numbered .NET versions).  Today's .NET is very different from *.NET Framework* of the 2000's.  Let's start with a simple distinction:
 
 - `.NET Framework` - Win32 bindings, legacy, and primarily maintained and supported for legacy enterprise use cases.  You'll see this as `.NET Framework 4.8.x`
-- `.NET 5`, `.NET 6`, `.NET 7`, `.NET 8`, `.NET 9`, etc - Modern, cross-platform .NET that runs on Linux, macOS, and Windows with x64 or Arm64 targets.
+- `.NET 6`, `.NET 7`, `.NET 8`, `.NET 9`, `.NET 10`, etc - Modern, cross-platform .NET that runs on Linux, macOS, and Windows with x64 or Arm64 targets.
 - `.NET Core`, `.NET Standard` - Designator of the bifurcation point between legacy and modern (long legacy of terrible nomenclature from Microsoft...)
 
 ::: info What's in a name?

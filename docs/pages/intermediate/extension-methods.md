@@ -84,4 +84,74 @@ var ada = new Person("Ada", "Lovelace");
 ada.Print(); // "Ada Lovelace"
 ```
 
-However, with C#, we are limited only to methods and not properties; to achieve that, we can use [Partial Members](../bonus/partial-classes.md) instead.
+## Extension Members
+
+C# 14 and .NET 10 introduce [extension members](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14) as well.
+
+This mechanism is extremely useful when working with third party types or even types from your own libraries where you may only want to extend the behavior without modifying the original.
+
+<CodeSplitter>
+  <template #left>
+
+```ts
+// Class definition
+class Person {
+  constructor(
+    public readonly firstName: string,
+    public readonly lastName: string
+  ) {}
+}
+
+// Without this, TS will complain about the `displayName`
+interface Person {
+  displayName: string
+}
+
+// Extend with additional properties
+Object.defineProperty(Person.prototype, "displayName", {
+  get() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+});
+
+const person = new Person("Ada", "Lovelace");
+console.log(person.displayName) // "Ada Lovelace"
+```
+
+  </template>
+  <template #right>
+
+```csharp{2,11-14}
+var contact = new Contact("Didi", "Cheng");
+Console.WriteLine(contact.DisplayName);
+
+public record Contact(
+  string FirstName,
+  string LastName
+);
+
+// 👇 Define one or more extension members here
+public static class ContactExtensions {
+  extension(IContact contact) {
+    public string DisplayName =>
+      $"{contact.FirstName} {contact.LastName}";
+  }
+}
+```
+
+  </template>
+</CodeSplitter>
+
+One additional note is that in some cases, you may want to only add the extension members in the context of a single file.  This can be useful when you need to add some utility members, but you do not want to pollute the general namespace.
+
+```cs
+// 👇 Note the use of `file` here
+file static class ContactExtensions {
+  extension(IContact contact) {
+    public string DisplayName =>
+      $"{contact.FirstName} {contact.LastName}";
+  }
+}
+```
+
+Not we can add this member only in the scope of the file.
