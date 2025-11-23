@@ -72,9 +72,36 @@ To use the code splitter:
 
 > 💡 ***Note*** the extra space after the opening `<template>` and before the closing `</template>`.  This is necessary for the VitePress pre-processor.
 
+In some cases, you may only need to write code for either JS/TS or C#.  In these cases, just use normal markdown code fences.
+
+For callouts:
+
+```
+::: info
+This is an info box.
+:::
+
+::: tip
+This is a tip.
+:::
+
+::: warning
+This is a warning.
+:::
+
+::: danger
+This is a dangerous warning.
+:::
+
+::: details
+This is a details block.
+:::
+```
+
 ## Guidelines
 
-- Focus on educating; you don't have to be able to fill in both sides (C# and JS); you can fill in one side and leave the other "WIP"
+- Focus on educating; you don't have to be able to fill in both sides (C# and JS); you can fill in one side and leave the other "WIP".
 - Write clear, concise, and easy to follow examples
-- Try to distill the examples down to the simplest use case that demonstrates the idea
-- Use [VitePress markdown extensions](https://vitepress.dev/guide/markdown) where appropriate including code line highlighting
+- Try to distill the examples down to the simplest use case that demonstrates the core of the idea; complex examples can be hard to grasp (but are sometimes unavoidable).
+- Use [VitePress markdown extensions](https://vitepress.dev/guide/markdown) where appropriate including code line highlighting.
+- When relevant, add links to documentation to interested readers can follow up and learn more!
