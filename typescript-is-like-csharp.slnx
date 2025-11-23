@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="src/csharp/console/console.csproj" />
+  <Project Path="src/csharp/csharpier-example/csharpier-example.csproj" />
+  <Project Path="src/csharp/editorconfig-example/editorconfig-example.csproj" />
+  <Project Path="src/csharp/ef-api/ef-api.csproj" />
+  <Project Path="src/csharp/tunit-example/tunit-example.csproj" />
+  <Project Path="src/csharp/webapi-controllers/webapi-controllers.csproj" />
+  <Project Path="src/csharp/webapi-minimal/webapi-minimal.csproj" />
+</Solution>
