@@ -157,7 +157,7 @@ var connectionString = "server=127.0.0.1;port=5432;database=momo;user id=postgre
 builder.Services.AddSingleton(new DbConfig(connectionString));
 builder.Services.AddDbContext<Database>();
 
-var app = var app = builder.Build();
+var app = builder.Build();
 
 // ⚠️ ONLY DEMO CODE; NOT FOR PROD ⚠️
 // Get our database from DI and ensure we create it
